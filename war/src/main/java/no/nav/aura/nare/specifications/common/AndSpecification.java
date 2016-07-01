@@ -24,7 +24,7 @@ public class AndSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public String getDescription() {
-        return spec1.getDescription() + " AND " + spec2.getDescription();
+        return spec1.getDescription() + " OG " + spec2.getDescription();
     }
 
     /**
@@ -33,11 +33,8 @@ public class AndSpecification<T> extends AbstractSpecification<T> {
     public Evaluation evaluate(final T t) {
         Evaluation eval1 = spec1.evaluate(t);
         Evaluation eval2 = spec2.evaluate(t);
-        String reason = getReason(eval1, eval2);
-        if (eval2.isSatisfied() && eval1.isSatisfied()) {
-            return Evaluation.yes(reason);
-        }
-        return Evaluation.no(reason);
+        return new Evaluation(eval2.result().and(eval1.result()), getReason(eval1, eval2));
+
     }
 
     private String getReason(Evaluation eval1, Evaluation eval2) {

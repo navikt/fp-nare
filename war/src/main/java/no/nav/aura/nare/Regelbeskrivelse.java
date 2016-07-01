@@ -3,7 +3,7 @@ package no.nav.aura.nare;
 
 import java.util.Objects;
 
-public class Regelbeskrivelse {
+public class Regelbeskrivelse implements Comparable<Regelbeskrivelse> {
 
     private final Integer id;
     private String beskrivelse;
@@ -41,5 +41,10 @@ public class Regelbeskrivelse {
     public String toString() {
         return "Regel " + id +
                 ": " + beskrivelse + '\n';
+    }
+
+    @Override
+    public int compareTo(Regelbeskrivelse other) {
+        return id.compareTo(other.id);
     }
 }

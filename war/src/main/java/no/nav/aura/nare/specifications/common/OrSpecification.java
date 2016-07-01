@@ -27,15 +27,12 @@ public class OrSpecification<T> extends AbstractSpecification<T> {
     public Evaluation evaluate(final T t) {
         Evaluation eval1 = spec1.evaluate(t);
         Evaluation eval2 = spec2.evaluate(t);
-        String reason = getReason(eval1, eval2);
-        if (eval1.isSatisfied() || eval2.isSatisfied()) {
-            return Evaluation.yes(reason);
-        }
-        return Evaluation.no(reason);
+        return new Evaluation(eval2.result().or(eval1.result()), getReason(eval1, eval2));
     }
 
     private String getReason(Evaluation eval1, Evaluation eval2) {
-        return eval1.getReason() + " ELLER " + eval2.getReason();
+        return eval1.result() + ":" + eval1.getReason() + " ELLER " +
+                eval2.result() + ":" + eval2.getReason() ;
 
     }
 

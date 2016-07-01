@@ -2,7 +2,6 @@ package no.nav.aura.nare.specifications;
 
 
 import no.nav.aura.nare.input.Familie;
-import no.nav.aura.nare.input.Person;
 import no.nav.aura.nare.specifications.common.AbstractSpecification;
 import no.nav.aura.nare.specifications.common.Evaluation;
 

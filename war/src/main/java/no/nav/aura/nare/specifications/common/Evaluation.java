@@ -1,26 +1,32 @@
 package no.nav.aura.nare.specifications.common;
 
+import no.nav.aura.nare.Resultat;
+
 import java.io.Serializable;
 import java.text.MessageFormat;
 
 @SuppressWarnings("serial")
 public class Evaluation implements Serializable {
 
-    private boolean satisfied;
+    private Resultat result;
     private String reason;
 
-    private Evaluation(boolean satisfied) {
-        this.satisfied = satisfied;
+    private Evaluation(Resultat result) {
+        this.result = result;
     }
 
-    private Evaluation(boolean satisfied, String reason, Object... stringformatArguments) {
-        this(satisfied);
+    public Evaluation(Resultat result, String reason, Object... stringformatArguments) {
+        this(result);
         this.reason = MessageFormat.format(reason, stringformatArguments);
     }
 
-    public boolean isSatisfied() {
-        return satisfied;
+    public Resultat result() {
+        return result;
     }
+
+
+
+
 
     public String getReason() {
         return reason;
@@ -28,14 +34,18 @@ public class Evaluation implements Serializable {
 
     @Override
     public String toString() {
-        return "Evaluering: " + satisfied + "\n\tBegrunnelse: " + reason + "";
+        return "Evaluering: " + result + "\n\tBegrunnelse: " + reason + "";
     }
 
     public static final Evaluation yes(String reason, Object... stringformatArguments) {
-        return new Evaluation(true, reason, stringformatArguments);
+        return new Evaluation(Resultat.INNVILGET, reason, stringformatArguments);
     }
 
     public static final Evaluation no(String reason, Object... stringformatArguments) {
-        return new Evaluation(false, reason, stringformatArguments);
+        return new Evaluation(Resultat.AVSLAG, reason, stringformatArguments);
+    }
+
+    public static final Evaluation manual(String reason, Object... stringformatArguments) {
+        return new Evaluation(Resultat.MANUELL_BEHANDLING, reason, stringformatArguments);
     }
 }

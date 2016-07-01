@@ -23,10 +23,4 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
         return new OrSpecification<T>(this, specification);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public Specification<T> ikke(final Specification<T> specification) {
-        return new NotSpecification<T>(specification);
-    }
 }

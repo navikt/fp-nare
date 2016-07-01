@@ -4,6 +4,7 @@ package no.nav.aura.nare.input;
 public class Familie implements Soker {
 
 
+    private Person barn;
     private Person hovedsoker;
     private Person medsoker;
     public String name = "Familien!";
@@ -31,5 +32,10 @@ public class Familie implements Soker {
 
     public static Familie hovedsoker(Person hovedsoker){
         return new Familie(hovedsoker);
+    }
+
+    public Familie forBarn(Person barn) {
+        this.barn = barn;
+        return this;
     }
 }

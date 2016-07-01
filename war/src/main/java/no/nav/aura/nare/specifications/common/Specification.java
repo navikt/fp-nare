@@ -37,13 +37,4 @@ public interface Specification<T> {
      * @return A new specification.
      */
     Specification<T> eller(Specification<T> specification);
-
-    /**
-     * Create a new specification that is the NOT operation of {@code this} specification.
-     * 
-     * @param specification
-     *            Specification to NOT.
-     * @return A new specification.
-     */
-    Specification<T> ikke(Specification<T> specification);
 }

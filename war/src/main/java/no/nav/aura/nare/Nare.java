@@ -18,17 +18,17 @@ public class Nare {
         //Mor er hovedforsørger og enten hovedsøker eller medsøker
         //Far er
 
-        Person far = new Person("Truls", Rolle.FAR, "Nerd", 500000, 15);
-        Person mor = new Person("Guro", Rolle.MOR, "Prosjektleder", 600000, 24 );
-        Person barn = new Person("Theo", Rolle.BARN,"Barn", 0, 0);
+        Person far = new Person("Truls", Rolle.FAR, "Nerd", 500000, 800,"Kløfta");
+        Person mor = new Person("Guro", Rolle.MOR, "Prosjektleder", 600000, 24, "Oslo" );
+        Person barn = new Person("Theo", Rolle.BARN,"Barn", 0, 0, "Oslo");
 
-        Familie familie = Familie.hovedsoker(far).medSoker(mor);
+        Evaluering evaluering = Regelsett
+                .hovedForsorger()
+                .vurder(Familie.hovedsoker(mor).forBarn(barn).medSoker(far));
 
-        Map<String, Evaluation> vurder = Regelsett.hovedForsorger()
-                .vurder(familie);
+        System.out.println(evaluering.resultat());
+        System.out.println(evaluering.begrunnelse());
 
-
-        System.out.println(Regelsett.hovedForsorger().vurdering(familie));
         System.out.println(Regelsett.hovedForsorger().regelbeskrivelser());
 
     }
