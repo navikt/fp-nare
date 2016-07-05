@@ -3,11 +3,13 @@ package no.nav.aura.nare.input;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Person{
 
     private final String name;
     private Rolle rolle;
+    private Uttaksplan uttaksplan;
     private final String yrke;
     private final int inntekt;
     private final String addresse;
@@ -25,6 +27,14 @@ public class Person{
         this.addresse = addresse;
         this.rettTilFp = rettTilFp;
         this.institusjonsOpphold = new ArrayList<>();
+    }
+
+    public void setUttaksplan(Uttaksplan uttaksplan){
+        this.uttaksplan = uttaksplan;
+    }
+
+    public Optional<Uttaksplan> getUttaksplan(){
+        return Optional.ofNullable(uttaksplan);
     }
 
     public void addInstituasjonsOpphold(String institusjonsopphold){

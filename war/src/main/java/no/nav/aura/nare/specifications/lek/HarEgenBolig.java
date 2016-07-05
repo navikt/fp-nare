@@ -1,11 +1,11 @@
 package no.nav.aura.nare.specifications.lek;
 
 
-import no.nav.aura.nare.input.Familie;
+import no.nav.aura.nare.input.Soknad;
 import no.nav.aura.nare.specifications.common.AbstractSpecification;
 import no.nav.aura.nare.specifications.common.Evaluation;
 
-public class HarEgenBolig extends AbstractSpecification<Familie> {
+public class HarEgenBolig extends AbstractSpecification<Soknad> {
 
     private HarEgenBolig(){}
 
@@ -14,15 +14,15 @@ public class HarEgenBolig extends AbstractSpecification<Familie> {
     }
 
     @Override
-    public Evaluation evaluate(Familie familie) {
-        String addresse = familie.getHovedsoker().getAddresse();
+    public Evaluation evaluate(Soknad soknad) {
+        String addresse = soknad.getHovedsøker().getAddresse();
         switch (addresse){
             case "" :
-                return Evaluation.no("Er ikke oppført med addresse");
-            case "Kløfta":
-                return Evaluation.manual("Meget skeptisk til folk fra Kløfta");
+                return Evaluation.no("Er ikke oppfort med addresse");
+            case "Klofta":
+                return Evaluation.manual("Meget skeptisk til folk fra Klofta");
             default:
-                return  Evaluation.yes("Er oppført med addresse {0}", addresse);
+                return  Evaluation.yes("Er oppfort med addresse {0}", addresse);
         }
     }
 

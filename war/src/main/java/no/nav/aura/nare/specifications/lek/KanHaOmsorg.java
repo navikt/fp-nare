@@ -1,11 +1,11 @@
 package no.nav.aura.nare.specifications.lek;
 
 
-import no.nav.aura.nare.input.Familie;
+import no.nav.aura.nare.input.Soknad;
 import no.nav.aura.nare.specifications.common.AbstractSpecification;
 import no.nav.aura.nare.specifications.common.Evaluation;
 
-public class KanHaOmsorg extends AbstractSpecification<Familie> {
+public class KanHaOmsorg extends AbstractSpecification<Soknad> {
 
     private KanHaOmsorg(){}
 
@@ -14,9 +14,9 @@ public class KanHaOmsorg extends AbstractSpecification<Familie> {
     }
 
     @Override
-    public Evaluation evaluate(Familie familie) {
-        boolean harInstOpphold = !familie.getHovedsoker().getInstitusjonsOpphold().isEmpty();
-        boolean registertInntekt = familie.getHovedsoker().getInntekt() > 0;
+    public Evaluation evaluate(Soknad soknad) {
+        boolean harInstOpphold = !soknad.getHovedsøker().getInstitusjonsOpphold().isEmpty();
+        boolean registertInntekt = soknad.getHovedsøker().getInntekt() > 0;
 
         if (!harInstOpphold && registertInntekt){
             return Evaluation.yes("Har ikke instopphold og registert inntekt.");
