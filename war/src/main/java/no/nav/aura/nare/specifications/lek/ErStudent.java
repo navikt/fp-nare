@@ -1,4 +1,4 @@
-package no.nav.aura.nare.specifications;
+package no.nav.aura.nare.specifications.lek;
 
 
 import no.nav.aura.nare.input.Familie;

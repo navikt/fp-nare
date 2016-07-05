@@ -2,10 +2,10 @@ package no.nav.aura.nare.regelsettyper;
 
 import no.nav.aura.nare.Regelsett;
 
-import static no.nav.aura.nare.specifications.ErStudent.erStudent;
+import static no.nav.aura.nare.specifications.lek.ErStudent.erStudent;
 import static no.nav.aura.nare.specifications.HarArbeidetSisteMnd.harArbeidetSisteMnd;
-import static no.nav.aura.nare.specifications.HarEgenBolig.harEgenBolig;
-import static no.nav.aura.nare.specifications.KanHaOmsorg.kanHaOmsorg;
+import static no.nav.aura.nare.specifications.lek.HarEgenBolig.harEgenBolig;
+import static no.nav.aura.nare.specifications.lek.KanHaOmsorg.kanHaOmsorg;
 import static no.nav.aura.nare.specifications.common.NotSpecification.ikke;
 
 

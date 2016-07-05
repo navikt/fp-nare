@@ -38,6 +38,6 @@ public class AndSpecification<T> extends AbstractSpecification<T> {
     }
 
     private String getReason(Evaluation eval1, Evaluation eval2) {
-        return eval1.getReason() + " OG " + eval2.getReason();
+        return "(" + eval1.result() + ": " + eval1.getReason()+ ")" + "  OG  " + "(" + eval2.result() + ": " +  eval2.getReason() + ")";
     }
 }

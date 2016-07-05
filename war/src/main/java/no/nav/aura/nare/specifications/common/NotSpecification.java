@@ -3,7 +3,7 @@ package no.nav.aura.nare.specifications.common;
 
 
 /**
- * NOT decorator, used to create a new specifcation that is the inverse (NOT) of the given spec.
+ * NOT decorator, used to create a new specifcation that is the inverse (IKKE) of the given spec.
  */
 public class NotSpecification<T> extends AbstractSpecification<T> {
 

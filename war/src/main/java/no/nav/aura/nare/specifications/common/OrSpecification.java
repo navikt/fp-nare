@@ -31,13 +31,14 @@ public class OrSpecification<T> extends AbstractSpecification<T> {
     }
 
     private String getReason(Evaluation eval1, Evaluation eval2) {
-        return eval1.result() + ":" + eval1.getReason() + " ELLER " +
-                eval2.result() + ":" + eval2.getReason() ;
+        return "(" + eval1.result() + ": " + eval1.getReason()+ ")" + "  ELLER  " + "(" + eval2.result() + ": " +  eval2.getReason() + ")";
+
 
     }
 
     @Override
     public String getDescription() {
+
         return spec1.getDescription() + " ELLER " + spec2.getDescription();
     }
 
