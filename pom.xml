@@ -2,15 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>no.nav.aura.maven.poms</groupId>
-        <artifactId>aura-maven-pom</artifactId>
-        <version>1.0.2</version>
-    </parent>
+
 
     <groupId>no.nav.aura.nare</groupId>
     <artifactId>nare</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -19,28 +15,6 @@
         <module>ear</module>
     </modules>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-scm-plugin</artifactId>
-                <configuration>
-                    <tag>${project.artifactId}-${project.version}</tag>
-                </configuration>
-            </plugin>
-        </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>no.nav.aura.maven.plugins</groupId>
-                    <artifactId>nav-releasedoc-plugin</artifactId>
-                    <configuration>
-                        <jiraProject>AURA</jiraProject>
-                        <space>aura</space>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
 
     <scm>
         <connection>scm:git:ssh://git@stash.devillo.no:7999/aura/nare.git</connection>

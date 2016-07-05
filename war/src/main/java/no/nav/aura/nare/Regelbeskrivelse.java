@@ -5,14 +5,14 @@ import java.util.Objects;
 
 public class Regelbeskrivelse implements Comparable<Regelbeskrivelse> {
 
-    private final Integer id;
+    private final String id;
     private String beskrivelse;
 
-    private Regelbeskrivelse(final Integer id){
+    private Regelbeskrivelse(final String id){
         this.id = id;
     }
 
-    public static Regelbeskrivelse id(int id){
+    public static Regelbeskrivelse id(String id){
         return new Regelbeskrivelse(id);
     }
 

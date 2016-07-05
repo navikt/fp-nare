@@ -5,7 +5,7 @@
     <parent>
         <groupId>no.nav.aura.nare</groupId>
         <artifactId>nare</artifactId>
-        <version>3.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>nare-ear</artifactId>
@@ -45,14 +45,6 @@
                             <bundleFileName>nare-war.war</bundleFileName>
                         </webModule>
                     </modules>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>no.nav.aura.maven.plugins</groupId>
-                <artifactId>nav-releasedoc-plugin</artifactId>
-                <configuration>
-                    <skipJira>true</skipJira>
-                    <skipConfluence>true</skipConfluence>
                 </configuration>
             </plugin>
         </plugins>

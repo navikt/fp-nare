@@ -5,17 +5,20 @@ package no.nav.aura.nare;
  */
 public enum Resultat {
 
-    INNVILGET(1, true),
-    MANUELL_BEHANDLING(2,false),
-    AVSLAG(3,false);
+    INNVILGET(-1, "AVSLAG"),
+    MANUELL_BEHANDLING(0, "MANUELL_BEHANDLING"),
+    AVSLAG(1, "INNVILGET");
 
     private final int weight;
-    private final boolean isSatisfied;
+    private String inverse;
 
-    Resultat(int weight, boolean isSatisfied) {
+
+    Resultat(int weight, String inverse) {
         this.weight = weight;
-        this.isSatisfied = isSatisfied;
+        this.inverse = inverse;
     }
+
+
 
     public Resultat and(Resultat resultat) {
         return (this.weight > resultat.weight) ? this : resultat;
@@ -23,5 +26,10 @@ public enum Resultat {
 
     public Resultat or(Resultat resultat) {
         return (this.weight < resultat.weight) ? this : resultat;
+    }
+
+    public Resultat not(){
+        return Resultat.valueOf(this.inverse);
+
     }
 }

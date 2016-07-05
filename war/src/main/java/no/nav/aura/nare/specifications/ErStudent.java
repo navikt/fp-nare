@@ -16,7 +16,9 @@ public class ErStudent extends AbstractSpecification<Familie> {
     @Override
     public Evaluation evaluate(Familie familie) {
         String yrke = familie.getHovedsoker().getYrke();
-        return (yrke == "student") ? Evaluation.yes("Oppført som {0} (JA)", yrke) : Evaluation.no("Ikke oppgitt som student, men som {0})",yrke);
+        return (yrke == "student")
+                ? Evaluation.yes("Oppført som {0}", yrke)
+                : Evaluation.no("Ikke oppgitt som student, men som {0})",yrke);
     }
 
     @Override

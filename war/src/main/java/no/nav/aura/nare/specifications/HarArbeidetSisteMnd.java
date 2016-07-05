@@ -28,6 +28,6 @@ public class HarArbeidetSisteMnd extends AbstractSpecification<Familie> {
 
     @Override
     public String getDescription() {
-        return "Har arbeidet i minst " + month + "måneder";
+        return "Har arbeidet i minst " + month + " måneder";
     }
 }

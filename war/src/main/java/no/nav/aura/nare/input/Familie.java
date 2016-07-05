@@ -1,6 +1,9 @@
 package no.nav.aura.nare.input;
 
 
+import java.util.Optional;
+import java.util.stream.Stream;
+
 public class Familie implements Soker {
 
 
@@ -37,5 +40,9 @@ public class Familie implements Soker {
     public Familie forBarn(Person barn) {
         this.barn = barn;
         return this;
+    }
+
+    public Optional<Person> getSoker(Rolle rolle) {
+        return Stream.of(hovedsoker, medsoker).filter(person -> person.getRolle().equals(rolle)).findFirst();
     }
 }

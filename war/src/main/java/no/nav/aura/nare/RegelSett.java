@@ -2,6 +2,7 @@ package no.nav.aura.nare;
 
 import no.nav.aura.nare.input.Familie;
 import no.nav.aura.nare.regelsettyper.Hovedforsorger;
+import no.nav.aura.nare.regelsettyper.Mødrekvote;
 import no.nav.aura.nare.specifications.common.Specification;
 
 import java.util.HashMap;
@@ -20,7 +21,14 @@ public class Regelsett {
         return new Hovedforsorger();
     }
 
-    public void regel(Integer id, String regelbeskrivelse, Specification specification) {
+
+
+
+    public static Regelsett mødrekvote() {
+        return new Mødrekvote();
+    }
+
+    public void regel(String id, String regelbeskrivelse, Specification specification) {
         specifications.put(Regelbeskrivelse.id(id).beskrivelse(regelbeskrivelse), specification);
     }
 
@@ -43,5 +51,4 @@ public class Regelsett {
                 .map(entry -> entry.getKey() + "\t" + entry.getValue()+"\n")
                 .collect(Collectors.joining(""));
     }
-
 }

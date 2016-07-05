@@ -37,4 +37,7 @@ public interface Specification<T> {
      * @return A new specification.
      */
     Specification<T> eller(Specification<T> specification);
+
+
+
 }
