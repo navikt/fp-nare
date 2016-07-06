@@ -4,6 +4,7 @@ import no.nav.aura.nare.input.Soknad;
 import no.nav.aura.nare.input.Person;
 import no.nav.aura.nare.input.Rolle;
 import no.nav.aura.nare.input.Uttaksplan;
+import no.nav.aura.nare.specifications.common.Evaluation;
 import org.junit.Test;
 
 
@@ -15,6 +16,12 @@ public class NareTest {
 
 
     @Test
+    public void test(){
+        mor.setUttaksplan(Uttaksplan.INNEN_3_AAR);
+        Ruleset.modrekvote().evaluer(Soknad.adopsjonsSøknada(mor).medSøker(far)).print();
+    }
+
+    @Test
     public void mor(){
 
         mor.setUttaksplan(Uttaksplan.INNEN_3_AAR);
@@ -23,18 +30,6 @@ public class NareTest {
         System.out.println(evaluering.begrunnelse());
     }
 
-
-    @Test
-    public void far(){
-
-
-
-        Evaluering evaluering = Ruleset.hovedForsørger().vurder(Soknad.fodselSøknad(far).forBarn(barn).medSøker(mor));
-
-        System.out.println(evaluering.resultat());
-        System.out.println(evaluering.begrunnelse());
-
-    }
 
 
     @Test

@@ -18,10 +18,9 @@ public interface Specification<T> {
      */
     Evaluation evaluate(T t);
 
-    String getDescription();
 
     /**
-     * Create a new specification that is the AND operation of {@code this} specification og another specification.
+     * Create a new specification that is the AND operation of {@code this} specification of another specification.
      * 
      * @param specification
      *            Specification to AND.
@@ -30,13 +29,18 @@ public interface Specification<T> {
     Specification<T> og(Specification<T> specification);
 
     /**
-     * Create a new specification that is the OR operation of {@code this} specification og another specification.
+     * Create a new specification that is the OR operation of {@code this} specification of another specification.
      * 
      * @param specification
      *            Specification to OR.
      * @return A new specification.
      */
     Specification<T> eller(Specification<T> specification);
+
+    String identifikator();
+
+    String beskrivelse();
+
 
 
 

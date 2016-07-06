@@ -27,7 +27,7 @@ public class OrSpecification<T> extends AbstractSpecification<T> {
     public Evaluation evaluate(final T t) {
         Evaluation eval1 = spec1.evaluate(t);
         Evaluation eval2 = spec2.evaluate(t);
-        Evaluation evaluation = new Evaluation(eval2.result().or(eval1.result()), getReason(eval1, eval2));
+        Evaluation evaluation = new Evaluation(eval2.result().or(eval1.result()), identifikator(), beskrivelse(),getReason(eval1, eval2));
         evaluation.setChildren(eval1,eval2);
         return evaluation;
     }
@@ -38,10 +38,15 @@ public class OrSpecification<T> extends AbstractSpecification<T> {
 
     }
 
-    @Override
-    public String getDescription() {
 
-        return spec1.getDescription() + " ELLER " + spec2.getDescription();
+    @Override
+    public String identifikator() {
+        return "ELLER";
+    }
+
+    @Override
+    public String beskrivelse() {
+        return spec1.identifikator() + " " + identifikator() + " " +  spec2.identifikator();
     }
 
 }

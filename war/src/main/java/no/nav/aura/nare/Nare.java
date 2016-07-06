@@ -4,13 +4,12 @@ import no.nav.aura.nare.input.Soknad;
 import no.nav.aura.nare.input.Person;
 import no.nav.aura.nare.input.Rolle;
 
-/**
- * Created by j116592 on 28.06.2016.
- */
+
 public class Nare {
 
     public static void main(String[] args) {
 
+/*
         //Mor er hovedforsorger og enten hovedsøker eller medsøker
         //Far er
 
@@ -26,6 +25,7 @@ public class Nare {
         System.out.println(evaluering.begrunnelse());
 
         System.out.println(Ruleset.hovedForsørger().regelbeskrivelser());
+*/
 
     }
 }

@@ -5,9 +5,9 @@ package no.nav.aura.nare;
  */
 public enum Resultat {
 
-    INNVILGET(-1, "AVSLAG"),
+    JA(-1, "NEI"),
     MANUELL_BEHANDLING(0, "MANUELL_BEHANDLING"),
-    AVSLAG(1, "INNVILGET");
+    NEI(1, "JA");
 
     private final int weight;
     private String inverse;

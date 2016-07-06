@@ -21,17 +21,21 @@ public class SoknadGjelder extends AbstractSpecification<Soknad> {
 
     @Override
     public Evaluation evaluate(Soknad soknad) {
-
-
         if (soknad.getSoknadstype().equals(soknadstype)){
-            return Evaluation.yes("Søknad gjelder {0}", soknadstype);
+            return ja("Søknad gjelder {0}", soknadstype);
         }else{
-            return Evaluation.no("Søknad gjelder ikke {0}", soknadstype);
+            return nei("Søknad gjelder ikke {0}", soknadstype);
         }
     }
 
     @Override
-    public String getDescription() {
-        return "FK_VK 10.2/FK_VK 10.3 - gjelder søknad " + soknadstype;
+    public String identifikator() {
+        return "FK_VK 10.2/FK_VK 10.3";
     }
+
+    @Override
+    public String beskrivelse() {
+        return "gjelder søknad " + soknadstype;
+    }
+
 }

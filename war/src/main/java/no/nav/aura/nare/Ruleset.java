@@ -1,7 +1,6 @@
 package no.nav.aura.nare;
 
 import no.nav.aura.nare.input.Soknad;
-import no.nav.aura.nare.regelsettyper.Hovedforsorger;
 import no.nav.aura.nare.regelsettyper.Modrekvote;
 import no.nav.aura.nare.specifications.common.Evaluation;
 import no.nav.aura.nare.specifications.common.Specification;
@@ -19,10 +18,6 @@ public class Ruleset {
     private Map<Regelbeskrivelse, Specification> specifications = new HashMap<>();
 
     private Specification specification;
-
-    public static Ruleset hovedForsørger() {
-        return new Hovedforsorger();
-    }
 
     public static Ruleset modrekvote() {
         return new Modrekvote();
@@ -46,7 +41,7 @@ public class Ruleset {
     public String regelbeskrivelser() {
         return prettyifyMap(specifications.entrySet()
                 .stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().toString(), entry -> entry.getValue().getDescription())));
+                .collect(Collectors.toMap(entry -> entry.getKey().toString(), entry -> entry.getValue().beskrivelse())));
     }
 
     private String prettyifyMap(Map<String,String> map){

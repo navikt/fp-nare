@@ -27,16 +27,20 @@ public class HarRettTilForeldrePenger extends AbstractSpecification<Soknad> {
 
         Optional<Person> søker = soknad.getSøker(rolle);
         if (!søker.isPresent()){
-             return Evaluation.no("Ingen søker med rolle {0} ", rolle);
+             return nei("Ingen søker med rolle {0} ", rolle);
         }else if(!søker.get().harRettTilForeldrepenger()){
-            return Evaluation.no("Søker med rolle {0} har ikke rett til foreldrepenger", rolle);
+            return nei("Søker med rolle {0} har ikke rett til foreldrepenger", rolle);
         }else{
-            return Evaluation.yes("Søker med rolle {0} har rett til foreldrepenger", rolle);
+            return ja("Søker med rolle {0} har rett til foreldrepenger", rolle);
         }
     }
 
     @Override
-    public String getDescription() {
-        return "FK_VK 10.1 - har søker med rolle " + rolle +" rett til foreldrepenger";
+    public String identifikator() {
+        return  "FK_VK_10.1";    }
+
+    @Override
+    public String beskrivelse() {
+        return "Har søker med rolle " + rolle +" rett til foreldrepenger?" ;
     }
 }
