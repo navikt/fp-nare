@@ -1,6 +1,6 @@
 package no.nav.aura.nare.regelsettyper;
 
-import no.nav.aura.nare.Regelsett;
+import no.nav.aura.nare.Ruleset;
 
 import static no.nav.aura.nare.specifications.lek.ErStudent.erStudent;
 import static no.nav.aura.nare.specifications.HarArbeidetSisteMnd.harArbeidetSisteMnd;
@@ -9,7 +9,7 @@ import static no.nav.aura.nare.specifications.lek.KanHaOmsorg.kanHaOmsorg;
 import static no.nav.aura.nare.specifications.common.NotSpecification.ikke;
 
 
-public class Hovedforsorger extends Regelsett {
+public class Hovedforsorger extends Ruleset {
 
     public Hovedforsorger() {
         regel("1","Regel for oppfylling av arbeidsvilkår for primærforsorger", harArbeidetSisteMnd(12).eller(erStudent()));

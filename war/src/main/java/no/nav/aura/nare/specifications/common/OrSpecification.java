@@ -27,7 +27,9 @@ public class OrSpecification<T> extends AbstractSpecification<T> {
     public Evaluation evaluate(final T t) {
         Evaluation eval1 = spec1.evaluate(t);
         Evaluation eval2 = spec2.evaluate(t);
-        return new Evaluation(eval2.result().or(eval1.result()), getReason(eval1, eval2));
+        Evaluation evaluation = new Evaluation(eval2.result().or(eval1.result()), getReason(eval1, eval2));
+        evaluation.setChildren(eval1,eval2);
+        return evaluation;
     }
 
     private String getReason(Evaluation eval1, Evaluation eval2) {

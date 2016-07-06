@@ -30,11 +30,12 @@ public class NotSpecification<T> extends AbstractSpecification<T> {
     public Evaluation evaluate(final T t) {
         Evaluation eval1 = spec1.evaluate(t);
         Evaluation evaluation = new Evaluation(eval1.result().not(), getReason(eval1));
+        evaluation.setChildren(eval1);
         return evaluation;
     }
 
     private String getReason(Evaluation eval1) {
-        return eval1.result().not() + ":" + eval1.getReason();
+        return "(" + eval1.result().not() + ": " + eval1.getReason()+ ")";
     }
 
     @Override

@@ -18,14 +18,14 @@ public class Nare {
         Person mor = new Person("Guro", Rolle.MOR, "Prosjektleder", 600000, 24, "Oslo", false);
         Person barn = new Person("Theo", Rolle.BARN,"Barn", 0, 0, "Oslo", false);
 
-        Evaluering evaluering = Regelsett
+        Evaluering evaluering = Ruleset
                 .hovedForsørger()
                 .vurder(Soknad.fodselSøknad(mor).forBarn(barn).medSøker(far));
 
         System.out.println(evaluering.resultat());
         System.out.println(evaluering.begrunnelse());
 
-        System.out.println(Regelsett.hovedForsørger().regelbeskrivelser());
+        System.out.println(Ruleset.hovedForsørger().regelbeskrivelser());
 
     }
 }

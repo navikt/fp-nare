@@ -18,7 +18,7 @@ public class NareTest {
     public void mor(){
 
         mor.setUttaksplan(Uttaksplan.INNEN_3_AAR);
-        Evaluering evaluering = Regelsett.modrekvote().vurder(Soknad.adopsjonsSøknada(mor).medSøker(far));
+        Evaluering evaluering = Ruleset.modrekvote().vurder(Soknad.adopsjonsSøknada(mor).medSøker(far));
         System.out.println(evaluering.resultat());
         System.out.println(evaluering.begrunnelse());
     }
@@ -29,7 +29,7 @@ public class NareTest {
 
 
 
-        Evaluering evaluering = Regelsett.hovedForsørger().vurder(Soknad.fodselSøknad(far).forBarn(barn).medSøker(mor));
+        Evaluering evaluering = Ruleset.hovedForsørger().vurder(Soknad.fodselSøknad(far).forBarn(barn).medSøker(mor));
 
         System.out.println(evaluering.resultat());
         System.out.println(evaluering.begrunnelse());
@@ -39,7 +39,7 @@ public class NareTest {
 
     @Test
     public void regelsett(){
-        System.out.println(Regelsett.modrekvote().regelbeskrivelser());
+        System.out.println(Ruleset.modrekvote().regelbeskrivelser());
     }
 
 

@@ -4,12 +4,15 @@ import no.nav.aura.nare.Resultat;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class Evaluation implements Serializable {
 
     private Resultat result;
     private String reason;
+    private List<Evaluation> children;
 
     private Evaluation(Resultat result) {
         this.result = result;
@@ -23,9 +26,6 @@ public class Evaluation implements Serializable {
     public Resultat result() {
         return result;
     }
-
-
-
 
 
     public String getReason() {
@@ -48,4 +48,29 @@ public class Evaluation implements Serializable {
     public static final Evaluation manual(String reason, Object... stringformatArguments) {
         return new Evaluation(Resultat.MANUELL_BEHANDLING, reason, stringformatArguments);
     }
+
+    public void setChildren(Evaluation... evaluations) {
+        this.children = Arrays.asList(evaluations);
+    }
+
+    public List<Evaluation> getChildren() {
+        return children;
+    }
+
+
+    public void print() {
+        print("", true);
+    }
+
+    private void print(String prefix, boolean isTail) {
+        System.out.println(prefix + (isTail ? "└── " : "├── ") + result);
+        for (int i = 0; i < children.size() - 1; i++) {
+            children.get(i).print(prefix + (isTail ? "    " : "│   "), false);
+        }
+        if (children.size() > 0) {
+            children.get(children.size() - 1).print(prefix + (isTail ? "    " : "│   "), true);
+        }
+    }
+
+
 }
