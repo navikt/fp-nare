@@ -1,15 +1,14 @@
 package no.nav.aura.nare;
 
+
+import no.nav.aura.nare.evalulation.Evaluation;
 import no.nav.aura.nare.input.Soknad;
 import no.nav.aura.nare.regelsettyper.Modrekvote;
-import no.nav.aura.nare.specifications.common.Evaluation;
-import no.nav.aura.nare.specifications.common.Specification;
+import no.nav.aura.nare.specifications.Specification;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import static no.nav.aura.nare.Evaluering.resultat;
 
 
 public class Ruleset {
@@ -32,11 +31,11 @@ public class Ruleset {
         return new Modrekvote().getModreKvote().evaluate(soknad);
     }
 
-    public Evaluering vurder(Soknad soknad) {
+ /*   public Evaluering vurder(Soknad soknad) {
         return resultat(specifications.entrySet()
                 .stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().toString(), entry -> entry.getValue().evaluate(soknad))));
-    }
+    }*/
 
     public String regelbeskrivelser() {
         return prettyifyMap(specifications.entrySet()

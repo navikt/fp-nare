@@ -1,17 +1,17 @@
 package no.nav.aura.nare.regelsettyper;
 
 import no.nav.aura.nare.Ruleset;
-import no.nav.aura.nare.specifications.common.Specification;
+import no.nav.aura.nare.specifications.Specification;
 
 import static no.nav.aura.nare.input.Rolle.FAR;
 import static no.nav.aura.nare.input.Rolle.MOR;
 import static no.nav.aura.nare.input.Soknadstype.FODSEL;
 import static no.nav.aura.nare.input.Uttaksplan.INNEN_3_AAR;
 import static no.nav.aura.nare.input.Uttaksplan.SAMMENHENGENDE;
-import static no.nav.aura.nare.specifications.HarRettTilForeldrePenger.harRettTilForeldrePenger;
-import static no.nav.aura.nare.specifications.HarUttaksplanForModreKvote.harUttaksplanForModreKvote;
-import static no.nav.aura.nare.specifications.SoknadGjelder.søknadGjelder;
-import static no.nav.aura.nare.specifications.common.NotSpecification.ikke;
+import static no.nav.aura.nare.regler.HarRettTilForeldrePenger.harRettTilForeldrePenger;
+import static no.nav.aura.nare.regler.HarUttaksplanForModreKvote.harUttaksplanForModreKvote;
+import static no.nav.aura.nare.regler.SoknadGjelder.søknadGjelder;
+import static no.nav.aura.nare.specifications.NotSpecification.ikke;
 
 public class Modrekvote extends Ruleset {
 
@@ -34,9 +34,7 @@ public class Modrekvote extends Ruleset {
         Specification en = harRettTilForeldrePenger(MOR).og(harRettTilForeldrePenger(FAR));
         Specification to = søknadGjelder(FODSEL);
         Specification tre = harUttaksplanForModreKvote(SAMMENHENGENDE).eller(harUttaksplanForModreKvote(INNEN_3_AAR));
-        return en
-                .og(ikke(to))
-                .og(tre);
+        return en.og(to).og(tre);
 
     }
 

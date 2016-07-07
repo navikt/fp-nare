@@ -1,9 +1,10 @@
-package no.nav.aura.nare.specifications;
+package no.nav.aura.nare.regler;
 
 
+import no.nav.aura.nare.evalulation.Evaluation;
 import no.nav.aura.nare.input.Soknad;
-import no.nav.aura.nare.specifications.common.AbstractSpecification;
-import no.nav.aura.nare.specifications.common.Evaluation;
+import no.nav.aura.nare.specifications.AbstractSpecification;
+
 
 public class HarArbeidetSisteMnd extends AbstractSpecification<Soknad> {
 

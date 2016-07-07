@@ -1,6 +1,4 @@
-package no.nav.aura.nare;
-
-import no.nav.aura.nare.specifications.common.Evaluation;
+package no.nav.aura.nare.evaluering;
 
 import java.util.Map;
 import java.util.stream.Collectors;

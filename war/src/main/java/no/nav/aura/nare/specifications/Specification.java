@@ -1,5 +1,7 @@
-package no.nav.aura.nare.specifications.common;
+package no.nav.aura.nare.specifications;
 
+
+import no.nav.aura.nare.evalulation.Evaluation;
 
 /**
  * Specificaiton interface.

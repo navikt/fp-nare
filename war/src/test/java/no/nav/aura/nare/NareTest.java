@@ -1,10 +1,12 @@
 package no.nav.aura.nare;
 
+
+import no.nav.aura.nare.evaluering.Evaluering;
+import no.nav.aura.nare.evalulation.Evaluation;
 import no.nav.aura.nare.input.Soknad;
 import no.nav.aura.nare.input.Person;
 import no.nav.aura.nare.input.Rolle;
 import no.nav.aura.nare.input.Uttaksplan;
-import no.nav.aura.nare.specifications.common.Evaluation;
 import org.junit.Test;
 
 
@@ -18,10 +20,14 @@ public class NareTest {
     @Test
     public void test(){
         mor.setUttaksplan(Uttaksplan.INNEN_3_AAR);
-        Ruleset.modrekvote().evaluer(Soknad.adopsjonsSøknada(mor).medSøker(far)).print();
+        Evaluation evaluer = Ruleset.modrekvote().evaluer(Soknad.adopsjonsSøknada(mor).medSøker(far));
+        evaluer.result();
+        System.out.println(evaluer.reason());
+        evaluer.ruleDescription();
+
     }
 
-    @Test
+    /*@Test
     public void mor(){
 
         mor.setUttaksplan(Uttaksplan.INNEN_3_AAR);
@@ -29,7 +35,7 @@ public class NareTest {
         System.out.println(evaluering.resultat());
         System.out.println(evaluering.begrunnelse());
     }
-
+*/
 
 
     @Test
