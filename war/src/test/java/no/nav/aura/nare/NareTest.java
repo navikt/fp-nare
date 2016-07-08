@@ -1,13 +1,25 @@
 package no.nav.aura.nare;
 
 
-import no.nav.aura.nare.evaluering.Evaluering;
 import no.nav.aura.nare.evalulation.Evaluation;
-import no.nav.aura.nare.input.Soknad;
 import no.nav.aura.nare.input.Person;
 import no.nav.aura.nare.input.Rolle;
+import no.nav.aura.nare.input.Soknad;
 import no.nav.aura.nare.input.Uttaksplan;
 import org.junit.Test;
+
+import javax.ws.rs.core.UriBuilder;
+
+
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.FileAttribute;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 
 public class NareTest {
@@ -18,15 +30,19 @@ public class NareTest {
 
 
     @Test
-    public void test(){
+    public void test() throws IOException {
         mor.setUttaksplan(Uttaksplan.INNEN_3_AAR);
-        Evaluation evaluer = Ruleset.modrekvote().evaluer(Soknad.adopsjonsSøknada(mor).medSøker(far));
+        Evaluation evaluer = Ruleset.modrekvote().evaluer(Soknad.fodselSøknad(mor).medSøker(far));
         evaluer.result();
-        System.out.println(evaluer.reason());
+        System.out.println(evaluer.result() + evaluer.reason());
+
+        System.out.println(evaluer);
+        Files.createDirectories(Paths.get("..","output"));
+        Files.write(Paths.get("..","output","test.json"), evaluer.toString().getBytes());
+
         evaluer.ruleDescription();
 
     }
-
     /*@Test
     public void mor(){
 

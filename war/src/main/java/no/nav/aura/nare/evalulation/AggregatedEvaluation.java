@@ -1,14 +1,9 @@
 package no.nav.aura.nare.evalulation;
 
-import no.nav.aura.nare.evaluering.Reason;
+import com.google.gson.GsonBuilder;
 import no.nav.aura.nare.evaluering.Resultat;
 
-import java.util.List;
 
-
-/**
- * Created by j116592 on 07.07.2016.
- */
 public class AggregatedEvaluation implements Evaluation {
 
 
@@ -74,5 +69,10 @@ public class AggregatedEvaluation implements Evaluation {
             case NOT: return "Satisfied the opposite of " + eval1.ruleIdentification() + " (" + eval1.reason() + ")";
             default: throw new RuntimeException("Unknown operatpr");
         }
+    }
+
+    @Override
+    public String toString(){
+        return new GsonBuilder().setPrettyPrinting().create().toJson(this);
     }
 }

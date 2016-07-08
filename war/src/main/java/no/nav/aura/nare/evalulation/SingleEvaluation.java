@@ -1,5 +1,7 @@
 package no.nav.aura.nare.evalulation;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import no.nav.aura.nare.evaluering.Resultat;
 
 import java.text.MessageFormat;
@@ -37,5 +39,10 @@ public class SingleEvaluation implements Evaluation {
     @Override
     public String reason() {
         return reason;
+    }
+
+    @Override
+    public String toString(){
+        return new GsonBuilder().setPrettyPrinting().create().toJson(this);
     }
 }
