@@ -1,54 +1,75 @@
 {
-  "identification": 1509514333,
+  "type": "AGGREGATE",
+  "ruleIdentifcation": 116211441,
+  "ruleDescription": "966808741 OG 1908153060",
   "operator": "AND",
   "resultat": "JA",
-  "reason": "Satisfies both 1705929636 and 1221555852",
-  "eval1": {
-    "identification": 1705929636,
-    "operator": "AND",
-    "resultat": "JA",
-    "reason": "Satisfies both 1297685781 and FK_VK 10.2/FK_VK 10.3",
-    "eval1": {
-      "identification": 1297685781,
+  "reason": "Tilfredstiller både 966808741 og 1908153060",
+  "children": [
+    {
+      "type": "AGGREGATE",
+      "ruleIdentifcation": 966808741,
+      "ruleDescription": "2054881392 OG FK_VK 10.2/FK_VK 10.3",
       "operator": "AND",
       "resultat": "JA",
-      "reason": "Satisfies both FK_VK_10.1 and FK_VK_10.1",
-      "eval1": {
-        "ruleIdentifcation": "FK_VK_10.1",
-        "ruleDescription": "Har søker med rolle MOR rett til foreldrepenger?",
-        "resultat": "JA",
-        "reason": "Søker med rolle MOR har rett til foreldrepenger"
-      },
-      "eval2": {
-        "ruleIdentifcation": "FK_VK_10.1",
-        "ruleDescription": "Har søker med rolle FAR rett til foreldrepenger?",
-        "resultat": "JA",
-        "reason": "Søker med rolle FAR har rett til foreldrepenger"
-      }
+      "reason": "Tilfredstiller både 2054881392 og FK_VK 10.2/FK_VK 10.3",
+      "children": [
+        {
+          "type": "AGGREGATE",
+          "ruleIdentifcation": 2054881392,
+          "ruleDescription": "FK_VK_10.1 OG FK_VK_10.1",
+          "operator": "AND",
+          "resultat": "JA",
+          "reason": "Tilfredstiller både FK_VK_10.1 og FK_VK_10.1",
+          "children": [
+            {
+              "type": "SINGLE",
+              "ruleIdentifcation": "FK_VK_10.1",
+              "ruleDescription": "Har søker med rolle MOR rett til foreldrepenger?",
+              "resultat": "JA",
+              "reason": "Søker med rolle MOR har rett til foreldrepenger"
+            },
+            {
+              "type": "SINGLE",
+              "ruleIdentifcation": "FK_VK_10.1",
+              "ruleDescription": "Har søker med rolle FAR rett til foreldrepenger?",
+              "resultat": "JA",
+              "reason": "Søker med rolle FAR har rett til foreldrepenger"
+            }
+          ]
+        },
+        {
+          "type": "SINGLE",
+          "ruleIdentifcation": "FK_VK 10.2/FK_VK 10.3",
+          "ruleDescription": "gjelder søknad FODSEL",
+          "resultat": "JA",
+          "reason": "Søknad gjelder FODSEL"
+        }
+      ]
     },
-    "eval2": {
-      "ruleIdentifcation": "FK_VK 10.2/FK_VK 10.3",
-      "ruleDescription": "gjelder søknad FODSEL",
+    {
+      "type": "AGGREGATE",
+      "ruleIdentifcation": 1908153060,
+      "ruleDescription": "FK_VK 10.4/FK_VK 10.5 ELLER FK_VK 10.4/FK_VK 10.5",
+      "operator": "OR",
       "resultat": "JA",
-      "reason": "Søknad gjelder FODSEL"
+      "reason": "Tilfredstiller FK_VK 10.4/FK_VK 10.5",
+      "children": [
+        {
+          "type": "SINGLE",
+          "ruleIdentifcation": "FK_VK 10.4/FK_VK 10.5",
+          "ruleDescription": "Uttaksplan for mødrekvote sammenhengende etter fødsel",
+          "resultat": "NEI",
+          "reason": "Mødrekvote tas ikke sammenhengende etter fødsel"
+        },
+        {
+          "type": "SINGLE",
+          "ruleIdentifcation": "FK_VK 10.4/FK_VK 10.5",
+          "ruleDescription": "Uttaksplan for mødrekvote innen 3 år etter fødsel",
+          "resultat": "JA",
+          "reason": "Mødrekvote tas innen 3 år etter fødsel"
+        }
+      ]
     }
-  },
-  "eval2": {
-    "identification": 1221555852,
-    "operator": "OR",
-    "resultat": "JA",
-    "reason": "Satisfies at least FK_VK 10.4/FK_VK 10.5(NEI) or FK_VK 10.4/FK_VK 10.5 (JA)",
-    "eval1": {
-      "ruleIdentifcation": "FK_VK 10.4/FK_VK 10.5",
-      "ruleDescription": "Uttaksplan for mødrekvote sammenhengende etter fødsel",
-      "resultat": "NEI",
-      "reason": "Mødrekvote tas ikke sammenhengende etter fødsel"
-    },
-    "eval2": {
-      "ruleIdentifcation": "FK_VK 10.4/FK_VK 10.5",
-      "ruleDescription": "Uttaksplan for mødrekvote innen 3 år etter fødsel",
-      "resultat": "JA",
-      "reason": "Mødrekvote tas innen 3 år etter fødsel"
-    }
-  }
+  ]
 }
