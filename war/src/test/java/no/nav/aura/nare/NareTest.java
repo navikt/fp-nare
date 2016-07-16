@@ -1,7 +1,7 @@
 package no.nav.aura.nare;
 
 
-import no.nav.aura.nare.evalulation.Evaluation;
+import no.nav.aura.nare.evaluation.Evaluation;
 import no.nav.aura.nare.input.Person;
 import no.nav.aura.nare.input.Rolle;
 import no.nav.aura.nare.input.Soknad;
@@ -24,7 +24,7 @@ public class NareTest {
     @Test
     public void test() throws IOException {
         mor.setUttaksplan(Uttaksplan.INNEN_3_AAR);
-        Evaluation evaluer = Ruleset.modrekvote().evaluate(Soknad.adopsjonsSøknada(mor).medSøker(far));
+        Evaluation evaluer = Ruleset.modrekvote().evaluer(Soknad.adopsjonsSøknada(mor).medSøker(far));
         evaluer.result();
         System.out.println(evaluer.result() + evaluer.reason());
 

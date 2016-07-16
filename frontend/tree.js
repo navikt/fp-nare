@@ -79,7 +79,10 @@ function update(source) {
             .type( function(d) { return getType(d) }))
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide)
-        .style("fill", function(d){ return d.resultat=="JA" ? "#206A42": "#88242B"});
+        .style("fill", function(d){ return d.resultat=="JA" ? "#206A42": "#88242B"})
+        .style("stroke","#8c8c8c")
+        .style("stroke-width",2)
+        .style("opacity",1);
 
 
 

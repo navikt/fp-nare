@@ -3,7 +3,8 @@ package no.nav.aura.nare.regler;
 import no.nav.aura.nare.input.Soknad;
 import no.nav.aura.nare.input.Soknadstype;
 import no.nav.aura.nare.specifications.AbstractSpecification;
-import no.nav.aura.nare.evalulation.Evaluation;
+import no.nav.aura.nare.evaluation.Evaluation;
+import no.nav.aura.nare.specifications.Specification;
 
 public class SoknadGjelder extends AbstractSpecification<Soknad> {
 
@@ -37,5 +38,6 @@ public class SoknadGjelder extends AbstractSpecification<Soknad> {
     public String beskrivelse() {
         return "gjelder søknad " + soknadstype;
     }
+
 
 }

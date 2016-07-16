@@ -1,4 +1,4 @@
-package no.nav.aura.nare.evalulation;
+package no.nav.aura.nare.evaluation;
 
 import com.google.gson.GsonBuilder;
 

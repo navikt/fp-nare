@@ -1,4 +1,4 @@
-package no.nav.aura.nare.evalulation;
+package no.nav.aura.nare.evaluation;
 
 /**
  * Created by j116592 on 30.06.2016.

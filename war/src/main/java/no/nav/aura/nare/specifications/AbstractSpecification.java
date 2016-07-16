@@ -1,13 +1,16 @@
 package no.nav.aura.nare.specifications;
 
 
-import no.nav.aura.nare.evalulation.Evaluation;
-import no.nav.aura.nare.evalulation.Resultat;
-import no.nav.aura.nare.evalulation.SingleEvaluation;
+import com.google.gson.GsonBuilder;
+import no.nav.aura.nare.evaluation.Evaluation;
+import no.nav.aura.nare.evaluation.Resultat;
+import no.nav.aura.nare.evaluation.SingleEvaluation;
 
 public abstract class AbstractSpecification<T> implements Specification<T> {
 
-    protected AbstractSpecification(){}
+
+    protected AbstractSpecification(){
+    }
 
     public Specification<T> og(final Specification<T> specification) {
         return new AndSpecification<T>(this, specification);
@@ -29,4 +32,9 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
         return  new SingleEvaluation(Resultat.MANUELL_BEHANDLING, identifikator(), beskrivelse(), reason, stringformatArguments);
     }
 
+    @Override
+    public String toString() {
+        System.out.println(this.beskrivelse());
+        return new GsonBuilder().setPrettyPrinting().create().toJson(this);
+    }
 }

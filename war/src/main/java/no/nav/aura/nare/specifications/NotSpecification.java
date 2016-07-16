@@ -1,8 +1,8 @@
 package no.nav.aura.nare.specifications;
 
 
-import no.nav.aura.nare.evalulation.AggregatedEvaluation;
-import no.nav.aura.nare.evalulation.Evaluation;
+import no.nav.aura.nare.evaluation.AggregatedEvaluation;
+import no.nav.aura.nare.evaluation.Evaluation;
 
 /**
  * NOT decorator, used to create a new specifcation that is the inverse (IKKE) of the given spec.
@@ -32,6 +32,6 @@ public class NotSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public String beskrivelse() {
-        return "IKKE ";
+        return "(IKKE " + spec1.beskrivelse() + ")";
     }
 }

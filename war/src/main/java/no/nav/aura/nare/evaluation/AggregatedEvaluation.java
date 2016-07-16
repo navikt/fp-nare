@@ -1,4 +1,4 @@
-package no.nav.aura.nare.evalulation;
+package no.nav.aura.nare.evaluation;
 
 import com.google.gson.GsonBuilder;
 
@@ -37,11 +37,11 @@ public class AggregatedEvaluation implements Evaluation {
         return new AggregatedEvaluation(Operator.NOT, eval);
     }
 
-    private Evaluation eval1() {
+    private Evaluation first() {
         return children.get(0);
     }
 
-    private Evaluation eval2() {
+    private Evaluation second() {
         return children.get(1);
     }
 
@@ -50,11 +50,11 @@ public class AggregatedEvaluation implements Evaluation {
     public Resultat result() {
         switch (operator) {
             case AND:
-                return eval1().result().and(eval2().result());
+                return first().result().and(second().result());
             case OR:
-                return eval1().result().or(eval2().result());
+                return first().result().or(second().result());
             case NOT:
-                return eval1().result().not();
+                return first().result().not();
             default:
                 throw new RuntimeException("Unknown operatpr");
         }
@@ -64,11 +64,11 @@ public class AggregatedEvaluation implements Evaluation {
     public String ruleDescription() {
         switch (operator) {
             case AND:
-                return eval1().ruleIdentification() + " OG " + eval2().ruleIdentification();
+                return first().ruleIdentification() + " OG " + second().ruleIdentification();
             case OR:
-                return eval1().ruleIdentification() + " ELLER " + eval2().ruleIdentification();
+                return first().ruleIdentification() + " ELLER " + second().ruleIdentification();
             case NOT:
-                return "NOT " + eval1().ruleIdentification();
+                return "NOT " + first().ruleIdentification();
             default:
                 throw new RuntimeException("Unknown operator");
         }
@@ -79,27 +79,23 @@ public class AggregatedEvaluation implements Evaluation {
         return ruleIdentifcation.toString();
     }
 
-    private String ruleIdentificationIfYes(Evaluation eval) {
-        return eval.result().equals(Resultat.JA) ? eval.ruleIdentification() : "";
-    }
-
     private String ruleOrIdentification() {
-        String eval1 = ruleIdentificationIfYes(eval1());
-        String eval2 = ruleIdentificationIfYes(eval2());
-        if (eval1.isEmpty()) return eval2;
-        if (eval2.isEmpty()) return eval1;
-        return eval1 + " og " + eval2;
+        String firstID = first().result().equals(Resultat.JA) ? first().ruleIdentification() : "";
+        String secondID = second().result().equals(Resultat.JA) ? second().ruleIdentification() : "";
+        if (firstID.isEmpty()) return secondID;
+        if (secondID.isEmpty()) return firstID;
+        return firstID + " OG " + secondID;
     }
 
     @Override
     public String reason() {
         switch (operator) {
             case AND:
-                return "Tilfredstiller både " + eval1().ruleIdentification() + " og " + eval2().ruleIdentification();
+                return "Tilfredstiller både " + first().ruleIdentification() + " og " + second().ruleIdentification();
             case OR:
                 return "Tilfredstiller " + ruleOrIdentification();
             case NOT:
-                return "Tilfredstiller det motsatte av " + eval1().ruleIdentification();
+                return "Tilfredstiller det motsatte av " + first().ruleIdentification();
             default:
                 throw new RuntimeException("Unknown operator");
         }

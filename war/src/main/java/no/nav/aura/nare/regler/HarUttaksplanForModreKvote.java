@@ -6,7 +6,8 @@ import no.nav.aura.nare.input.Soknad;
 import no.nav.aura.nare.input.Soknadstype;
 import no.nav.aura.nare.input.Uttaksplan;
 import no.nav.aura.nare.specifications.AbstractSpecification;
-import no.nav.aura.nare.evalulation.Evaluation;
+import no.nav.aura.nare.evaluation.Evaluation;
+import no.nav.aura.nare.specifications.Specification;
 
 import java.util.Optional;
 

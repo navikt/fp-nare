@@ -1,7 +1,8 @@
 package no.nav.aura.nare.specifications;
 
 
-import no.nav.aura.nare.evalulation.Evaluation;
+import no.nav.aura.nare.Regelbeskrivelse;
+import no.nav.aura.nare.evaluation.Evaluation;
 
 /**
  * Specificaiton interface.
@@ -42,8 +43,4 @@ public interface Specification<T> {
     String identifikator();
 
     String beskrivelse();
-
-
-
-
 }

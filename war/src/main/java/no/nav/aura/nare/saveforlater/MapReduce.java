@@ -1,7 +1,7 @@
 package no.nav.aura.nare.saveforlater;
 
-import no.nav.aura.nare.evalulation.Evaluation;
-import no.nav.aura.nare.evalulation.Resultat;
+import no.nav.aura.nare.evaluation.Evaluation;
+import no.nav.aura.nare.evaluation.Resultat;
 
 import java.util.Map;
 import java.util.stream.Collectors;
