@@ -1,15 +1,12 @@
 package no.nav.aura.nare.evalulation;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import no.nav.aura.nare.evaluering.Resultat;
 
 import java.text.MessageFormat;
 
 
 public class SingleEvaluation implements Evaluation {
 
-    private final String type;
     private String ruleIdentifcation;
     private String ruleDescription;
     private Resultat resultat;
@@ -20,7 +17,6 @@ public class SingleEvaluation implements Evaluation {
         this.ruleDescription = ruleDescription;
         this.resultat = resultat;
         this.reason = MessageFormat.format(reason, stringformatArguments);
-        this.type = "SINGLE";
     }
 
     @Override

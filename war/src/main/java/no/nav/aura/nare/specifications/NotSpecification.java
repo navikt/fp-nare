@@ -1,7 +1,6 @@
 package no.nav.aura.nare.specifications;
 
 
-import no.nav.aura.nare.evaluering.Reason;
 import no.nav.aura.nare.evalulation.AggregatedEvaluation;
 import no.nav.aura.nare.evalulation.Evaluation;
 

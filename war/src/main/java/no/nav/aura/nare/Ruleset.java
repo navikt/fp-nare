@@ -1,8 +1,6 @@
 package no.nav.aura.nare;
 
 
-import no.nav.aura.nare.evalulation.Evaluation;
-import no.nav.aura.nare.input.Soknad;
 import no.nav.aura.nare.regelsettyper.Modrekvote;
 import no.nav.aura.nare.specifications.Specification;
 
@@ -13,29 +11,18 @@ import java.util.stream.Collectors;
 
 public class Ruleset {
 
-
     private Map<Regelbeskrivelse, Specification> specifications = new HashMap<>();
 
     private Specification specification;
 
-    public static Ruleset modrekvote() {
-        return new Modrekvote();
+    public static Specification modrekvote() {
+        return new Modrekvote().getModreKvote();
     }
 
     public void regel(String id, String regelbeskrivelse, Specification specification) {
         specifications.put(Regelbeskrivelse.id(id).beskrivelse(regelbeskrivelse), specification);
     }
 
-
-    public Evaluation evaluer(Soknad soknad){
-        return new Modrekvote().getModreKvote().evaluate(soknad);
-    }
-
- /*   public Evaluering vurder(Soknad soknad) {
-        return resultat(specifications.entrySet()
-                .stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().toString(), entry -> entry.getValue().evaluate(soknad))));
-    }*/
 
     public String regelbeskrivelser() {
         return prettyifyMap(specifications.entrySet()

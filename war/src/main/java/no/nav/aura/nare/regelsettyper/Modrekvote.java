@@ -5,11 +5,13 @@ import no.nav.aura.nare.specifications.Specification;
 
 import static no.nav.aura.nare.input.Rolle.FAR;
 import static no.nav.aura.nare.input.Rolle.MOR;
+import static no.nav.aura.nare.input.Soknadstype.ADOPSJON;
 import static no.nav.aura.nare.input.Soknadstype.FODSEL;
 import static no.nav.aura.nare.input.Uttaksplan.INNEN_3_AAR;
 import static no.nav.aura.nare.input.Uttaksplan.SAMMENHENGENDE;
 import static no.nav.aura.nare.regler.HarRettTilForeldrePenger.harRettTilForeldrePenger;
-import static no.nav.aura.nare.regler.HarUttaksplanForModreKvote.harUttaksplanForModreKvote;
+import static no.nav.aura.nare.regler.HarUttaksplanForModreKvote.harUttaksplanForModreKvoteAdopsjonl;
+import static no.nav.aura.nare.regler.HarUttaksplanForModreKvote.harUttaksplanForModreKvoteFodsel;
 import static no.nav.aura.nare.regler.SoknadGjelder.søknadGjelder;
 import static no.nav.aura.nare.specifications.NotSpecification.ikke;
 
@@ -24,7 +26,7 @@ public class Modrekvote extends Ruleset {
 
         Specification en = harRettTilForeldrePenger(MOR).og(harRettTilForeldrePenger(FAR));
         Specification to = søknadGjelder(FODSEL);
-        Specification tre = harUttaksplanForModreKvote(SAMMENHENGENDE).eller(harUttaksplanForModreKvote(INNEN_3_AAR));
+        Specification tre = harUttaksplanForModreKvoteFodsel(SAMMENHENGENDE).eller(harUttaksplanForModreKvoteFodsel(INNEN_3_AAR));
         regel("test", "beskrivelse",  en.og(ikke(to)).og(tre));
 
     }
@@ -33,8 +35,19 @@ public class Modrekvote extends Ruleset {
 
         Specification en = harRettTilForeldrePenger(MOR).og(harRettTilForeldrePenger(FAR));
         Specification to = søknadGjelder(FODSEL);
-        Specification tre = harUttaksplanForModreKvote(SAMMENHENGENDE).eller(harUttaksplanForModreKvote(INNEN_3_AAR));
-        return en.og(to).og(tre);
+        Specification tre = harUttaksplanForModreKvoteFodsel(SAMMENHENGENDE).eller(harUttaksplanForModreKvoteFodsel(INNEN_3_AAR));
+        Specification fire = søknadGjelder(ADOPSJON);
+        Specification fem = harUttaksplanForModreKvoteAdopsjonl(INNEN_3_AAR);
+        return
+                (en
+                .og(to)
+                .og(tre)
+                ).eller
+                        (en
+                        .og(ikke(to))
+                        .og(fire)
+                        .og(fem)
+                );
 
     }
 

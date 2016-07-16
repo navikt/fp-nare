@@ -1,9 +1,8 @@
 package no.nav.aura.nare.specifications;
 
 
-import no.nav.aura.nare.evaluering.Reason;
-import no.nav.aura.nare.evaluering.Resultat;
 import no.nav.aura.nare.evalulation.Evaluation;
+import no.nav.aura.nare.evalulation.Resultat;
 import no.nav.aura.nare.evalulation.SingleEvaluation;
 
 public abstract class AbstractSpecification<T> implements Specification<T> {

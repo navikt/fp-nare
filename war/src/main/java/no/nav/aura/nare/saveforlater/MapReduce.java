@@ -1,19 +1,15 @@
-package no.nav.aura.nare.evaluering;
+package no.nav.aura.nare.saveforlater;
+
+import no.nav.aura.nare.evalulation.Evaluation;
+import no.nav.aura.nare.evalulation.Resultat;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Evaluering {
+public class MapReduce {
 
     private Map<String, Evaluation> vurderinger;
 
-    private Evaluering(Map<String, Evaluation> vurderinger){
-        this.vurderinger = vurderinger;
-    }
-
-    public static Evaluering resultat(Map<String, Evaluation> vurderinger){
-        return new Evaluering(vurderinger);
-    }
 
     public Resultat resultat (){
         return vurderinger.values().stream()
