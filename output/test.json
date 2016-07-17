@@ -1,27 +1,27 @@
 {
-  "ruleIdentifcation": 240650537,
-  "ruleDescription": "312116338 ELLER 659748578",
-  "operator": "OR",
+  "ruleIdentifcation": "FK_VK.10",
+  "ruleDescription": "Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?",
+  "operator": "AND",
   "resultat": "JA",
-  "reason": "Tilfredstiller 659748578",
+  "reason": "Tilfredstiller FK_VK.10.B",
   "children": [
     {
-      "ruleIdentifcation": 312116338,
-      "ruleDescription": "288665596 OG 13648335",
+      "ruleIdentifcation": "FK_VK.10.A",
+      "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG Gjelder søknad fødsel?) OG Har mor uttaksplan sammenhengende eller tre år etter fødsel?)",
       "operator": "AND",
       "resultat": "NEI",
-      "reason": "Tilfredstiller både 288665596 og 13648335",
+      "reason": "Tilfredstiller ikke både 401424608 og FK_VK_10.4",
       "children": [
         {
-          "ruleIdentifcation": 288665596,
-          "ruleDescription": "1456208737 OG FK_VK 10.2/FK_VK 10.3",
+          "ruleIdentifcation": "401424608",
+          "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG Gjelder søknad fødsel?)",
           "operator": "AND",
           "resultat": "NEI",
-          "reason": "Tilfredstiller både 1456208737 og FK_VK 10.2/FK_VK 10.3",
+          "reason": "Tilfredstiller ikke både FK_VK_10.1 og FK_VK 10.2",
           "children": [
             {
-              "ruleIdentifcation": 1456208737,
-              "ruleDescription": "FK_VK_10.1 OG FK_VK_10.1",
+              "ruleIdentifcation": "FK_VK_10.1",
+              "ruleDescription": "Har begge foreldre rett til foreldrepenger?",
               "operator": "AND",
               "resultat": "JA",
               "reason": "Tilfredstiller både FK_VK_10.1 og FK_VK_10.1",
@@ -41,17 +41,17 @@
               ]
             },
             {
-              "ruleIdentifcation": "FK_VK 10.2/FK_VK 10.3",
-              "ruleDescription": "gjelder søknad FODSEL",
+              "ruleIdentifcation": "FK_VK 10.2",
+              "ruleDescription": "Gjelder søknad fødsel?",
               "resultat": "NEI",
               "reason": "Søknad gjelder ikke FODSEL"
             }
           ]
         },
         {
-          "ruleIdentifcation": 13648335,
-          "ruleDescription": "FK_VK 10.4/FK_VK 10.5 ELLER FK_VK 10.4/FK_VK 10.5",
-          "operator": "OR",
+          "ruleIdentifcation": "FK_VK_10.4",
+          "ruleDescription": "Har mor uttaksplan sammenhengende eller tre år etter fødsel?",
+          "operator": "AND",
           "resultat": "JA",
           "reason": "Tilfredstiller FK_VK 10.4/FK_VK 10.5",
           "children": [
@@ -72,29 +72,29 @@
       ]
     },
     {
-      "ruleIdentifcation": 659748578,
-      "ruleDescription": "1802598046 OG FK_VK 10.6",
+      "ruleIdentifcation": "FK_VK.10.B",
+      "ruleDescription": "(((Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel) OG Gjelder søknad adopsjon?) OG Uttaksplan for mødrekvote innen 3 år etter)",
       "operator": "AND",
       "resultat": "JA",
-      "reason": "Tilfredstiller både 1802598046 og FK_VK 10.6",
+      "reason": "Tilfredstiller både 796684896 og FK_VK 10.6",
       "children": [
         {
-          "ruleIdentifcation": 1802598046,
-          "ruleDescription": "1809787067 OG FK_VK 10.2/FK_VK 10.3",
+          "ruleIdentifcation": "796684896",
+          "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel) OG Gjelder søknad adopsjon?)",
           "operator": "AND",
           "resultat": "JA",
-          "reason": "Tilfredstiller både 1809787067 og FK_VK 10.2/FK_VK 10.3",
+          "reason": "Tilfredstiller både 757108857 og FK_VK 10.3",
           "children": [
             {
-              "ruleIdentifcation": 1809787067,
-              "ruleDescription": "453211571 OG 796684896",
+              "ruleIdentifcation": "757108857",
+              "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel)",
               "operator": "AND",
               "resultat": "JA",
-              "reason": "Tilfredstiller både 453211571 og 796684896",
+              "reason": "Tilfredstiller både FK_VK_10.1 og 1809787067",
               "children": [
                 {
-                  "ruleIdentifcation": 453211571,
-                  "ruleDescription": "FK_VK_10.1 OG FK_VK_10.1",
+                  "ruleIdentifcation": "FK_VK_10.1",
+                  "ruleDescription": "Har begge foreldre rett til foreldrepenger?",
                   "operator": "AND",
                   "resultat": "JA",
                   "reason": "Tilfredstiller både FK_VK_10.1 og FK_VK_10.1",
@@ -114,15 +114,15 @@
                   ]
                 },
                 {
-                  "ruleIdentifcation": 796684896,
-                  "ruleDescription": "NOT FK_VK 10.2/FK_VK 10.3",
+                  "ruleIdentifcation": "1809787067",
+                  "ruleDescription": "søknad gjelder ikke fødsel",
                   "operator": "NOT",
                   "resultat": "JA",
-                  "reason": "Tilfredstiller det motsatte av FK_VK 10.2/FK_VK 10.3",
+                  "reason": "Tilfredstiller det motsatte av FK_VK 10.2",
                   "children": [
                     {
-                      "ruleIdentifcation": "FK_VK 10.2/FK_VK 10.3",
-                      "ruleDescription": "gjelder søknad FODSEL",
+                      "ruleIdentifcation": "FK_VK 10.2",
+                      "ruleDescription": "Gjelder søknad fødsel?",
                       "resultat": "NEI",
                       "reason": "Søknad gjelder ikke FODSEL"
                     }
@@ -131,8 +131,8 @@
               ]
             },
             {
-              "ruleIdentifcation": "FK_VK 10.2/FK_VK 10.3",
-              "ruleDescription": "gjelder søknad ADOPSJON",
+              "ruleIdentifcation": "FK_VK 10.3",
+              "ruleDescription": "Gjelder søknad adopsjon?",
               "resultat": "JA",
               "reason": "Søknad gjelder ADOPSJON"
             }

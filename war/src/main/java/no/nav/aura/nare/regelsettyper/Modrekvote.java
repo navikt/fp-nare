@@ -31,26 +31,15 @@ public class Modrekvote extends Ruleset {
 
     public Specification getModreKvote(){
 
-        Specification en = harRettTilForeldrePenger(MOR)
-                .og(harRettTilForeldrePenger(FAR))
-                .medBeskrivelse("Har begge foreldre rett til foreldrepenger?");
-        Specification to = søknadGjelder(FODSEL);
-        Specification tre = harUttaksplanForModreKvoteFodsel(SAMMENHENGENDE)
-                .eller(harUttaksplanForModreKvoteFodsel(INNEN_3_AAR))
-                .medBeskrivelse("Har mor uttaksplan sammenehengende eller tre år innen fødsel?");
-        Specification fire = søknadGjelder(ADOPSJON);
-        Specification fem = harUttaksplanForModreKvoteAdopsjonl(INNEN_3_AAR);
+        Specification en = regel("FK_VK_10.1", "Har begge foreldre rett til foreldrepenger?", harRettTilForeldrePenger(MOR).og(harRettTilForeldrePenger(FAR)));
+        Specification to = regel("FK_VK 10.2", "Gjelder søknad fødsel?", søknadGjelder(FODSEL));
+        Specification tre = regel("FK_VK 10.3", "Gjelder søknad adopsjon?", søknadGjelder(ADOPSJON));
+        Specification fire = regel("FK_VK_10.4", "Har mor uttaksplan sammenhengende eller tre år etter fødsel?", harUttaksplanForModreKvoteFodsel(SAMMENHENGENDE).eller(harUttaksplanForModreKvoteFodsel(INNEN_3_AAR)));
+        Specification fem = regel("FK_VK_10.5", "Har mor uttaksplan sammenhengende eller tre år etter adopsjon?",  harUttaksplanForModreKvoteAdopsjonl(INNEN_3_AAR));
 
-        Specification førsteLedd =
-                en
-                .og(to)
-                .og(tre);
-        Specification andreledd =
-                en
-                .og(ikke(to).medBeskrivelse("søknad gjelder ikke fødsel"))
-                .og(fire)
-                .og(fem);
-        return førsteLedd.eller(andreledd).medBeskrivelse("Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?");
+        Specification førsteLedd = regel("FK_VK.10.A", en.og(to).og(fire));
+        Specification andreledd = regel ("FK_VK.10.B", en.og(ikke(to).medBeskrivelse("søknad gjelder ikke fødsel")).og(tre).og(fem));
+        return regel("FK_VK.10","Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?", førsteLedd.eller(andreledd));
 
     }
 

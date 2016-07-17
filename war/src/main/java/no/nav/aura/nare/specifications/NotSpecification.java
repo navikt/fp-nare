@@ -4,6 +4,7 @@ package no.nav.aura.nare.specifications;
 import no.nav.aura.nare.RuleDescription;
 import no.nav.aura.nare.evaluation.AggregatedEvaluation;
 import no.nav.aura.nare.evaluation.Evaluation;
+import no.nav.aura.nare.evaluation.NotEvaluation;
 import no.nav.aura.nare.evaluation.Operator;
 
 /**
@@ -23,14 +24,9 @@ public class NotSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public Evaluation evaluate(final T t) {
-        return AggregatedEvaluation.notEvaluation(spec1.evaluate(t));
+        return new NotEvaluation(identifikator(), beskrivelse(), spec1.evaluate(t));
     }
 
-
-    @Override
-    public String identifikator() {
-        return "IKKE";
-    }
 
     @Override
     public String beskrivelse() {

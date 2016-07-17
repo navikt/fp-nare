@@ -29,15 +29,4 @@ public class SoknadGjelder extends AbstractSpecification<Soknad> {
         }
     }
 
-    @Override
-    public String identifikator() {
-        return "FK_VK 10.2/FK_VK 10.3";
-    }
-
-    @Override
-    public String beskrivelse() {
-        return "gjelder søknad " + soknadstype;
-    }
-
-
 }

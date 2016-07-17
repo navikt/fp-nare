@@ -48,4 +48,6 @@ public interface Specification<T> {
     RuleDescription ruleDescription();
 
     Specification medBeskrivelse(String beskrivelse);
+
+    Specification medID(String id);
 }

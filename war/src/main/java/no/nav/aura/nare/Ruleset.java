@@ -16,6 +16,14 @@ public class Ruleset {
     public static Ruleset modrekvote() {return new Modrekvote();
     }
 
+    public Specification regel(String id, String beskrivelse, Specification specification){
+        return specification.medBeskrivelse(beskrivelse).medID(id);
+    }
+
+    public Specification regel(String id, Specification specification){
+        return specification.medID(id);
+    }
+
     //public void regel(String id, String regelbeskrivelse, Specification specification) {
     //    specifications.put(Regelbeskrivelse.id(id).beskrivelse(regelbeskrivelse), specification);
     //}

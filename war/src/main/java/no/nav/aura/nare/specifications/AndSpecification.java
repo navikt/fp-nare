@@ -2,9 +2,7 @@ package no.nav.aura.nare.specifications;
 
 
 import no.nav.aura.nare.RuleDescription;
-import no.nav.aura.nare.evaluation.AggregatedEvaluation;
-import no.nav.aura.nare.evaluation.Evaluation;
-import no.nav.aura.nare.evaluation.Operator;
+import no.nav.aura.nare.evaluation.*;
 
 /**
  * AND specification, used to create a new specifcation that is the AND of two other specifications.
@@ -21,22 +19,16 @@ public class AndSpecification<T> extends AbstractSpecification<T> {
     }
 
     public Evaluation evaluate(final T t) {
-        return AggregatedEvaluation.andEvaluation(spec1.evaluate(t), spec2.evaluate(t));
-    }
-
-    @Override
-    public String identifikator() {
-        return "OG";
+        return new AndEvaluation(identifikator(), beskrivelse(), spec1.evaluate(t), spec2.evaluate(t));
     }
 
     @Override
     public String beskrivelse() {
         if (beskrivelse.isEmpty()){
-            return "(" + spec1.beskrivelse() + " " + identifikator() + " " +  spec2.beskrivelse() + ")";
+            return "(" + spec1.beskrivelse() + " OG " +  spec2.beskrivelse() + ")";
         }else{
             return beskrivelse;
         }
-
     }
 
     @Override

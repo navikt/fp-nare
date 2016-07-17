@@ -9,6 +9,7 @@ import no.nav.aura.nare.evaluation.SingleEvaluation;
 
 public abstract class AbstractSpecification<T> implements Specification<T> {
     protected String beskrivelse="";
+    protected String id="";
 
     protected AbstractSpecification(){
     }
@@ -40,8 +41,28 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
     }
 
     @Override
+    public String identifikator() {
+        if (id.isEmpty()) {
+            return Integer.toString(this.hashCode());
+        } else {
+            return id;
+        }
+    }
+
+    @Override
+    public String beskrivelse(){
+        return beskrivelse;
+    }
+
+    @Override
     public Specification medBeskrivelse(String beskrivelse) {
         this.beskrivelse = beskrivelse;
+        return this;
+    }
+
+    @Override
+    public Specification medID(String id) {
+        this.id = id;
         return this;
     }
 
