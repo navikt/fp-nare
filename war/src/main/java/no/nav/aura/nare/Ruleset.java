@@ -24,7 +24,7 @@ public class Ruleset {
         return specification.evaluate(soknad);
     }
     public String regelbeskrivelser() {
-        return specification.toString();
+        return specification.ruleDescription().toString();
     }
 
 }

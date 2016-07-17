@@ -2,6 +2,7 @@ package no.nav.aura.nare.specifications;
 
 
 import no.nav.aura.nare.Regelbeskrivelse;
+import no.nav.aura.nare.RuleDescription;
 import no.nav.aura.nare.evaluation.Evaluation;
 
 /**
@@ -43,4 +44,8 @@ public interface Specification<T> {
     String identifikator();
 
     String beskrivelse();
+
+    RuleDescription ruleDescription();
+
+    Specification medBeskrivelse(String beskrivelse);
 }

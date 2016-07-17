@@ -1,26 +1,26 @@
 {
-  "ruleIdentifcation": 804611486,
-  "ruleDescription": "1129670968 ELLER 985655350",
+  "ruleIdentifcation": 240650537,
+  "ruleDescription": "312116338 ELLER 659748578",
   "operator": "OR",
   "resultat": "JA",
-  "reason": "Tilfredstiller 985655350",
+  "reason": "Tilfredstiller 659748578",
   "children": [
     {
-      "ruleIdentifcation": 1129670968,
-      "ruleDescription": "662441761 OG 1618212626",
+      "ruleIdentifcation": 312116338,
+      "ruleDescription": "288665596 OG 13648335",
       "operator": "AND",
       "resultat": "NEI",
-      "reason": "Tilfredstiller både 662441761 og 1618212626",
+      "reason": "Tilfredstiller både 288665596 og 13648335",
       "children": [
         {
-          "ruleIdentifcation": 662441761,
-          "ruleDescription": "1254526270 OG FK_VK 10.2/FK_VK 10.3",
+          "ruleIdentifcation": 288665596,
+          "ruleDescription": "1456208737 OG FK_VK 10.2/FK_VK 10.3",
           "operator": "AND",
           "resultat": "NEI",
-          "reason": "Tilfredstiller både 1254526270 og FK_VK 10.2/FK_VK 10.3",
+          "reason": "Tilfredstiller både 1456208737 og FK_VK 10.2/FK_VK 10.3",
           "children": [
             {
-              "ruleIdentifcation": 1254526270,
+              "ruleIdentifcation": 1456208737,
               "ruleDescription": "FK_VK_10.1 OG FK_VK_10.1",
               "operator": "AND",
               "resultat": "JA",
@@ -49,7 +49,7 @@
           ]
         },
         {
-          "ruleIdentifcation": 1618212626,
+          "ruleIdentifcation": 13648335,
           "ruleDescription": "FK_VK 10.4/FK_VK 10.5 ELLER FK_VK 10.4/FK_VK 10.5",
           "operator": "OR",
           "resultat": "JA",
@@ -72,28 +72,28 @@
       ]
     },
     {
-      "ruleIdentifcation": 985655350,
-      "ruleDescription": "1971489295 OG FK_VK 10.6",
+      "ruleIdentifcation": 659748578,
+      "ruleDescription": "1802598046 OG FK_VK 10.6",
       "operator": "AND",
       "resultat": "JA",
-      "reason": "Tilfredstiller både 1971489295 og FK_VK 10.6",
+      "reason": "Tilfredstiller både 1802598046 og FK_VK 10.6",
       "children": [
         {
-          "ruleIdentifcation": 1971489295,
-          "ruleDescription": "1837543557 OG FK_VK 10.2/FK_VK 10.3",
+          "ruleIdentifcation": 1802598046,
+          "ruleDescription": "1809787067 OG FK_VK 10.2/FK_VK 10.3",
           "operator": "AND",
           "resultat": "JA",
-          "reason": "Tilfredstiller både 1837543557 og FK_VK 10.2/FK_VK 10.3",
+          "reason": "Tilfredstiller både 1809787067 og FK_VK 10.2/FK_VK 10.3",
           "children": [
             {
-              "ruleIdentifcation": 1837543557,
-              "ruleDescription": "1023714065 OG 2051450519",
+              "ruleIdentifcation": 1809787067,
+              "ruleDescription": "453211571 OG 796684896",
               "operator": "AND",
               "resultat": "JA",
-              "reason": "Tilfredstiller både 1023714065 og 2051450519",
+              "reason": "Tilfredstiller både 453211571 og 796684896",
               "children": [
                 {
-                  "ruleIdentifcation": 1023714065,
+                  "ruleIdentifcation": 453211571,
                   "ruleDescription": "FK_VK_10.1 OG FK_VK_10.1",
                   "operator": "AND",
                   "resultat": "JA",
@@ -114,7 +114,7 @@
                   ]
                 },
                 {
-                  "ruleIdentifcation": 2051450519,
+                  "ruleIdentifcation": 796684896,
                   "ruleDescription": "NOT FK_VK 10.2/FK_VK 10.3",
                   "operator": "NOT",
                   "resultat": "JA",

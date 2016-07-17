@@ -31,15 +31,26 @@ public class Modrekvote extends Ruleset {
 
     public Specification getModreKvote(){
 
-        Specification en = harRettTilForeldrePenger(MOR).og(harRettTilForeldrePenger(FAR));
+        Specification en = harRettTilForeldrePenger(MOR)
+                .og(harRettTilForeldrePenger(FAR))
+                .medBeskrivelse("Har begge foreldre rett til foreldrepenger?");
         Specification to = søknadGjelder(FODSEL);
-        Specification tre = harUttaksplanForModreKvoteFodsel(SAMMENHENGENDE).eller(harUttaksplanForModreKvoteFodsel(INNEN_3_AAR));
+        Specification tre = harUttaksplanForModreKvoteFodsel(SAMMENHENGENDE)
+                .eller(harUttaksplanForModreKvoteFodsel(INNEN_3_AAR))
+                .medBeskrivelse("Har mor uttaksplan sammenehengende eller tre år innen fødsel?");
         Specification fire = søknadGjelder(ADOPSJON);
         Specification fem = harUttaksplanForModreKvoteAdopsjonl(INNEN_3_AAR);
 
-        Specification førsteLedd = (en.og(to).og(tre));
-        Specification andreledd = en.og(ikke(to)).og(fire).og(fem);
-        return førsteLedd.eller(andreledd);
+        Specification førsteLedd =
+                en
+                .og(to)
+                .og(tre);
+        Specification andreledd =
+                en
+                .og(ikke(to).medBeskrivelse("søknad gjelder ikke fødsel"))
+                .og(fire)
+                .og(fem);
+        return førsteLedd.eller(andreledd).medBeskrivelse("Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?");
 
     }
 

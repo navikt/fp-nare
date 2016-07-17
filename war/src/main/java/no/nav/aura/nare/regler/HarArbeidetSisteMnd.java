@@ -1,6 +1,7 @@
 package no.nav.aura.nare.regler;
 
 
+import no.nav.aura.nare.RuleDescription;
 import no.nav.aura.nare.evaluation.Evaluation;
 import no.nav.aura.nare.input.Soknad;
 import no.nav.aura.nare.specifications.AbstractSpecification;
@@ -37,4 +38,5 @@ public class HarArbeidetSisteMnd extends AbstractSpecification<Soknad> {
     public String beskrivelse() {
         return "Har dokumentert sammenhengende arbeid siste " + month + " mnd";
     }
+
 }
