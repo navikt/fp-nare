@@ -1,4 +1,4 @@
-package no.nav.aura.nare;
+package no.nav.aura.nare.saveforlater;
 
 
 import java.util.Objects;

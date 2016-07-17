@@ -22,7 +22,7 @@ public class NareTest {
 
 
     @Test
-    public void test() throws IOException {
+    public void test() throws Exception {
         mor.setUttaksplan(Uttaksplan.INNEN_3_AAR);
         Evaluation evaluer = Ruleset.modrekvote().evaluer(Soknad.adopsjonsSøknada(mor).medSøker(far));
         evaluer.result();
@@ -38,8 +38,10 @@ public class NareTest {
 
 
     @Test
-    public void regelsett(){
-        System.out.println(new Modrekvote().regelbeskrivelser());
+    public void regelsett() throws Exception{
+
+        Files.createDirectories(Paths.get("..","output"));
+        Files.write(Paths.get("..","output","modrekvote.json"), new Modrekvote().regelbeskrivelser().toString().getBytes());
     }
 
 

@@ -1,7 +1,7 @@
 {
   "ruleIdentifcation": "FK_VK.10",
   "ruleDescription": "Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?",
-  "operator": "AND",
+  "operator": "OR",
   "resultat": "JA",
   "reason": "Tilfredstiller FK_VK.10.B",
   "children": [
@@ -10,10 +10,10 @@
       "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG Gjelder søknad fødsel?) OG Har mor uttaksplan sammenhengende eller tre år etter fødsel?)",
       "operator": "AND",
       "resultat": "NEI",
-      "reason": "Tilfredstiller ikke både 401424608 og FK_VK_10.4",
+      "reason": "Tilfredstiller ikke både (FK_VK_10.1 OG FK_VK 10.2) og FK_VK_10.4",
       "children": [
         {
-          "ruleIdentifcation": "401424608",
+          "ruleIdentifcation": "(FK_VK_10.1 OG FK_VK 10.2)",
           "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG Gjelder søknad fødsel?)",
           "operator": "AND",
           "resultat": "NEI",
@@ -51,19 +51,19 @@
         {
           "ruleIdentifcation": "FK_VK_10.4",
           "ruleDescription": "Har mor uttaksplan sammenhengende eller tre år etter fødsel?",
-          "operator": "AND",
+          "operator": "OR",
           "resultat": "JA",
           "reason": "Tilfredstiller FK_VK 10.4/FK_VK 10.5",
           "children": [
             {
               "ruleIdentifcation": "FK_VK 10.4/FK_VK 10.5",
-              "ruleDescription": "Uttaksplan for mødrekvote sammenhengende etter",
+              "ruleDescription": "",
               "resultat": "NEI",
               "reason": "Mødrekvote tas ikke sammenhengende etter FODSEL"
             },
             {
               "ruleIdentifcation": "FK_VK 10.4/FK_VK 10.5",
-              "ruleDescription": "Uttaksplan for mødrekvote innen 3 år etter",
+              "ruleDescription": "",
               "resultat": "JA",
               "reason": "Mødrekvote tas innen 3 år etter"
             }
@@ -73,24 +73,24 @@
     },
     {
       "ruleIdentifcation": "FK_VK.10.B",
-      "ruleDescription": "(((Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel) OG Gjelder søknad adopsjon?) OG Uttaksplan for mødrekvote innen 3 år etter)",
+      "ruleDescription": "(((Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel) OG Gjelder søknad adopsjon?) OG Har mor uttaksplan sammenhengende eller tre år etter adopsjon?)",
       "operator": "AND",
       "resultat": "JA",
-      "reason": "Tilfredstiller både 796684896 og FK_VK 10.6",
+      "reason": "Tilfredstiller både ((FK_VK_10.1 OG (IKKE FK_VK 10.2)) OG FK_VK 10.3) og FK_VK 10.6",
       "children": [
         {
-          "ruleIdentifcation": "796684896",
+          "ruleIdentifcation": "((FK_VK_10.1 OG (IKKE FK_VK 10.2)) OG FK_VK 10.3)",
           "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel) OG Gjelder søknad adopsjon?)",
           "operator": "AND",
           "resultat": "JA",
-          "reason": "Tilfredstiller både 757108857 og FK_VK 10.3",
+          "reason": "Tilfredstiller både (FK_VK_10.1 OG (IKKE FK_VK 10.2)) og FK_VK 10.3",
           "children": [
             {
-              "ruleIdentifcation": "757108857",
+              "ruleIdentifcation": "(FK_VK_10.1 OG (IKKE FK_VK 10.2))",
               "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel)",
               "operator": "AND",
               "resultat": "JA",
-              "reason": "Tilfredstiller både FK_VK_10.1 og 1809787067",
+              "reason": "Tilfredstiller både FK_VK_10.1 og (IKKE FK_VK 10.2)",
               "children": [
                 {
                   "ruleIdentifcation": "FK_VK_10.1",
@@ -114,7 +114,7 @@
                   ]
                 },
                 {
-                  "ruleIdentifcation": "1809787067",
+                  "ruleIdentifcation": "(IKKE FK_VK 10.2)",
                   "ruleDescription": "søknad gjelder ikke fødsel",
                   "operator": "NOT",
                   "resultat": "JA",
@@ -140,7 +140,7 @@
         },
         {
           "ruleIdentifcation": "FK_VK 10.6",
-          "ruleDescription": "Uttaksplan for mødrekvote innen 3 år etter",
+          "ruleDescription": "Har mor uttaksplan sammenhengende eller tre år etter adopsjon?",
           "resultat": "JA",
           "reason": "Mødrekvote tas innen 3 år etter"
         }

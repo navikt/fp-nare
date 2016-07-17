@@ -16,6 +16,7 @@ var diagonal = d3.svg.diagonal()
     });
 
 var svg = d3.select("body").append("svg")
+    .style("background", "#212121")
     .attr("width", width + margin.right + margin.left)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -30,9 +31,9 @@ var tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
     .html(function(d) {
-        return "<div> ID: <span style='color:lightblue;float: right'>"+ d.ruleIdentifcation+"</span></div> " +
-            "<div> Beskrivelse: <span style='color:lightblue';float: right'>"+ d.ruleDescription+"</span></div> " +
-            "<div> Evaluering: <span style='color:lightblue;float: right''>"+ d.reason+"</span></div>";
+        return "<div> ID: <span style='color:lightblue'>"+ d.ruleIdentifcation+"</span></div> " +
+            "<div> Beskrivelse: <div style='color:lightblue'>"+ d.ruleDescription+"</span></div> " +
+            "<div> Evaluering: <div style='color:lightblue'>"+ d.reason+"</div></div>";
     })
 
 svg.call(tip);
@@ -80,8 +81,8 @@ function update(source) {
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide)
         .style("fill", function(d){ return d.resultat=="JA" ? "#206A42": "#88242B"})
-        .style("stroke","#8c8c8c")
-        .style("stroke-width",2)
+        .style("stroke","#BEBEBE")
+        .style("stroke-width",3)
         .style("opacity",1);
 
 
@@ -97,7 +98,7 @@ function update(source) {
         .text(function (d) {
             return d.children ? "" : d.reason;
         })
-        .style("fill-opacity", 1);
+        .style("fill", "#BEBEBE");
 
     nodeEnter.append("text")
         .attr("dy", "0.35em")
@@ -107,7 +108,7 @@ function update(source) {
         })
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide)
-        .style("fill", "#FFF");
+        .style("fill", "#BEBEBE");
 
     // Declare the links…
     var link = svg.selectAll("path.link")

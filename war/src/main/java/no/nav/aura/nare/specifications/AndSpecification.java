@@ -23,6 +23,15 @@ public class AndSpecification<T> extends AbstractSpecification<T> {
     }
 
     @Override
+    public String identifikator() {
+        if (id.isEmpty()) {
+            return "(" + spec1.identifikator() + " OG " + spec2.identifikator() +")";
+        } else {
+            return id;
+        }
+    }
+
+    @Override
     public String beskrivelse() {
         if (beskrivelse.isEmpty()){
             return "(" + spec1.beskrivelse() + " OG " +  spec2.beskrivelse() + ")";

@@ -4,7 +4,7 @@ public class OrEvaluation extends AggregatedEvaluation {
 
 
     public OrEvaluation(String id, String ruleDescription, Evaluation... children) {
-        super(Operator.AND, id, ruleDescription, children);
+        super(Operator.OR, id, ruleDescription, children);
     }
 
     @Override

@@ -27,6 +27,16 @@ public class NotSpecification<T> extends AbstractSpecification<T> {
         return new NotEvaluation(identifikator(), beskrivelse(), spec1.evaluate(t));
     }
 
+    @Override
+    public String identifikator() {
+        if (id.isEmpty()) {
+            return "(IKKE " + spec1.identifikator() + ")";
+        } else {
+            return id;
+        }
+    }
+
+
 
     @Override
     public String beskrivelse() {

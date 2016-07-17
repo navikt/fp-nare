@@ -26,6 +26,16 @@ public class OrSpecification<T> extends AbstractSpecification<T> {
     }
 
 
+    @Override
+    public String identifikator() {
+        if (id.isEmpty()) {
+            return "(" + spec1.identifikator() + " ELLER " + spec2.identifikator() + ")";
+        } else {
+            return id;
+        }
+    }
+
+
 
     @Override
     public String beskrivelse() {

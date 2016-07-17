@@ -1,13 +1,12 @@
 package no.nav.aura.nare.regler;
 
 
+import no.nav.aura.nare.evaluation.Evaluation;
 import no.nav.aura.nare.input.Person;
 import no.nav.aura.nare.input.Soknad;
 import no.nav.aura.nare.input.Soknadstype;
 import no.nav.aura.nare.input.Uttaksplan;
 import no.nav.aura.nare.specifications.AbstractSpecification;
-import no.nav.aura.nare.evaluation.Evaluation;
-import no.nav.aura.nare.specifications.Specification;
 
 import java.util.Optional;
 
@@ -33,6 +32,10 @@ public class HarUttaksplanForModreKvote extends AbstractSpecification<Soknad> {
         return  new HarUttaksplanForModreKvote("FK_VK 10.6", Soknadstype.ADOPSJON, uttaksplan);
     }
 
+    @Override
+    public String identifikator() {
+        return id;
+    }
 
     @Override
     public Evaluation evaluate(Soknad soknad) {
@@ -50,13 +53,4 @@ public class HarUttaksplanForModreKvote extends AbstractSpecification<Soknad> {
                 : nei("Mødrekvote tas ikke {0} {1}", uttaksplanModreKvote.description(), soknadstype);
     }
 
-    @Override
-    public String identifikator() {
-        return id; //"FK_VK 10.4/FK_VK 10.5";
-    }
-
-    @Override
-    public String beskrivelse() {
-        return "Uttaksplan for mødrekvote " + uttaksplanModreKvote.description();
-    }
 }
