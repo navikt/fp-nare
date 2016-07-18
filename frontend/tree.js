@@ -70,7 +70,7 @@ function update(source) {
             case "OR" :
                 return "cross";
             case "NOT" :
-                return "diamond
+                return "diamond";
             default:
                 return "circle";
         }
@@ -118,7 +118,7 @@ function update(source) {
 
     // Enter the links.
     link.enter().insert("path", "g")
-        .attr("class", function(d){  return d.source.resultat=="JA" ? "linkyes": "linkno"})
+        .attr("class", function(d){ return d.target.resultat=="JA" ? "linkyes": "linkno"})
         .attr("d", diagonal);
 
 
