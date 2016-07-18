@@ -23,7 +23,7 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // load the external data
-d3.json("../output/test.json", function (error, root) {
+d3.json("../../output/modrekvote.json", function (error, root) {
     update(root);
 });
 
@@ -68,9 +68,7 @@ function update(source) {
             case "AND" :
                 return "square";
             case "OR" :
-                return "cross";
-            case "NOT" :
-                return "diamond
+                return "diamond";
             default:
                 return "circle";
         }
@@ -78,37 +76,40 @@ function update(source) {
 
     nodeEnter.append("path")
         .attr("d", d3.svg.symbol()
-            .size( function(d) { return 30*30 })
-            .type( function(d) { return getType(d) }))
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide)
-        .attr("class", function(d){ return d.resultat=="JA"? "nodeYes": "nodeNo"})
+            .size( function(d) { return 20*20 })
+            .type( function(d) { return getType(d) })
+        )
+        .attr("transform", "translate( 50, 0 )")
+        .style("fill", "#316470")
+        .style("stroke","#BEBEBE")
+        .style("stroke-width",3)
+        .style("opacity",1);
 
-
+    nodeEnter.append("rect")
+        .attr("class", "boks")
+        .attr("width", 100)
+        .attr("height", 60)
+        .attr("y", -30)
+        .attr("x", -50)
+        .attr("rx", 10)
+        .attr("ry",10)
+        .style("fill", "#20AFB1")
+        .style("stroke","#BEBEBE")
+        .style("stroke-width",3)
+        .style("opacity",1);
 
     nodeEnter.append("text")
-        .attr("x", function (d) {
-            return d.children ? -20 : 20;
-        })
-        .attr("dy", ".35em")
-        .attr("text-anchor", function (d) {
-            return d.children  ? "end" : "start";
-        })
-        .text(function (d) {
-            return d.children ? "" : d.reason;
-        })
-        .style("fill", "#BEBEBE");
-
-    nodeEnter.append("text")
-        .attr("dy", "0.35em")
+        .attr("class", "teksten")
         .attr("text-anchor", "middle")
         .text(function (d) {
-            return d.resultat;
+            return d.ruleIdentifcation;
         })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide)
-        .style("fill", "#212121")
-        .style("font-weight","bold")
+
+        .style("fill", "#212121");
+
+
+
+
 
     // Declare the links…
     var link = svg.selectAll("path.link")
@@ -118,8 +119,49 @@ function update(source) {
 
     // Enter the links.
     link.enter().insert("path", "g")
-        .attr("class", function(d){  return d.source.resultat=="JA" ? "linkyes": "linkno"})
+        .attr("class", "link")
         .attr("d", diagonal);
 
+
+
+    function wrap(text, width) {
+        text.each(function() {
+            var text = d3.select(this),
+                words = text.text().split(/\s+/).reverse(),
+                word,
+                line = [],
+                lineNumber = 0,
+                lineHeight = 1.1, // ems
+                y = 0,
+                dy = -0.5,
+                tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+
+            while (word = words.pop()) {
+                line.push(word);
+                tspan.text(line.join(" "));
+                if (tspan.node().getComputedTextLength() > width) {
+                    line.pop();
+                    tspan.text(line.join(" "));
+                    line = [word];
+                    tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+                }
+            }
+        });
+    }
+
+    node.selectAll("text").call(wrap, 90);
+
+    var defaults = {
+        "width": 100,
+        "height": 100,
+        "resize": false
+    }
+
+    //// Wrap text in a rectangle, and size the text to fit.
+    //d3plus.textwrap()
+    //    .dev(true)
+    //    .config(defaults)
+    //    .container(d3.selectAll("text.teksten"))
+    //    .draw();
 
 }

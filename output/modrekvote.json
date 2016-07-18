@@ -1,0 +1,110 @@
+{
+  "ruleIdentifcation": "FK_VK.10",
+  "ruleDescription": "Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?",
+  "operator": "OR",
+  "children": [
+    {
+      "ruleIdentifcation": "FK_VK.10.A",
+      "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG Gjelder søknad fødsel?) OG Har mor uttaksplan sammenhengende eller tre år etter fødsel?)",
+      "operator": "AND",
+      "children": [
+        {
+          "ruleIdentifcation": "(FK_VK_10.1 OG FK_VK 10.2)",
+          "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG Gjelder søknad fødsel?)",
+          "operator": "AND",
+          "children": [
+            {
+              "ruleIdentifcation": "FK_VK_10.1",
+              "ruleDescription": "Har begge foreldre rett til foreldrepenger?",
+              "operator": "AND",
+              "children": [
+                {
+                  "ruleIdentifcation": "FK_VK_10.1",
+                  "ruleDescription": "Har søker med rolle MOR rett til foreldrepenger?"
+                },
+                {
+                  "ruleIdentifcation": "FK_VK_10.1",
+                  "ruleDescription": "Har søker med rolle FAR rett til foreldrepenger?"
+                }
+              ]
+            },
+            {
+              "ruleIdentifcation": "FK_VK 10.2",
+              "ruleDescription": "Gjelder søknad fødsel?"
+            }
+          ]
+        },
+        {
+          "ruleIdentifcation": "FK_VK_10.4",
+          "ruleDescription": "Har mor uttaksplan sammenhengende eller tre år etter fødsel?",
+          "operator": "OR",
+          "children": [
+            {
+              "ruleIdentifcation": "FK_VK 10.4/FK_VK 10.5",
+              "ruleDescription": ""
+            },
+            {
+              "ruleIdentifcation": "FK_VK 10.4/FK_VK 10.5",
+              "ruleDescription": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ruleIdentifcation": "FK_VK.10.B",
+      "ruleDescription": "(((Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel) OG Gjelder søknad adopsjon?) OG Har mor uttaksplan sammenhengende eller tre år etter adopsjon?)",
+      "operator": "AND",
+      "children": [
+        {
+          "ruleIdentifcation": "((FK_VK_10.1 OG (IKKE FK_VK 10.2)) OG FK_VK 10.3)",
+          "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel) OG Gjelder søknad adopsjon?)",
+          "operator": "AND",
+          "children": [
+            {
+              "ruleIdentifcation": "(FK_VK_10.1 OG (IKKE FK_VK 10.2))",
+              "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel)",
+              "operator": "AND",
+              "children": [
+                {
+                  "ruleIdentifcation": "FK_VK_10.1",
+                  "ruleDescription": "Har begge foreldre rett til foreldrepenger?",
+                  "operator": "AND",
+                  "children": [
+                    {
+                      "ruleIdentifcation": "FK_VK_10.1",
+                      "ruleDescription": "Har søker med rolle MOR rett til foreldrepenger?"
+                    },
+                    {
+                      "ruleIdentifcation": "FK_VK_10.1",
+                      "ruleDescription": "Har søker med rolle FAR rett til foreldrepenger?"
+                    }
+                  ]
+                },
+                {
+                  "ruleIdentifcation": "(IKKE FK_VK 10.2)",
+                  "ruleDescription": "søknad gjelder ikke fødsel",
+                  "operator": "NOT",
+                  "children": [
+                    {
+                      "ruleIdentifcation": "FK_VK 10.2",
+                      "ruleDescription": "Gjelder søknad fødsel?"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ruleIdentifcation": "FK_VK 10.3",
+              "ruleDescription": "Gjelder søknad adopsjon?"
+            }
+          ]
+        },
+        {
+          "ruleIdentifcation": "FK_VK 10.6",
+          "ruleDescription": "Har mor uttaksplan sammenhengende eller tre år etter adopsjon?"
+        }
+      ]
+    }
+  ]
+}
