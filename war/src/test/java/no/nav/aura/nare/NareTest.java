@@ -24,15 +24,15 @@ public class NareTest {
     @Test
     public void test() throws Exception {
         mor.setUttaksplan(Uttaksplan.INNEN_3_AAR);
-        Evaluation evaluer = Ruleset.modrekvote().evaluer(Soknad.adopsjonsSøknada(mor).medSøker(far));
-        evaluer.result();
-        System.out.println(evaluer.result() + evaluer.reason());
+        Evaluation evaluation = Ruleset.modrekvote().evaluer(Soknad.fodselSøknad(mor).medSøker(far));
 
-        System.out.println(evaluer);
+        System.out.println(evaluation.result() + evaluation.reason());
+        System.out.println(evaluation);
+
         Files.createDirectories(Paths.get("..","output"));
-        Files.write(Paths.get("..","output","test.json"), evaluer.toString().getBytes());
+        Files.write(Paths.get("..","output","test.json"), evaluation.toString().getBytes());
 
-        evaluer.ruleDescription();
+        evaluation.ruleDescription();
 
     }
 

@@ -18,31 +18,35 @@ import static no.nav.aura.nare.specifications.NotSpecification.ikke;
 public class Modrekvote extends Ruleset {
 
 
-    public Modrekvote(){
-
-      //  regel("FK_VK 10.1", "Begge foreldre har rett til foreldrepenger", harRettTilForeldrePenger(MOR).og(harRettTilForeldrePenger(FAR)));
-       // regel("FK_VK 10.2", "Er det fødsel?", søknadGjelder(FODSEL));
-       // regel("FK_VK 10.4/FK_VK 10.5", "Skal mor ta ut mødrekvoten sammenhengende eller innen tre år etter fødsel? ", harUttaksplanForModreKvote(SAMMENHENGENDE).eller(harUttaksplanForModreKvote(INNEN_3_AAR)));
-
-        //regel("Mødrekvote", "Vilkårsprøving om mødrekvote", getModreKvote());
+    public Modrekvote() {
         specification = getModreKvote();
 
     }
 
-    public Specification getModreKvote(){
+    public Specification getModreKvote() {
 
-        Specification en = regel("FK_VK_10.1", "Har begge foreldre rett til foreldrepenger?", harRettTilForeldrePenger(MOR).og(harRettTilForeldrePenger(FAR)));
-        Specification to = regel("FK_VK 10.2", "Gjelder søknad fødsel?", søknadGjelder(FODSEL));
-        Specification tre = regel("FK_VK 10.3", "Gjelder søknad adopsjon?", søknadGjelder(ADOPSJON));
-        Specification fire = regel("FK_VK_10.4", "Har mor uttaksplan sammenhengende eller tre år etter fødsel?", harUttaksplanForModreKvoteFodsel(SAMMENHENGENDE).eller(harUttaksplanForModreKvoteFodsel(INNEN_3_AAR)));
-        Specification fem = regel("FK_VK_10.5", "Har mor uttaksplan sammenhengende eller tre år etter adopsjon?",  harUttaksplanForModreKvoteAdopsjonl(INNEN_3_AAR));
+        Specification harBeggeForeldreRettTilForeldrepenger =
+                regel("FK_VK_10.1", "Har begge foreldre rett til foreldrepenger?",
+                harRettTilForeldrePenger(MOR).og(harRettTilForeldrePenger(FAR)));
+        Specification gjelderSøknadFødsel = regel("FK_VK 10.2", "Gjelder søknad fødsel?", søknadGjelder(FODSEL));
+        Specification gjelderSøknadAdopsjon = regel("FK_VK 10.3", "Gjelder søknad adopsjon?", søknadGjelder(ADOPSJON));
+        Specification harUttaksplanEtterFodsel =
+                regel("FK_VK_10.4", "Har mor uttaksplan sammenhengende eller tre år etter fødsel?", harUttaksplanForModreKvoteFodsel(SAMMENHENGENDE).eller(harUttaksplanForModreKvoteFodsel(INNEN_3_AAR)));
+        Specification harUttaksplanEtterAdopsjon =
+                regel("FK_VK_10.5", "Har mor uttaksplan sammenhengende eller tre år etter adopsjon?", harUttaksplanForModreKvoteAdopsjonl(INNEN_3_AAR));
 
-        Specification førsteLedd = regel("FK_VK.10.A", en.og(to).og(fire));
-        Specification andreledd = regel ("FK_VK.10.B", en.og(ikke(to).medBeskrivelse("søknad gjelder ikke fødsel")).og(tre).og(fem));
-        return regel("FK_VK.10","Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?", førsteLedd.eller(andreledd));
+        Specification vilkårForFødsel =
+                regel("FK_VK.10.A", harBeggeForeldreRettTilForeldrepenger.og(gjelderSøknadFødsel).og(harUttaksplanEtterFodsel));
+
+        Specification vilkårForAdopsjon =
+                regel("FK_VK.10.B", harBeggeForeldreRettTilForeldrepenger
+                        .og(ikke(gjelderSøknadFødsel).medBeskrivelse("søknad gjelder ikke fødsel"))
+                        .og(gjelderSøknadAdopsjon)
+                        .og(harUttaksplanEtterAdopsjon));
+
+        return regel("FK_VK.10", "Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?", vilkårForFødsel.eller(vilkårForAdopsjon));
 
     }
-
 
 
 }

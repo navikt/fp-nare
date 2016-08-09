@@ -102,7 +102,7 @@ function update(source) {
         .attr("class", "teksten")
         .attr("text-anchor", "middle")
         .text(function (d) {
-            return d.ruleIdentifcation;
+            return d.ruleDescription;
         })
 
         .style("fill", "#212121");

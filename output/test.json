@@ -3,21 +3,21 @@
   "ruleDescription": "Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?",
   "operator": "OR",
   "resultat": "JA",
-  "reason": "Tilfredstiller FK_VK.10.B",
+  "reason": "Tilfredstiller FK_VK.10.A",
   "children": [
     {
       "ruleIdentifcation": "FK_VK.10.A",
       "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG Gjelder søknad fødsel?) OG Har mor uttaksplan sammenhengende eller tre år etter fødsel?)",
       "operator": "AND",
-      "resultat": "NEI",
-      "reason": "Tilfredstiller ikke både (FK_VK_10.1 OG FK_VK 10.2) og FK_VK_10.4",
+      "resultat": "JA",
+      "reason": "Tilfredstiller både (FK_VK_10.1 OG FK_VK 10.2) og FK_VK_10.4",
       "children": [
         {
           "ruleIdentifcation": "(FK_VK_10.1 OG FK_VK 10.2)",
           "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG Gjelder søknad fødsel?)",
           "operator": "AND",
-          "resultat": "NEI",
-          "reason": "Tilfredstiller ikke både FK_VK_10.1 og FK_VK 10.2",
+          "resultat": "JA",
+          "reason": "Tilfredstiller både FK_VK_10.1 og FK_VK 10.2",
           "children": [
             {
               "ruleIdentifcation": "FK_VK_10.1",
@@ -43,8 +43,8 @@
             {
               "ruleIdentifcation": "FK_VK 10.2",
               "ruleDescription": "Gjelder søknad fødsel?",
-              "resultat": "NEI",
-              "reason": "Søknad gjelder ikke FODSEL"
+              "resultat": "JA",
+              "reason": "Søknad gjelder FODSEL"
             }
           ]
         },
@@ -75,22 +75,22 @@
       "ruleIdentifcation": "FK_VK.10.B",
       "ruleDescription": "(((Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel) OG Gjelder søknad adopsjon?) OG Har mor uttaksplan sammenhengende eller tre år etter adopsjon?)",
       "operator": "AND",
-      "resultat": "JA",
-      "reason": "Tilfredstiller både ((FK_VK_10.1 OG (IKKE FK_VK 10.2)) OG FK_VK 10.3) og FK_VK 10.6",
+      "resultat": "NEI",
+      "reason": "Tilfredstiller ikke både ((FK_VK_10.1 OG (IKKE FK_VK 10.2)) OG FK_VK 10.3) og FK_VK 10.6",
       "children": [
         {
           "ruleIdentifcation": "((FK_VK_10.1 OG (IKKE FK_VK 10.2)) OG FK_VK 10.3)",
           "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel) OG Gjelder søknad adopsjon?)",
           "operator": "AND",
-          "resultat": "JA",
-          "reason": "Tilfredstiller både (FK_VK_10.1 OG (IKKE FK_VK 10.2)) og FK_VK 10.3",
+          "resultat": "NEI",
+          "reason": "Tilfredstiller ikke både (FK_VK_10.1 OG (IKKE FK_VK 10.2)) og FK_VK 10.3",
           "children": [
             {
               "ruleIdentifcation": "(FK_VK_10.1 OG (IKKE FK_VK 10.2))",
               "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel)",
               "operator": "AND",
-              "resultat": "JA",
-              "reason": "Tilfredstiller både FK_VK_10.1 og (IKKE FK_VK 10.2)",
+              "resultat": "NEI",
+              "reason": "Tilfredstiller ikke både FK_VK_10.1 og (IKKE FK_VK 10.2)",
               "children": [
                 {
                   "ruleIdentifcation": "FK_VK_10.1",
@@ -117,14 +117,14 @@
                   "ruleIdentifcation": "(IKKE FK_VK 10.2)",
                   "ruleDescription": "søknad gjelder ikke fødsel",
                   "operator": "NOT",
-                  "resultat": "JA",
-                  "reason": "Tilfredstiller det motsatte av FK_VK 10.2",
+                  "resultat": "NEI",
+                  "reason": "Tilfredstiller ikke det motsatte av FK_VK 10.2",
                   "children": [
                     {
                       "ruleIdentifcation": "FK_VK 10.2",
                       "ruleDescription": "Gjelder søknad fødsel?",
-                      "resultat": "NEI",
-                      "reason": "Søknad gjelder ikke FODSEL"
+                      "resultat": "JA",
+                      "reason": "Søknad gjelder FODSEL"
                     }
                   ]
                 }
@@ -133,8 +133,8 @@
             {
               "ruleIdentifcation": "FK_VK 10.3",
               "ruleDescription": "Gjelder søknad adopsjon?",
-              "resultat": "JA",
-              "reason": "Søknad gjelder ADOPSJON"
+              "resultat": "NEI",
+              "reason": "Søknad gjelder ikke ADOPSJON"
             }
           ]
         },
