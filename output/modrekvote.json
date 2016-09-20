@@ -1,16 +1,16 @@
 {
   "ruleIdentifcation": "FK_VK.10",
-  "ruleDescription": "Er vilkÃ¥r for mÃ¸drekvote oppfylt for enten fÃ¸dsel eller adopsjon?",
+  "ruleDescription": "Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?",
   "operator": "OR",
   "children": [
     {
       "ruleIdentifcation": "FK_VK.10.A",
-      "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG Gjelder sÃ¸knad fÃ¸dsel?) OG Har mor uttaksplan sammenhengende eller tre Ã¥r etter fÃ¸dsel?)",
+      "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG Gjelder søknad fødsel?) OG Har mor uttaksplan sammenhengende eller tre år etter fødsel?)",
       "operator": "AND",
       "children": [
         {
           "ruleIdentifcation": "(FK_VK_10.1 OG FK_VK 10.2)",
-          "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG Gjelder sÃ¸knad fÃ¸dsel?)",
+          "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG Gjelder søknad fødsel?)",
           "operator": "AND",
           "children": [
             {
@@ -20,23 +20,23 @@
               "children": [
                 {
                   "ruleIdentifcation": "FK_VK_10.1",
-                  "ruleDescription": "Har sÃ¸ker med rolle MOR rett til foreldrepenger?"
+                  "ruleDescription": "Har søker med rolle MOR rett til foreldrepenger?"
                 },
                 {
                   "ruleIdentifcation": "FK_VK_10.1",
-                  "ruleDescription": "Har sÃ¸ker med rolle FAR rett til foreldrepenger?"
+                  "ruleDescription": "Har søker med rolle FAR rett til foreldrepenger?"
                 }
               ]
             },
             {
               "ruleIdentifcation": "FK_VK 10.2",
-              "ruleDescription": "Gjelder sÃ¸knad fÃ¸dsel?"
+              "ruleDescription": "Gjelder søknad fødsel?"
             }
           ]
         },
         {
           "ruleIdentifcation": "FK_VK_10.4",
-          "ruleDescription": "Har mor uttaksplan sammenhengende eller tre Ã¥r etter fÃ¸dsel?",
+          "ruleDescription": "Har mor uttaksplan sammenhengende eller tre år etter fødsel?",
           "operator": "OR",
           "children": [
             {
@@ -53,17 +53,17 @@
     },
     {
       "ruleIdentifcation": "FK_VK.10.B",
-      "ruleDescription": "(((Har begge foreldre rett til foreldrepenger? OG sÃ¸knad gjelder ikke fÃ¸dsel) OG Gjelder sÃ¸knad adopsjon?) OG Har mor uttaksplan sammenhengende eller tre Ã¥r etter adopsjon?)",
+      "ruleDescription": "(((Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel) OG Gjelder søknad adopsjon?) OG Har mor uttaksplan sammenhengende eller tre år etter adopsjon?)",
       "operator": "AND",
       "children": [
         {
           "ruleIdentifcation": "((FK_VK_10.1 OG (IKKE FK_VK 10.2)) OG FK_VK 10.3)",
-          "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG sÃ¸knad gjelder ikke fÃ¸dsel) OG Gjelder sÃ¸knad adopsjon?)",
+          "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel) OG Gjelder søknad adopsjon?)",
           "operator": "AND",
           "children": [
             {
               "ruleIdentifcation": "(FK_VK_10.1 OG (IKKE FK_VK 10.2))",
-              "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG sÃ¸knad gjelder ikke fÃ¸dsel)",
+              "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel)",
               "operator": "AND",
               "children": [
                 {
@@ -73,22 +73,22 @@
                   "children": [
                     {
                       "ruleIdentifcation": "FK_VK_10.1",
-                      "ruleDescription": "Har sÃ¸ker med rolle MOR rett til foreldrepenger?"
+                      "ruleDescription": "Har søker med rolle MOR rett til foreldrepenger?"
                     },
                     {
                       "ruleIdentifcation": "FK_VK_10.1",
-                      "ruleDescription": "Har sÃ¸ker med rolle FAR rett til foreldrepenger?"
+                      "ruleDescription": "Har søker med rolle FAR rett til foreldrepenger?"
                     }
                   ]
                 },
                 {
                   "ruleIdentifcation": "(IKKE FK_VK 10.2)",
-                  "ruleDescription": "sÃ¸knad gjelder ikke fÃ¸dsel",
+                  "ruleDescription": "søknad gjelder ikke fødsel",
                   "operator": "NOT",
                   "children": [
                     {
                       "ruleIdentifcation": "FK_VK 10.2",
-                      "ruleDescription": "Gjelder sÃ¸knad fÃ¸dsel?"
+                      "ruleDescription": "Gjelder søknad fødsel?"
                     }
                   ]
                 }
@@ -96,13 +96,13 @@
             },
             {
               "ruleIdentifcation": "FK_VK 10.3",
-              "ruleDescription": "Gjelder sÃ¸knad adopsjon?"
+              "ruleDescription": "Gjelder søknad adopsjon?"
             }
           ]
         },
         {
           "ruleIdentifcation": "FK_VK 10.6",
-          "ruleDescription": "Har mor uttaksplan sammenhengende eller tre Ã¥r etter adopsjon?"
+          "ruleDescription": "Har mor uttaksplan sammenhengende eller tre år etter adopsjon?"
         }
       ]
     }

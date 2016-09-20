@@ -1,148 +1,148 @@
 {
-  "ruleIdentifcation": "FK_VK.10",
-  "ruleDescription": "Er vilkÃ¥r for mÃ¸drekvote oppfylt for enten fÃ¸dsel eller adopsjon?",
+  "ruleIdentification": "FK_VK.10",
+  "ruleDescription": "Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?",
   "operator": "OR",
-  "resultat": "JA",
-  "reason": "Tilfredstiller FK_VK.10.A",
+  "resultat": "NEI",
+  "reason": "Tilfredstiller hverken FK_VK.10.A eller FK_VK.10.B",
   "children": [
     {
-      "ruleIdentifcation": "FK_VK.10.A",
-      "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG Gjelder sÃ¸knad fÃ¸dsel?) OG Har mor uttaksplan sammenhengende eller tre Ã¥r etter fÃ¸dsel?)",
+      "ruleIdentification": "FK_VK.10.A",
+      "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG Gjelder søknad fødsel?) OG Har mor uttaksplan sammenhengende eller tre år etter fødsel?)",
       "operator": "AND",
-      "resultat": "JA",
-      "reason": "Tilfredstiller bÃ¥de (FK_VK_10.1 OG FK_VK 10.2) og FK_VK_10.4",
+      "resultat": "NEI",
+      "reason": "Tilfredstiller ikke både (FK_VK_10.1 OG FK_VK 10.2) og FK_VK_10.4",
       "children": [
         {
-          "ruleIdentifcation": "(FK_VK_10.1 OG FK_VK 10.2)",
-          "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG Gjelder sÃ¸knad fÃ¸dsel?)",
+          "ruleIdentification": "(FK_VK_10.1 OG FK_VK 10.2)",
+          "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG Gjelder søknad fødsel?)",
           "operator": "AND",
           "resultat": "JA",
-          "reason": "Tilfredstiller bÃ¥de FK_VK_10.1 og FK_VK 10.2",
+          "reason": "Tilfredstiller både FK_VK_10.1 og FK_VK 10.2",
           "children": [
             {
-              "ruleIdentifcation": "FK_VK_10.1",
+              "ruleIdentification": "FK_VK_10.1",
               "ruleDescription": "Har begge foreldre rett til foreldrepenger?",
               "operator": "AND",
               "resultat": "JA",
-              "reason": "Tilfredstiller bÃ¥de FK_VK_10.1 og FK_VK_10.1",
+              "reason": "Tilfredstiller både FK_VK_10.1 og FK_VK_10.1",
               "children": [
                 {
-                  "ruleIdentifcation": "FK_VK_10.1",
-                  "ruleDescription": "Har sÃ¸ker med rolle MOR rett til foreldrepenger?",
+                  "ruleIdentification": "FK_VK_10.1",
+                  "ruleDescription": "Har søker med rolle MOR rett til foreldrepenger?",
                   "resultat": "JA",
-                  "reason": "SÃ¸ker med rolle MOR har rett til foreldrepenger"
+                  "reason": "Søker med rolle MOR har rett til foreldrepenger"
                 },
                 {
-                  "ruleIdentifcation": "FK_VK_10.1",
-                  "ruleDescription": "Har sÃ¸ker med rolle FAR rett til foreldrepenger?",
+                  "ruleIdentification": "FK_VK_10.1",
+                  "ruleDescription": "Har søker med rolle FAR rett til foreldrepenger?",
                   "resultat": "JA",
-                  "reason": "SÃ¸ker med rolle FAR har rett til foreldrepenger"
+                  "reason": "Søker med rolle FAR har rett til foreldrepenger"
                 }
               ]
             },
             {
-              "ruleIdentifcation": "FK_VK 10.2",
-              "ruleDescription": "Gjelder sÃ¸knad fÃ¸dsel?",
+              "ruleIdentification": "FK_VK 10.2",
+              "ruleDescription": "Gjelder søknad fødsel?",
               "resultat": "JA",
-              "reason": "SÃ¸knad gjelder FODSEL"
+              "reason": "Søknad gjelder FODSEL"
             }
           ]
         },
         {
-          "ruleIdentifcation": "FK_VK_10.4",
-          "ruleDescription": "Har mor uttaksplan sammenhengende eller tre Ã¥r etter fÃ¸dsel?",
+          "ruleIdentification": "FK_VK_10.4",
+          "ruleDescription": "Har mor uttaksplan sammenhengende eller tre år etter fødsel?",
           "operator": "OR",
-          "resultat": "JA",
-          "reason": "Tilfredstiller FK_VK 10.4/FK_VK 10.5",
+          "resultat": "NEI",
+          "reason": "Tilfredstiller hverken FK_VK 10.4/FK_VK 10.5 eller FK_VK 10.4/FK_VK 10.5",
           "children": [
             {
-              "ruleIdentifcation": "FK_VK 10.4/FK_VK 10.5",
+              "ruleIdentification": "FK_VK 10.4/FK_VK 10.5",
               "ruleDescription": "",
               "resultat": "NEI",
-              "reason": "MÃ¸drekvote tas ikke sammenhengende etter FODSEL"
+              "reason": "Mødrekvote tas ikke sammenhengende etter FODSEL"
             },
             {
-              "ruleIdentifcation": "FK_VK 10.4/FK_VK 10.5",
+              "ruleIdentification": "FK_VK 10.4/FK_VK 10.5",
               "ruleDescription": "",
-              "resultat": "JA",
-              "reason": "MÃ¸drekvote tas innen 3 Ã¥r etter"
+              "resultat": "NEI",
+              "reason": "Mødrekvote tas ikke innen 3 år etter FODSEL"
             }
           ]
         }
       ]
     },
     {
-      "ruleIdentifcation": "FK_VK.10.B",
-      "ruleDescription": "(((Har begge foreldre rett til foreldrepenger? OG sÃ¸knad gjelder ikke fÃ¸dsel) OG Gjelder sÃ¸knad adopsjon?) OG Har mor uttaksplan sammenhengende eller tre Ã¥r etter adopsjon?)",
+      "ruleIdentification": "FK_VK.10.B",
+      "ruleDescription": "(((Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel) OG Gjelder søknad adopsjon?) OG Har mor uttaksplan sammenhengende eller tre år etter adopsjon?)",
       "operator": "AND",
       "resultat": "NEI",
-      "reason": "Tilfredstiller ikke bÃ¥de ((FK_VK_10.1 OG (IKKE FK_VK 10.2)) OG FK_VK 10.3) og FK_VK 10.6",
+      "reason": "Tilfredstiller ikke både ((FK_VK_10.1 OG (IKKE FK_VK 10.2)) OG FK_VK 10.3) og FK_VK 10.6",
       "children": [
         {
-          "ruleIdentifcation": "((FK_VK_10.1 OG (IKKE FK_VK 10.2)) OG FK_VK 10.3)",
-          "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG sÃ¸knad gjelder ikke fÃ¸dsel) OG Gjelder sÃ¸knad adopsjon?)",
+          "ruleIdentification": "((FK_VK_10.1 OG (IKKE FK_VK 10.2)) OG FK_VK 10.3)",
+          "ruleDescription": "((Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel) OG Gjelder søknad adopsjon?)",
           "operator": "AND",
           "resultat": "NEI",
-          "reason": "Tilfredstiller ikke bÃ¥de (FK_VK_10.1 OG (IKKE FK_VK 10.2)) og FK_VK 10.3",
+          "reason": "Tilfredstiller ikke både (FK_VK_10.1 OG (IKKE FK_VK 10.2)) og FK_VK 10.3",
           "children": [
             {
-              "ruleIdentifcation": "(FK_VK_10.1 OG (IKKE FK_VK 10.2))",
-              "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG sÃ¸knad gjelder ikke fÃ¸dsel)",
+              "ruleIdentification": "(FK_VK_10.1 OG (IKKE FK_VK 10.2))",
+              "ruleDescription": "(Har begge foreldre rett til foreldrepenger? OG søknad gjelder ikke fødsel)",
               "operator": "AND",
               "resultat": "NEI",
-              "reason": "Tilfredstiller ikke bÃ¥de FK_VK_10.1 og (IKKE FK_VK 10.2)",
+              "reason": "Tilfredstiller ikke både FK_VK_10.1 og (IKKE FK_VK 10.2)",
               "children": [
                 {
-                  "ruleIdentifcation": "FK_VK_10.1",
+                  "ruleIdentification": "FK_VK_10.1",
                   "ruleDescription": "Har begge foreldre rett til foreldrepenger?",
                   "operator": "AND",
                   "resultat": "JA",
-                  "reason": "Tilfredstiller bÃ¥de FK_VK_10.1 og FK_VK_10.1",
+                  "reason": "Tilfredstiller både FK_VK_10.1 og FK_VK_10.1",
                   "children": [
                     {
-                      "ruleIdentifcation": "FK_VK_10.1",
-                      "ruleDescription": "Har sÃ¸ker med rolle MOR rett til foreldrepenger?",
+                      "ruleIdentification": "FK_VK_10.1",
+                      "ruleDescription": "Har søker med rolle MOR rett til foreldrepenger?",
                       "resultat": "JA",
-                      "reason": "SÃ¸ker med rolle MOR har rett til foreldrepenger"
+                      "reason": "Søker med rolle MOR har rett til foreldrepenger"
                     },
                     {
-                      "ruleIdentifcation": "FK_VK_10.1",
-                      "ruleDescription": "Har sÃ¸ker med rolle FAR rett til foreldrepenger?",
+                      "ruleIdentification": "FK_VK_10.1",
+                      "ruleDescription": "Har søker med rolle FAR rett til foreldrepenger?",
                       "resultat": "JA",
-                      "reason": "SÃ¸ker med rolle FAR har rett til foreldrepenger"
+                      "reason": "Søker med rolle FAR har rett til foreldrepenger"
                     }
                   ]
                 },
                 {
-                  "ruleIdentifcation": "(IKKE FK_VK 10.2)",
-                  "ruleDescription": "sÃ¸knad gjelder ikke fÃ¸dsel",
+                  "ruleIdentification": "(IKKE FK_VK 10.2)",
+                  "ruleDescription": "søknad gjelder ikke fødsel",
                   "operator": "NOT",
                   "resultat": "NEI",
                   "reason": "Tilfredstiller ikke det motsatte av FK_VK 10.2",
                   "children": [
                     {
-                      "ruleIdentifcation": "FK_VK 10.2",
-                      "ruleDescription": "Gjelder sÃ¸knad fÃ¸dsel?",
+                      "ruleIdentification": "FK_VK 10.2",
+                      "ruleDescription": "Gjelder søknad fødsel?",
                       "resultat": "JA",
-                      "reason": "SÃ¸knad gjelder FODSEL"
+                      "reason": "Søknad gjelder FODSEL"
                     }
                   ]
                 }
               ]
             },
             {
-              "ruleIdentifcation": "FK_VK 10.3",
-              "ruleDescription": "Gjelder sÃ¸knad adopsjon?",
+              "ruleIdentification": "FK_VK 10.3",
+              "ruleDescription": "Gjelder søknad adopsjon?",
               "resultat": "NEI",
-              "reason": "SÃ¸knad gjelder ikke ADOPSJON"
+              "reason": "Søknad gjelder ikke ADOPSJON"
             }
           ]
         },
         {
-          "ruleIdentifcation": "FK_VK 10.6",
-          "ruleDescription": "Har mor uttaksplan sammenhengende eller tre Ã¥r etter adopsjon?",
-          "resultat": "JA",
-          "reason": "MÃ¸drekvote tas innen 3 Ã¥r etter"
+          "ruleIdentification": "FK_VK 10.6",
+          "ruleDescription": "Har mor uttaksplan sammenhengende eller tre år etter adopsjon?",
+          "resultat": "NEI",
+          "reason": "Mødrekvote tas ikke innen 3 år etter ADOPSJON"
         }
       ]
     }

@@ -1,5 +1,7 @@
 package no.nav.aura.nare.evaluation;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 public class OrEvaluation extends AggregatedEvaluation {
 
 

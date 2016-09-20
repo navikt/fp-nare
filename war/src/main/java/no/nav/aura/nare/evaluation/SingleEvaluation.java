@@ -1,19 +1,20 @@
 package no.nav.aura.nare.evaluation;
 
 import com.google.gson.GsonBuilder;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 import java.text.MessageFormat;
 
-
 public class SingleEvaluation implements Evaluation {
 
-    private String ruleIdentifcation;
+    private String ruleIdentification;
     private String ruleDescription;
     private Resultat resultat;
     private String reason;
 
-    public SingleEvaluation(Resultat resultat, String ruleIdentifcation, String ruleDescription, String reason, Object... stringformatArguments) {
-        this.ruleIdentifcation = ruleIdentifcation;
+    public SingleEvaluation(Resultat resultat, String ruleIdentification, String ruleDescription, String reason, Object... stringformatArguments) {
+        this.ruleIdentification = ruleIdentification;
         this.ruleDescription = ruleDescription;
         this.resultat = resultat;
         this.reason = MessageFormat.format(reason, stringformatArguments);
@@ -31,7 +32,7 @@ public class SingleEvaluation implements Evaluation {
 
     @Override
     public String ruleIdentification() {
-        return ruleIdentifcation;
+        return ruleIdentification;
     }
 
     @Override
@@ -39,8 +40,5 @@ public class SingleEvaluation implements Evaluation {
         return reason;
     }
 
-    @Override
-    public String toString(){
-        return new GsonBuilder().setPrettyPrinting().create().toJson(this);
-    }
+
 }

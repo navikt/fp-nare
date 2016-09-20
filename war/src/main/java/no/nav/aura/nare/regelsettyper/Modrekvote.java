@@ -20,7 +20,6 @@ public class Modrekvote extends Ruleset {
 
     public Modrekvote() {
         specification = getModreKvote();
-
     }
 
     public Specification getModreKvote() {
@@ -45,7 +44,6 @@ public class Modrekvote extends Ruleset {
                         .og(harUttaksplanEtterAdopsjon));
 
         return regel("FK_VK.10", "Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?", vilkårForFødsel.eller(vilkårForAdopsjon));
-
     }
 
 

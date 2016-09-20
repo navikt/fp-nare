@@ -23,7 +23,7 @@ public class NareTest {
 
     @Test
     public void test() throws Exception {
-        mor.setUttaksplan(Uttaksplan.INNEN_3_AAR);
+        mor.setUttaksplan(Uttaksplan.SENERE);
         Evaluation evaluation = Ruleset.modrekvote().evaluer(Soknad.fodselSøknad(mor).medSøker(far));
 
         System.out.println(evaluation.result() + evaluation.reason());

@@ -1,6 +1,8 @@
 package no.nav.aura.nare.evaluation;
 
 import com.google.gson.GsonBuilder;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,18 +10,18 @@ import java.util.List;
 
 public abstract class AggregatedEvaluation implements Evaluation {
 
-    private final String ruleIdentifcation;
-    private final String ruleDescription;
+    private  String ruleIdentification;
+    private  String ruleDescription;
     private Operator operator;
     private Resultat resultat;
+
     private String reason;
     private List<Evaluation> children;
-
 
     protected AggregatedEvaluation(Operator operator, String id, String ruleDescription, Evaluation... children) {
         this.operator = operator;
         this.children = Arrays.asList(children);
-        this.ruleIdentifcation = id;
+        this.ruleIdentification = id;
         this.ruleDescription = ruleDescription;
         this.resultat = result();
         this.reason = reason();
@@ -28,6 +30,7 @@ public abstract class AggregatedEvaluation implements Evaluation {
     protected Evaluation first() {
         return children.get(0);
     }
+
     protected Evaluation second() {
         return children.get(1);
     }
@@ -35,18 +38,17 @@ public abstract class AggregatedEvaluation implements Evaluation {
 
     @Override
     public String ruleDescription() {
-        return  ruleDescription;
+        return ruleDescription;
     }
 
     @Override
     public String ruleIdentification() {
-        return ruleIdentifcation;
+        return ruleIdentification;
     }
 
 
-
-    @Override
-    public String toString() {
+    public String toString(){
         return new GsonBuilder().setPrettyPrinting().create().toJson(this);
     }
+
 }
