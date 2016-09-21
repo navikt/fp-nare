@@ -1,6 +1,9 @@
-package no.nav.aura.nare.evaluation;
+package no.nav.aura.nare.evaluation.booleans;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
+import no.nav.aura.nare.evaluation.AggregatedEvaluation;
+import no.nav.aura.nare.evaluation.Evaluation;
+import no.nav.aura.nare.evaluation.Operator;
+import no.nav.aura.nare.evaluation.Resultat;
 
 public class AndEvaluation extends AggregatedEvaluation {
 

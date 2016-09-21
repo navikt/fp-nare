@@ -3,6 +3,7 @@ package no.nav.aura.nare.specifications;
 
 import no.nav.aura.nare.RuleDescription;
 import no.nav.aura.nare.evaluation.*;
+import no.nav.aura.nare.evaluation.booleans.AndEvaluation;
 
 /**
  * AND specification, used to create a new specifcation that is the AND of two other specifications.

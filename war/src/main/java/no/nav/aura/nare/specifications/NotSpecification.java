@@ -2,9 +2,8 @@ package no.nav.aura.nare.specifications;
 
 
 import no.nav.aura.nare.RuleDescription;
-import no.nav.aura.nare.evaluation.AggregatedEvaluation;
 import no.nav.aura.nare.evaluation.Evaluation;
-import no.nav.aura.nare.evaluation.NotEvaluation;
+import no.nav.aura.nare.evaluation.booleans.NotEvaluation;
 import no.nav.aura.nare.evaluation.Operator;
 
 /**

@@ -1,9 +1,5 @@
 package no.nav.aura.nare.evaluation;
 
-import com.google.gson.GsonBuilder;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,11 +40,6 @@ public abstract class AggregatedEvaluation implements Evaluation {
     @Override
     public String ruleIdentification() {
         return ruleIdentification;
-    }
-
-
-    public String toString(){
-        return new GsonBuilder().setPrettyPrinting().create().toJson(this);
     }
 
 }

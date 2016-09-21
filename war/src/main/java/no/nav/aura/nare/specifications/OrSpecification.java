@@ -1,10 +1,9 @@
 package no.nav.aura.nare.specifications;
 
 import no.nav.aura.nare.RuleDescription;
-import no.nav.aura.nare.evaluation.AggregatedEvaluation;
 import no.nav.aura.nare.evaluation.Evaluation;
 import no.nav.aura.nare.evaluation.Operator;
-import no.nav.aura.nare.evaluation.OrEvaluation;
+import no.nav.aura.nare.evaluation.booleans.OrEvaluation;
 
 /**
  * OR specification, used to create a new specifcation that is the OR of two other specifications.
