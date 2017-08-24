@@ -1,1 +1,1 @@
-#SNot a rule engine
+Branch av NARE for Foreldrepengerprosjektet.
