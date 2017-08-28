@@ -34,6 +34,7 @@ public class ModrekvoteTest {
 
         Assertions.assertThat(asJson)
                 .contains("FK_VK 10.4")
+                .contains("FK_VK_10.4")
                 .contains("FK_VK 10.5")
                 .contains("FK_VK 10.6")
                 .contains("FK_VK 10.4/FK_VK 10.5")
