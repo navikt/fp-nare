@@ -31,7 +31,7 @@ public abstract class AggregatedEvaluation implements Evaluation {
     protected Evaluation second() {
         return children.get(1);
     }
-    
+
     public List<Evaluation> children(){
     	return Collections.unmodifiableList(children);
     }

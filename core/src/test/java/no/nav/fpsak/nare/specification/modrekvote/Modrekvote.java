@@ -20,7 +20,7 @@ import no.nav.fpsak.nare.specification.Specification;
 import no.nav.fpsak.nare.specification.modrekvote.input.Soknad;
 
 public class Modrekvote extends Ruleset implements RuleService<Soknad> {
-	
+
     private final Ruleset ruleset = new Ruleset();
 
     public Modrekvote() {
@@ -29,7 +29,7 @@ public class Modrekvote extends Ruleset implements RuleService<Soknad> {
     @Override
 	public EvaluationSpecification<Soknad> getSpecification() {
     	Ruleset rs = ruleset;
-    	
+
         Specification<Soknad> harBeggeForeldreRettTilForeldrepenger =
                 rs.regel("FK_VK_10.1", "Har begge foreldre rett til foreldrepenger?",
                 harRettTilForeldrePenger(MOR).og(harRettTilForeldrePenger(FAR)));

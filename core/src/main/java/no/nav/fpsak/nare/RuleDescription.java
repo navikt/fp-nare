@@ -2,11 +2,7 @@ package no.nav.fpsak.nare;
 
 import com.google.gson.GsonBuilder;
 
-import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
-import no.nav.fpsak.nare.evaluation.Resultat;
-import no.nav.fpsak.nare.specification.Specification;
-
 import java.util.Arrays;
 import java.util.List;
 
