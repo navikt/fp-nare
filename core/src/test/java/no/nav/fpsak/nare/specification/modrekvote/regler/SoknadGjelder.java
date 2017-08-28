@@ -2,7 +2,6 @@ package no.nav.fpsak.nare.specification.modrekvote.regler;
 
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.specification.AbstractSpecification;
-import no.nav.fpsak.nare.specification.Specification;
 import no.nav.fpsak.nare.specification.modrekvote.input.Soknad;
 import no.nav.fpsak.nare.specification.modrekvote.input.Soknadstype;
 

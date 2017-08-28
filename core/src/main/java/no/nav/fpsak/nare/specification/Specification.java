@@ -13,7 +13,7 @@ public interface Specification<T> extends EvaluationSpecification<T> {
 
     /**
      * Create a new specification that is the AND operation of {@code this} specification of another specification.
-     * 
+     *
      * @param specification
      *            Specification to AND.
      * @return A new specification.
@@ -22,7 +22,7 @@ public interface Specification<T> extends EvaluationSpecification<T> {
 
     /**
      * Create a new specification that is the OR operation of {@code this} specification of another specification.
-     * 
+     *
      * @param specification
      *            Specification to OR.
      * @return A new specification.
