@@ -18,6 +18,7 @@ public class HarRettTilForeldrePenger extends LeafSpecification<Soknad> {
     private Rolle rolle;
 
     private HarRettTilForeldrePenger(Rolle rolle) {
+        super("FK_VK_10.1");
         this.rolle = rolle;
     }
 
@@ -37,11 +38,6 @@ public class HarRettTilForeldrePenger extends LeafSpecification<Soknad> {
         } else {
             return ja(ModrekvoteUtfall.UTFALL_05, "Søker med rolle {0} har rett til foreldrepenger", rolle);
         }
-    }
-
-    @Override
-    public String identifikator() {
-        return "FK_VK_10.1";
     }
 
 }

@@ -22,14 +22,12 @@ public class HarUttaksplanForModreKvote extends LeafSpecification<Soknad> {
         return new HarUttaksplanForModreKvote("FK_VK 10.4/FK_VK 10.5", Soknadstype.FODSEL, uttaksplan);
     }
 
-    private final String id;
-
     private final Soknadstype soknadstype;
 
     private Uttaksplan uttaksplanModreKvote;
 
     private HarUttaksplanForModreKvote(String id, Soknadstype soknadstype, Uttaksplan uttaksplan) {
-        this.id = id;
+        super(id);
         this.soknadstype = soknadstype;
         this.uttaksplanModreKvote = uttaksplan;
     }
@@ -48,11 +46,6 @@ public class HarUttaksplanForModreKvote extends LeafSpecification<Soknad> {
         return (uttaksplanModreKvote.equals(soker.get().getUttaksplan().get()))
                 ? ja(ModrekvoteUtfall.UTFALL_08, "Mødrekvote tas {0}", uttaksplanModreKvote.description(), soknadstype)
                 : nei(ModrekvoteUtfall.UTFALL_09, "Mødrekvote tas ikke {0} {1}", uttaksplanModreKvote.description(), soknadstype);
-    }
-
-    @Override
-    public String identifikator() {
-        return id;
     }
 
 }

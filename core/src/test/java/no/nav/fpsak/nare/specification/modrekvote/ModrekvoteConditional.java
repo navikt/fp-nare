@@ -46,9 +46,8 @@ public class ModrekvoteConditional implements RuleService<Soknad> {
         Specification<Soknad> harUttaksplanEtterFodsel = rs.regel("FK_VK_10.4",
                 "Har mor uttaksplan sammenhengende eller tre år etter fødsel?",
                 harUttaksplanForModreKvoteFodsel(SAMMENHENGENDE).eller(harUttaksplanForModreKvoteFodsel(INNEN_3_AAR)));
-        Specification<Soknad> harUttaksplanEtterAdopsjon = rs.regel("FK_VK_10.5",
-                "Har mor uttaksplan sammenhengende eller tre år etter adopsjon?",
-                harUttaksplanForModreKvoteAdopsjonl(INNEN_3_AAR));
+        Specification<Soknad> harUttaksplanEtterAdopsjon = 
+                harUttaksplanForModreKvoteAdopsjonl(INNEN_3_AAR);
 
         Specification<Soknad> vilkårForFødsel = rs.regel("FK_VK.10.A",
                 harBeggeForeldreRettTilForeldrepenger

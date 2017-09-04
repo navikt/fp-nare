@@ -8,14 +8,10 @@ import no.nav.fpsak.nare.evaluation.node.AndEvaluation;
 /**
  * AND specification, used to create a new specifcation that is the AND of two other specifications.
  */
-public class AndSpecification<T> extends AbstractSpecification<T> {
-
-    private Specification<T> spec1;
-    private Specification<T> spec2;
+public class AndSpecification<T> extends BinarySpecification<T> {
 
     public AndSpecification(final Specification<T> spec1, final Specification<T> spec2) {
-        this.spec1 = spec1;
-        this.spec2 = spec2;
+        super(spec1, spec2);
     }
 
     @Override

@@ -14,6 +14,7 @@ public class HarArbeidetSisteMnd extends LeafSpecification<Soknad> {
     private final int month;
 
     private HarArbeidetSisteMnd(int mnd) {
+        super("FK_VK_10.x");
         this.month = mnd;
     }
 
@@ -29,11 +30,6 @@ public class HarArbeidetSisteMnd extends LeafSpecification<Soknad> {
                 ? ja(ModrekvoteUtfall.UTFALL_01, "Person har jobbet {0} måneder, som er tilstrekkelig", mndArbeid)
                 : nei(ModrekvoteUtfall.UTFALL_02, "Person er oppfort med {0} mnd arbeid. Dekker ikke kravet til {1} mnd med arbeid",
                         mndArbeid, month);
-    }
-
-    @Override
-    public String identifikator() {
-        return "FK_VK_10.x";
     }
 
 }

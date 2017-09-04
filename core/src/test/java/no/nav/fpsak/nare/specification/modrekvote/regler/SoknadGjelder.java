@@ -15,6 +15,7 @@ public class SoknadGjelder extends LeafSpecification<Soknad> {
     private final Soknadstype soknadstype;
 
     private SoknadGjelder(Soknadstype soknadstype) {
+        super("");
         this.soknadstype = soknadstype;
     }
 

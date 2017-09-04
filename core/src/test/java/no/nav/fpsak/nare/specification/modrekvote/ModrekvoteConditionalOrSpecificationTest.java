@@ -28,6 +28,10 @@ public class ModrekvoteConditionalOrSpecificationTest {
 
         RuleService<Soknad> modrekvote = new ModrekvoteConditional();
         Evaluation evaluation = modrekvote.evaluer(soknad);
+        
+        EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
+        Collection<String> leafReasons = evaluationSummary.leafReasons(Resultat.NEI, Resultat.MANUELL_BEHANDLING);
+        Assertions.assertThat(leafReasons).containsOnly(ModrekvoteUtfall.UTFALL_09, ModrekvoteUtfall.UTFALL_11);
 
         String asJson = EvaluationSerializer.asJson(evaluation);
 
@@ -41,10 +45,6 @@ public class ModrekvoteConditionalOrSpecificationTest {
                 .contains("FK_VK.10.B");
 
         // System.out.println(asJson);
-
-        EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
-        Collection<String> leafReasons = evaluationSummary.leafReasons(Resultat.NEI, Resultat.MANUELL_BEHANDLING);
-        Assertions.assertThat(leafReasons).containsOnly(ModrekvoteUtfall.UTFALL_09, ModrekvoteUtfall.UTFALL_11);
 
     }
 

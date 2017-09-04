@@ -8,14 +8,10 @@ import no.nav.fpsak.nare.evaluation.node.OrEvaluation;
 /**
  * OR specification, used to create a new specifcation that is the OR of two other specifications.
  */
-public class OrSpecification<T> extends AbstractSpecification<T> {
-
-    private Specification<T> spec1;
-    private Specification<T> spec2;
+public class OrSpecification<T> extends BinarySpecification<T> {
 
     public OrSpecification(final Specification<T> spec1, final Specification<T> spec2) {
-        this.spec1 = spec1;
-        this.spec2 = spec2;
+        super(spec1, spec2);
     }
 
     @Override
@@ -45,5 +41,5 @@ public class OrSpecification<T> extends AbstractSpecification<T> {
     public RuleDescription ruleDescription() {
         return new RuleDescription(Operator.OR, identifikator(), beskrivelse(), spec1.ruleDescription(), spec2.ruleDescription());
     }
-
+    
 }
