@@ -14,6 +14,7 @@ public class HarArbeidetSisteMnd extends LeafSpecification<Soknad> {
     private final int month;
 
     private HarArbeidetSisteMnd(int mnd) {
+        super("FK_VK_10.x");
         this.month = mnd;
     }
 
@@ -31,9 +32,5 @@ public class HarArbeidetSisteMnd extends LeafSpecification<Soknad> {
                         mndArbeid, month);
     }
 
-    @Override
-    public String identifikator() {
-        return "FK_VK_10.x";
-    }
 
 }

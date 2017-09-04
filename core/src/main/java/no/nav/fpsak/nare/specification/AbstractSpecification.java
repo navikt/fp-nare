@@ -14,6 +14,10 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
     protected AbstractSpecification() {
     }
 
+    protected AbstractSpecification(String id) {
+        this.id = id;
+    }
+
     @Override
     public String beskrivelse() {
         return beskrivelse;
@@ -69,7 +73,6 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
 
     @Override
     public String toString() {
-        System.out.println(this.beskrivelse());
         return new GsonBuilder().setPrettyPrinting().create().toJson(this);
     }
 }

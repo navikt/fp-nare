@@ -47,4 +47,6 @@ public interface Specification<T> {
     Specification<T> og(Specification<T> specification);
 
     RuleDescription ruleDescription();
+    
+    void visit(Specification<T> parentSpecification, SpecificationVisitor<T> visitor);
 }
