@@ -1,6 +1,5 @@
 package no.nav.fpsak.nare.specification;
 
-
 import no.nav.fpsak.nare.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
@@ -11,14 +10,24 @@ import no.nav.fpsak.nare.evaluation.node.NotEvaluation;
  */
 public class NotSpecification<T> extends AbstractSpecification<T> {
 
+    public static <V> NotSpecification<V> ikke(final Specification<V> spec1) {
+        return new NotSpecification<V>(spec1);
+    }
+
     private Specification<T> spec1;
 
     public NotSpecification(final Specification<T> spec1) {
         this.spec1 = spec1;
     }
 
-    public static<V> NotSpecification<V> ikke(final Specification<V> spec1) {
-        return new NotSpecification<V>(spec1);
+    @Override
+    public String beskrivelse() {
+        if (beskrivelse.isEmpty()) {
+            return "(IKKE " + spec1.beskrivelse() + ")";
+        } else {
+            return beskrivelse;
+        }
+
     }
 
     @Override
@@ -33,18 +42,6 @@ public class NotSpecification<T> extends AbstractSpecification<T> {
         } else {
             return id;
         }
-    }
-
-
-
-    @Override
-    public String beskrivelse() {
-        if (beskrivelse.isEmpty()){
-            return "(IKKE " + spec1.beskrivelse() + ")";
-        }else{
-            return beskrivelse;
-        }
-
     }
 
     @Override

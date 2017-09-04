@@ -9,24 +9,21 @@ public enum Resultat {
     private final int weight;
     private String inverse;
 
-
     Resultat(int weight, String inverse) {
         this.weight = weight;
         this.inverse = inverse;
     }
 
-
-
     public Resultat and(Resultat resultat) {
         return (this.weight > resultat.weight) ? this : resultat;
     }
 
-    public Resultat or(Resultat resultat) {
-        return (this.weight < resultat.weight) ? this : resultat;
-    }
-
-    public Resultat not(){
+    public Resultat not() {
         return Resultat.valueOf(this.inverse);
 
+    }
+
+    public Resultat or(Resultat resultat) {
+        return (this.weight < resultat.weight) ? this : resultat;
     }
 }

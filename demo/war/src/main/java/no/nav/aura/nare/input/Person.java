@@ -1,11 +1,10 @@
 package no.nav.aura.nare.input;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Person{
+public class Person {
 
     private final String name;
     private Rolle rolle;
@@ -18,7 +17,7 @@ public class Person{
     private List<String> institusjonsOpphold;
     private final int mndArbeid;
 
-    public Person(String name, Rolle rolle, String yrke, int inntekt, int mndArbeid, String addresse, boolean rettTilFp){
+    public Person(String name, Rolle rolle, String yrke, int inntekt, int mndArbeid, String addresse, boolean rettTilFp) {
         this.name = name;
         this.rolle = rolle;
         this.yrke = yrke;
@@ -29,19 +28,19 @@ public class Person{
         this.institusjonsOpphold = new ArrayList<>();
     }
 
-    public void setUttaksplan(Uttaksplan uttaksplan){
-        this.uttaksplan = uttaksplan;
-    }
-
-    public Optional<Uttaksplan> getUttaksplan(){
-        return Optional.ofNullable(uttaksplan);
-    }
-
-    public void addInstituasjonsOpphold(String institusjonsopphold){
+    public void addInstituasjonsOpphold(String institusjonsopphold) {
         institusjonsOpphold.add(institusjonsopphold);
     }
 
-    public List<String> getInstitusjonsOpphold(){
+    public String getAddresse() {
+        return addresse;
+    }
+
+    public int getInntekt() {
+        return inntekt;
+    }
+
+    public List<String> getInstitusjonsOpphold() {
         return institusjonsOpphold;
     }
 
@@ -49,28 +48,27 @@ public class Person{
         return mndArbeid;
     }
 
-    public int getInntekt() {
-        return inntekt;
-    }
-
-    public String getYrke() {
-        return yrke;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public String getAddresse() {
-        return addresse;
     }
 
     public Rolle getRolle() {
         return rolle;
     }
 
+    public Optional<Uttaksplan> getUttaksplan() {
+        return Optional.ofNullable(uttaksplan);
+    }
+
+    public String getYrke() {
+        return yrke;
+    }
 
     public boolean harRettTilForeldrepenger() {
         return rettTilFp;
+    }
+
+    public void setUttaksplan(Uttaksplan uttaksplan) {
+        this.uttaksplan = uttaksplan;
     }
 }

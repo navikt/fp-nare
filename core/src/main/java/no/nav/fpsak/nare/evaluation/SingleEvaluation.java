@@ -8,12 +8,32 @@ public class SingleEvaluation implements Evaluation {
     private String ruleDescription;
     private Resultat resultat;
     private String reason;
+    private String reasonKey;
+    private String reasonCode;
 
-    public SingleEvaluation(Resultat resultat, String ruleIdentification, String ruleDescription, String reason, Object... stringformatArguments) {
+    public SingleEvaluation(Resultat resultat, String ruleIdentification, String ruleDescription, String reasonCode, String reasonKey,
+            Object... stringformatArguments) {
         this.ruleIdentification = ruleIdentification;
         this.ruleDescription = ruleDescription;
         this.resultat = resultat;
-        this.reason = MessageFormat.format(reason, stringformatArguments);
+        this.reasonKey = reasonKey;
+        this.reasonCode = reasonCode;
+        // TODO (FC): Lookup message text I18N
+        this.reason = MessageFormat.format(reasonKey, stringformatArguments);
+    }
+
+    @Override
+    public String reason() {
+        return reason;
+    }
+
+    @Override
+    public String reasonCode() {
+        return reasonCode;
+    }
+
+    public String reasonKey() {
+        return reasonKey;
     }
 
     @Override
@@ -30,11 +50,4 @@ public class SingleEvaluation implements Evaluation {
     public String ruleIdentification() {
         return ruleIdentification;
     }
-
-    @Override
-    public String reason() {
-        return reason;
-    }
-
-
 }

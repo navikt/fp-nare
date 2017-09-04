@@ -1,16 +1,16 @@
 package no.nav.fpsak.nare;
 
-import com.google.gson.GsonBuilder;
-
-import no.nav.fpsak.nare.evaluation.Operator;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.gson.GsonBuilder;
+
+import no.nav.fpsak.nare.evaluation.Operator;
 
 public class RuleDescription {
 
-    private  String ruleIdentifcation;
-    private  String ruleDescription;
+    private String ruleIdentifcation;
+    private String ruleDescription;
     private Operator operator;
     private List<RuleDescription> children;
 
@@ -27,6 +27,9 @@ public class RuleDescription {
         this.ruleIdentifcation = ruleIdentifcation;
     }
 
+    public Operator getOperator() {
+        return operator;
+    }
 
     @Override
     public String toString() {

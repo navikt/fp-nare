@@ -6,8 +6,18 @@ import no.nav.fpsak.nare.evaluation.Operator;
 import no.nav.fpsak.nare.evaluation.Resultat;
 
 public class ConditionalOrEvaluation extends AggregatedEvaluation {
-	public ConditionalOrEvaluation(String id, String ruleDescription, Evaluation testEval, Evaluation flowEval) {
+    public ConditionalOrEvaluation(String id, String ruleDescription, Evaluation testEval, Evaluation flowEval) {
         super(Operator.COND_OR, id, ruleDescription, testEval, flowEval);
+    }
+
+    @Override
+    public String reason() {
+        if (result().equals(Resultat.JA)) {
+            return "Tilfredstiller flyt (test=" + first().ruleIdentification() + ")/" + second().ruleIdentification();
+        } else {
+            return "Tilfredstiller ikke flyt (test=" + first().ruleIdentification() + ")/" + second().ruleIdentification();
+        }
+
     }
 
     @Override
@@ -15,15 +25,4 @@ public class ConditionalOrEvaluation extends AggregatedEvaluation {
         return first().result().and(second().result());
     }
 
-    @Override
-    public String reason() {
-        if (result().equals(Resultat.JA)){
-            return "Tilfredstiller flyt " + first().ruleIdentification() + " > " + second().ruleIdentification();
-        }else{
-            return "Tilfredstiller ikke flyt " + first().ruleIdentification() + " > " + second().ruleIdentification();
-        }
-
-
-
-    }
 }
