@@ -59,7 +59,7 @@ public class ModrekvoteConditional implements RuleService<Soknad> {
                         .og(harUttaksplanEtterAdopsjon));
 
         return rs.regel("FK_VK.10", "Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?",
-                ConditionalOrSpecification.<Soknad> regel("id", "beskrivelse")
+                ConditionalOrSpecification.<Soknad> regel()
                         .ellersHvis(gjelderSøknadFødsel, vilkårForFødsel)
                         .ellersHvis(gjelderSøknadAdopsjon, vilkårForAdopsjon).build());
     }

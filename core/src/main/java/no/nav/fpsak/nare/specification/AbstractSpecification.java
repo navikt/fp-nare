@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 
 import no.nav.fpsak.nare.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
+import no.nav.fpsak.nare.evaluation.Operator;
 import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.SingleEvaluation;
 
@@ -68,7 +69,7 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
 
     @Override
     public RuleDescription ruleDescription() {
-        return new RuleDescription(identifikator(), beskrivelse());
+        return new RuleDescription(Operator.SINGLE, identifikator(), beskrivelse());
     }
 
     @Override
