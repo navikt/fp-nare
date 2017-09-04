@@ -7,9 +7,17 @@ import no.nav.fpsak.nare.evaluation.Resultat;
 
 public class OrEvaluation extends AggregatedEvaluation {
 
-
     public OrEvaluation(String id, String ruleDescription, Evaluation... children) {
         super(Operator.OR, id, ruleDescription, children);
+    }
+
+    @Override
+    public String reason() {
+        if (result().equals(Resultat.JA)) {
+            return "Tilfredstiller " + ruleOrIdentification();
+        } else {
+            return "Tilfredstiller hverken " + first().ruleIdentification() + " eller " + second().ruleIdentification();
+        }
     }
 
     @Override
@@ -17,24 +25,14 @@ public class OrEvaluation extends AggregatedEvaluation {
         return first().result().or(second().result());
     }
 
-    @Override
-    public String reason() {
-        if (result().equals(Resultat.JA)){
-            return "Tilfredstiller " + ruleOrIdentification();
-        }else{
-            return "Tilfredstiller hverken " + first().ruleIdentification() + " eller " + second().ruleIdentification();
-        }
-
-    }
-
-
     private String ruleOrIdentification() {
         String firstID = first().result().equals(Resultat.JA) ? first().ruleIdentification() : "";
         String secondID = second().result().equals(Resultat.JA) ? second().ruleIdentification() : "";
-        if (firstID.isEmpty()) return secondID;
-        if (secondID.isEmpty()) return firstID;
+        if (firstID.isEmpty())
+            return secondID;
+        if (secondID.isEmpty())
+            return firstID;
         return firstID + " OG " + secondID;
     }
-
 
 }

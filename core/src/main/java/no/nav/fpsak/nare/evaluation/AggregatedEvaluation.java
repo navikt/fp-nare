@@ -4,15 +4,18 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-
 public abstract class AggregatedEvaluation implements Evaluation {
 
-    private  String ruleIdentification;
-    private  String ruleDescription;
+    private String ruleIdentification;
+    private String ruleDescription;
     private Operator operator;
+
+    @SuppressWarnings("unused")
     private Resultat resultat;
 
+    @SuppressWarnings("unused")
     private String reason;
+
     private List<Evaluation> children;
 
     protected AggregatedEvaluation(Operator operator, String id, String ruleDescription, Evaluation... children) {
@@ -24,18 +27,9 @@ public abstract class AggregatedEvaluation implements Evaluation {
         this.reason = reason();
     }
 
-    protected Evaluation first() {
-        return children.get(0);
+    public List<Evaluation> children() {
+        return Collections.unmodifiableList(children);
     }
-
-    protected Evaluation second() {
-        return children.get(1);
-    }
-
-    public List<Evaluation> children(){
-    	return Collections.unmodifiableList(children);
-    }
-
 
     @Override
     public String ruleDescription() {
@@ -45,6 +39,29 @@ public abstract class AggregatedEvaluation implements Evaluation {
     @Override
     public String ruleIdentification() {
         return ruleIdentification;
+    }
+
+    @Override
+    public void visit(Evaluation parentEvaluation, EvaluationVisitor visitor) {
+        boolean visited = visitor.visiting(operator, parentEvaluation, this);
+        if (!visited) {
+            return; // allerede besøkt tidligere
+        }
+        for (Evaluation child : children) {
+            child.visit(this, visitor); // NOSONAR
+        }
+    }
+
+    protected Evaluation first() {
+        return children.get(0);
+    }
+
+    protected Operator getOperator() {
+        return operator;
+    }
+
+    protected Evaluation second() {
+        return children.get(1);
     }
 
 }

@@ -2,12 +2,15 @@ package no.nav.fpsak.nare.specification.modrekvote;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collection;
+
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import no.nav.fpsak.nare.RuleService;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.EvaluationSerializer;
+import no.nav.fpsak.nare.evaluation.EvaluationSummary;
 import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.specification.modrekvote.input.Person;
 import no.nav.fpsak.nare.specification.modrekvote.input.Rolle;
@@ -32,6 +35,8 @@ public class ModrekvoteTest {
 
         String asJson = EvaluationSerializer.asJson(evaluation);
 
+        // System.out.println(asJson);
+
         Assertions.assertThat(asJson)
                 .contains("FK_VK 10.4")
                 .contains("FK_VK_10.4")
@@ -40,6 +45,10 @@ public class ModrekvoteTest {
                 .contains("FK_VK 10.4/FK_VK 10.5")
                 .contains("FK_VK.10.A")
                 .contains("FK_VK.10.B");
+
+        EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
+        Collection<String> leafReasons = evaluationSummary.leafReasons(Resultat.NEI, Resultat.MANUELL_BEHANDLING);
+        Assertions.assertThat(leafReasons).containsOnly(ModrekvoteUtfall.UTFALL_09, ModrekvoteUtfall.UTFALL_11);
 
     }
 }

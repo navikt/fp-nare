@@ -1,11 +1,11 @@
 package no.nav.fpsak.nare;
 
 import no.nav.fpsak.nare.evaluation.Evaluation;
-import no.nav.fpsak.nare.specification.EvaluationSpecification;
+import no.nav.fpsak.nare.specification.Specification;
 
 public interface RuleService<T> {
 
-	Evaluation evaluer(T data);
+    Evaluation evaluer(T data);
 
-	EvaluationSpecification<T> getSpecification();
+    Specification<T> getSpecification();
 }

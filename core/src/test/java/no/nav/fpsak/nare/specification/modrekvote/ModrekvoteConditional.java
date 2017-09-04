@@ -16,53 +16,53 @@ import no.nav.fpsak.nare.RuleService;
 import no.nav.fpsak.nare.Ruleset;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.specification.ConditionalOrSpecification;
-import no.nav.fpsak.nare.specification.EvaluationSpecification;
 import no.nav.fpsak.nare.specification.Specification;
 import no.nav.fpsak.nare.specification.modrekvote.input.Soknad;
 
-public class ModrekvoteConditional extends Ruleset implements RuleService<Soknad> {
+public class ModrekvoteConditional implements RuleService<Soknad> {
 
-	private final Ruleset ruleset = new Ruleset();
+    private final Ruleset ruleset = new Ruleset();
 
-	public ModrekvoteConditional() {
-	}
+    public ModrekvoteConditional() {
+    }
 
-	@Override
-	public EvaluationSpecification<Soknad> getSpecification() {
-		Ruleset rs = ruleset;
+    @Override
+    public Evaluation evaluer(Soknad data) {
+        return getSpecification().evaluate(data);
+    }
 
-		Specification<Soknad> harBeggeForeldreRettTilForeldrepenger = rs.regel("FK_VK_10.1",
-				"Har begge foreldre rett til foreldrepenger?",
-				harRettTilForeldrePenger(MOR).og(harRettTilForeldrePenger(FAR)));
+    @Override
+    public Specification<Soknad> getSpecification() {
+        Ruleset rs = ruleset;
 
-		Specification<Soknad> gjelderSøknadFødsel = regel("FK_VK 10.2", "Gjelder søknad fødsel?",
-				søknadGjelder(FODSEL));
-		Specification<Soknad> gjelderSøknadAdopsjon = regel("FK_VK 10.3", "Gjelder søknad adopsjon?",
-				søknadGjelder(ADOPSJON));
-		Specification<Soknad> harUttaksplanEtterFodsel = rs.regel("FK_VK_10.4",
-				"Har mor uttaksplan sammenhengende eller tre år etter fødsel?",
-				harUttaksplanForModreKvoteFodsel(SAMMENHENGENDE).eller(harUttaksplanForModreKvoteFodsel(INNEN_3_AAR)));
-		Specification<Soknad> harUttaksplanEtterAdopsjon = rs.regel("FK_VK_10.5",
-				"Har mor uttaksplan sammenhengende eller tre år etter adopsjon?",
-				harUttaksplanForModreKvoteAdopsjonl(INNEN_3_AAR));
+        Specification<Soknad> harBeggeForeldreRettTilForeldrepenger = rs.regel("FK_VK_10.1",
+                "Har begge foreldre rett til foreldrepenger?",
+                harRettTilForeldrePenger(MOR).og(harRettTilForeldrePenger(FAR)));
 
-		Specification<Soknad> vilkårForFødsel = rs.regel("FK_VK.10.A",
-				harBeggeForeldreRettTilForeldrepenger.og(gjelderSøknadFødsel).og(harUttaksplanEtterFodsel));
+        Specification<Soknad> gjelderSøknadFødsel = rs.regel("FK_VK 10.2", "Gjelder søknad fødsel?",
+                søknadGjelder(FODSEL));
+        Specification<Soknad> gjelderSøknadAdopsjon = rs.regel("FK_VK 10.3", "Gjelder søknad adopsjon?",
+                søknadGjelder(ADOPSJON));
+        Specification<Soknad> harUttaksplanEtterFodsel = rs.regel("FK_VK_10.4",
+                "Har mor uttaksplan sammenhengende eller tre år etter fødsel?",
+                harUttaksplanForModreKvoteFodsel(SAMMENHENGENDE).eller(harUttaksplanForModreKvoteFodsel(INNEN_3_AAR)));
+        Specification<Soknad> harUttaksplanEtterAdopsjon = rs.regel("FK_VK_10.5",
+                "Har mor uttaksplan sammenhengende eller tre år etter adopsjon?",
+                harUttaksplanForModreKvoteAdopsjonl(INNEN_3_AAR));
 
-		Specification<Soknad> vilkårForAdopsjon = rs.regel("FK_VK.10.B",
-				harBeggeForeldreRettTilForeldrepenger
-						.og(ikke(gjelderSøknadFødsel).medBeskrivelse("søknad gjelder ikke fødsel"))
-						.og(gjelderSøknadAdopsjon).og(harUttaksplanEtterAdopsjon));
+        Specification<Soknad> vilkårForFødsel = rs.regel("FK_VK.10.A",
+                harBeggeForeldreRettTilForeldrepenger
+                        .og(harUttaksplanEtterFodsel));
 
-		return rs.regel("FK_VK.10", "Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?",
-				ConditionalOrSpecification.<Soknad>regel("id", "beskrivelse")
-						.ellersHvis(gjelderSøknadFødsel, vilkårForFødsel)
-						.ellersHvis(gjelderSøknadAdopsjon, vilkårForAdopsjon).build());
-	}
+        Specification<Soknad> vilkårForAdopsjon = rs.regel("FK_VK.10.B",
+                harBeggeForeldreRettTilForeldrepenger
+                        .og(ikke(gjelderSøknadFødsel).medBeskrivelse("søknad gjelder ikke fødsel"))
+                        .og(harUttaksplanEtterAdopsjon));
 
-	@Override
-	public Evaluation evaluer(Soknad data) {
-		return getSpecification().evaluate(data);
-	}
+        return rs.regel("FK_VK.10", "Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?",
+                ConditionalOrSpecification.<Soknad> regel("id", "beskrivelse")
+                        .ellersHvis(gjelderSøknadFødsel, vilkårForFødsel)
+                        .ellersHvis(gjelderSøknadAdopsjon, vilkårForAdopsjon).build());
+    }
 
 }

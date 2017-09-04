@@ -60,6 +60,13 @@
 	</dependencyManagement>
 
     <dependencies>
+    
+        <dependency>
+            <groupId>no.nav.fpsak.nare</groupId>
+	        <artifactId>fpsak-nare-core</artifactId>
+	        <version>${project.version}</version>
+        </dependency>
+        
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxrs</artifactId>
