@@ -43,7 +43,7 @@ public class ModrekvoteConditional implements RuleService<Soknad> {
                 søknadGjelder(FODSEL));
         Specification<Soknad> gjelderSøknadAdopsjon = rs.regel("FK_VK 10.3", "Gjelder søknad adopsjon?",
                 søknadGjelder(ADOPSJON));
-        Specification<Soknad> harUttaksplanEtterFodsel = rs.regel("FK_VK_10.4",
+        Specification<Soknad> harUttaksplanEtterFodsel = rs.regel("FK_VK 10.4",
                 "Har mor uttaksplan sammenhengende eller tre år etter fødsel?",
                 harUttaksplanForModreKvoteFodsel(SAMMENHENGENDE).eller(harUttaksplanForModreKvoteFodsel(INNEN_3_AAR)));
         Specification<Soknad> harUttaksplanEtterAdopsjon = 
@@ -55,7 +55,7 @@ public class ModrekvoteConditional implements RuleService<Soknad> {
 
         Specification<Soknad> vilkårForAdopsjon = rs.regel("FK_VK.10.B",
                 harBeggeForeldreRettTilForeldrepenger
-                        .og(ikke(gjelderSøknadFødsel).medBeskrivelse("søknad gjelder ikke fødsel"))
+                        .og(gjelderSøknadAdopsjon)
                         .og(harUttaksplanEtterAdopsjon));
 
         return rs.regel("FK_VK.10", "Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?",

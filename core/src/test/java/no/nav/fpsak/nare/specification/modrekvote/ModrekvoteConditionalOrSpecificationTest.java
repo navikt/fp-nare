@@ -29,22 +29,21 @@ public class ModrekvoteConditionalOrSpecificationTest {
         RuleService<Soknad> modrekvote = new ModrekvoteConditional();
         Evaluation evaluation = modrekvote.evaluer(soknad);
         
+        String asJson = EvaluationSerializer.asJson(evaluation);
+//        System.out.println(asJson);
+        
         EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
         Collection<String> leafReasons = evaluationSummary.leafReasons(Resultat.NEI, Resultat.MANUELL_BEHANDLING);
-        Assertions.assertThat(leafReasons).containsOnly(ModrekvoteUtfall.UTFALL_09, ModrekvoteUtfall.UTFALL_11);
-
-        String asJson = EvaluationSerializer.asJson(evaluation);
+        Assertions.assertThat(leafReasons).containsOnly(ModrekvoteUtfall.UTFALL_09);
 
         // TODO: unngå teste på string innhold, hent ut fra evaluation
         Assertions.assertThat(asJson)
-                .doesNotContain("FK_VK_10.4")
+                .doesNotContain("FK_VK 10.4")
                 .doesNotContain("FK_VK 10.5")
                 .doesNotContain("FK_VK.10.A")
-                .doesNotContain("FK_VK 10.4/FK_VK 10.5")
                 .contains("FK_VK 10.6")
                 .contains("FK_VK.10.B");
 
-        // System.out.println(asJson);
 
     }
 

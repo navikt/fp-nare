@@ -98,7 +98,7 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
         String rootSpecId = identifikator();
         RuleDescription[] ruleDescriptions = conditionalEntries.stream().map(coe -> {
             return new RuleDescription(Operator.AND, rootSpecId + "->" + coe.testSpec().identifikator(),
-                    coe.testSpec().beskrivelse(), coe.testSpec().ruleDescription(), coe.testSpec.ruleDescription(), coe.flowSpec.ruleDescription());
+                    coe.testSpec().beskrivelse(), coe.testSpec().ruleDescription(), coe.flowSpec.ruleDescription());
         }).toArray(RuleDescription[]::new);
 
         return new RuleDescription(Operator.COND_OR, identifikator(), beskrivelse(), ruleDescriptions);

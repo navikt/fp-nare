@@ -38,7 +38,7 @@ public class Modrekvote implements RuleService<Soknad> {
                 harRettTilForeldrePenger(MOR).og(harRettTilForeldrePenger(FAR)));
         Specification<Soknad> gjelderSøknadFødsel = rs.regel("FK_VK 10.2", "Gjelder søknad fødsel?", søknadGjelder(FODSEL));
         Specification<Soknad> gjelderSøknadAdopsjon = rs.regel("FK_VK 10.3", "Gjelder søknad adopsjon?", søknadGjelder(ADOPSJON));
-        Specification<Soknad> harUttaksplanEtterFodsel = rs.regel("FK_VK_10.4",
+        Specification<Soknad> harUttaksplanEtterFodsel = rs.regel("FK_VK 10.4",
                 "Har mor uttaksplan sammenhengende eller tre år etter fødsel?",
                 harUttaksplanForModreKvoteFodsel(SAMMENHENGENDE).eller(harUttaksplanForModreKvoteFodsel(INNEN_3_AAR)));
         Specification<Soknad> harUttaksplanEtterAdopsjon = harUttaksplanForModreKvoteAdopsjonl(INNEN_3_AAR);

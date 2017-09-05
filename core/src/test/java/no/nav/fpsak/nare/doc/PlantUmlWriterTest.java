@@ -15,7 +15,7 @@ public class PlantUmlWriterTest {
         RuleService modrekvote = new ModrekvoteConditional();
         
         RuleDescription ruleDescription = modrekvote.getSpecification().ruleDescription();
-        String output = ruleDescription.toPlantUmlActivityDiagram();
+        String output = new PlantUmlWriter().toPlantUmlActivityDiagram(ruleDescription);
         System.out.println(output);
     }
 }

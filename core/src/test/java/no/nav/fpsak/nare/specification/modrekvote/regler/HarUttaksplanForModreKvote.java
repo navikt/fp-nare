@@ -4,7 +4,6 @@ import static no.nav.fpsak.nare.specification.modrekvote.input.Rolle.MOR;
 
 import java.util.Optional;
 
-import no.nav.fpsak.nare.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.specification.LeafSpecification;
 import no.nav.fpsak.nare.specification.modrekvote.ModrekvoteUtfall;
@@ -20,7 +19,7 @@ public class HarUttaksplanForModreKvote extends LeafSpecification<Soknad> {
     }
 
     public static HarUttaksplanForModreKvote harUttaksplanForModreKvoteFodsel(Uttaksplan uttaksplan) {
-        return new HarUttaksplanForModreKvote("FK_VK 10.4-FK_VK 10.5", Soknadstype.FODSEL, uttaksplan);
+        return new HarUttaksplanForModreKvote("FK_VK 10.5", Soknadstype.FODSEL, uttaksplan);
     }
 
     private final Soknadstype soknadstype;
