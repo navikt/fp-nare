@@ -16,16 +16,16 @@ public class RuleDescription {
     private final Operator operator;
     private final List<RuleDescription> children;
 
-    public RuleDescription(Operator operator, String ruleIdentifcation, String ruleDescription, RuleDescription... children) {
+    public RuleDescription(Operator operator, String ruleIdentification, String ruleDescription, RuleDescription... children) {
         // Objects.requireNonNull(operator, "operator");
-        Objects.requireNonNull(ruleIdentifcation, "ruleIdentification");
+        Objects.requireNonNull(ruleIdentification, "ruleIdentification");
         Objects.requireNonNull(ruleDescription, "ruleDescription");
 
         if (Objects.equals(Operator.SINGLE, operator) && children != null && children.length > 0) {
             throw new IllegalArgumentException("Cannot have a SINGLE node with children : " + children.length);
         }
         this.operator = operator;
-        this.ruleIdentification = ruleIdentifcation;
+        this.ruleIdentification = ruleIdentification;
         this.ruleDescription = ruleDescription;
         this.children = children == null || children.length == 0 ? Collections.emptyList() : Arrays.asList(children);
 

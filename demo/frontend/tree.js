@@ -31,7 +31,7 @@ var tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
     .html(function(d) {
-        return "<div> ID: <span style='color:lightblue'>"+ d.ruleIdentifcation+"</span></div> " +
+        return "<div> ID: <span style='color:lightblue'>"+ d.ruleIdentification+"</span></div> " +
             "<div> Beskrivelse: <div style='color:lightblue'>"+ d.ruleDescription+"</span></div> " +
             "<div> Evaluering: <div style='color:lightblue'>"+ d.reason+"</div></div>";
     })
