@@ -8,32 +8,26 @@ public class SingleEvaluation implements Evaluation {
     private String ruleDescription;
     private Resultat resultat;
     private String reason;
-    private String reasonKey;
-    private String reasonCode;
+    private DetailReasonKey outcomeReason;
 
-    public SingleEvaluation(Resultat resultat, String ruleIdentification, String ruleDescription, String reasonCode, String reasonKey,
+    public SingleEvaluation(Resultat resultat, String ruleIdentification, String ruleDescription, DetailReasonKey outcome,
             Object... stringformatArguments) {
         this.ruleIdentification = ruleIdentification;
         this.ruleDescription = ruleDescription;
         this.resultat = resultat;
-        this.reasonKey = reasonKey;
-        this.reasonCode = reasonCode;
+        this.outcomeReason = outcome;
         // TODO (FC): Lookup message text I18N
-        this.reason = MessageFormat.format(reasonKey, stringformatArguments);
+        this.reason = MessageFormat.format(outcomeReason.getReasonTextTemplate(), stringformatArguments);
     }
 
     @Override
     public String reason() {
         return reason;
     }
-
+    
     @Override
-    public String reasonCode() {
-        return reasonCode;
-    }
-
-    public String reasonKey() {
-        return reasonKey;
+    public DetailReasonKey getOutcome() {
+        return outcomeReason;
     }
 
     @Override

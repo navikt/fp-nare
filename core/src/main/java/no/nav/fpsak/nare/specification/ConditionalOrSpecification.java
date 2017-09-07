@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import no.nav.fpsak.nare.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
+import no.nav.fpsak.nare.evaluation.DetailReasonKeyImpl;
 import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.node.ConditionalOrEvaluation;
 
@@ -17,6 +18,8 @@ import no.nav.fpsak.nare.evaluation.node.ConditionalOrEvaluation;
  * AND of two other specifications.
  */
 public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
+
+    private static final DetailReasonKeyImpl INVALID_EXIT = new DetailReasonKeyImpl(Operator.COND_OR.name(), "{0} har ingen gyldige utganger");
 
     public static class Builder<T> {
         private final List<CondOrEntry<T>> conditionalEntries = new ArrayList<>();
@@ -80,7 +83,7 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
             return new ConditionalOrEvaluation(identifikator(), beskrivelse(), testResult, flowResult);
         } else {
             // varlse en kritisk feil? Er inne i en blindvei
-            return nei(Operator.COND_OR.name(), "{0} har ingen gyldige utganger", identifikator());
+            return nei(INVALID_EXIT, identifikator());
         }
     }
 

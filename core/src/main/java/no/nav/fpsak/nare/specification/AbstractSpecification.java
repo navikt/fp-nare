@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import no.nav.fpsak.nare.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
+import no.nav.fpsak.nare.evaluation.DetailReasonKey;
 import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.SingleEvaluation;
 
@@ -38,12 +39,12 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
         }
     }
 
-    public Evaluation ja(String reasonCode, String reason, Object... stringformatArguments) {
-        return new SingleEvaluation(Resultat.JA, identifikator(), beskrivelse(), reasonCode, reason, stringformatArguments);
+    public Evaluation ja(DetailReasonKey reasonKey, Object... reasonArgs) {
+        return new SingleEvaluation(Resultat.JA, identifikator(), beskrivelse(), reasonKey, reasonArgs);
     }
 
-    public Evaluation manuell(String reasonCode, String reason, Object... stringformatArguments) {
-        return new SingleEvaluation(Resultat.MANUELL_BEHANDLING, identifikator(), beskrivelse(), reasonCode, reason, stringformatArguments);
+    public Evaluation manuell(DetailReasonKey reasonKey, Object... reasonArgs) {
+        return new SingleEvaluation(Resultat.MANUELL_BEHANDLING, identifikator(), beskrivelse(), reasonKey, reasonArgs);
     }
 
     @Override
@@ -58,8 +59,8 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
         return this;
     }
 
-    public Evaluation nei(String reasonCode, String reason, Object... stringformatArguments) {
-        return new SingleEvaluation(Resultat.NEI, identifikator(), beskrivelse(), reasonCode, reason, stringformatArguments);
+    public Evaluation nei(DetailReasonKey reasonKey, Object... reasonArgs) {
+        return new SingleEvaluation(Resultat.NEI, identifikator(), beskrivelse(), reasonKey, reasonArgs);
     }
 
     @Override

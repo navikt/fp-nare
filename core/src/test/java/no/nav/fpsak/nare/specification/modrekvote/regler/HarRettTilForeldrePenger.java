@@ -32,11 +32,11 @@ public class HarRettTilForeldrePenger extends LeafSpecification<Soknad> {
 
         Optional<Person> søker = soknad.getSøker(rolle);
         if (!søker.isPresent()) {
-            return nei(ModrekvoteUtfall.UTFALL_03, "Ingen søker med rolle {0} ", rolle);
+            return nei(ModrekvoteUtfall.ROLLE_INGEN_SØKER_MED_ROLLE, rolle);
         } else if (!søker.get().harRettTilForeldrepenger()) {
-            return nei(ModrekvoteUtfall.UTFALL_04, "Søker med rolle {0} har ikke rett til foreldrepenger", rolle);
+            return nei(ModrekvoteUtfall.ROLLE_HAR_IKKE_RETT, rolle);
         } else {
-            return ja(ModrekvoteUtfall.UTFALL_05, "Søker med rolle {0} har rett til foreldrepenger", rolle);
+            return ja(ModrekvoteUtfall.ROLLE_HAR_RETT, rolle);
         }
     }
 

@@ -3,6 +3,7 @@ package no.nav.fpsak.nare.evaluation.node;
 import no.nav.fpsak.nare.evaluation.AggregatedEvaluation;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
+import no.nav.fpsak.nare.evaluation.DetailReasonKey;
 import no.nav.fpsak.nare.evaluation.Resultat;
 
 public class AndEvaluation extends AggregatedEvaluation {
@@ -20,7 +21,7 @@ public class AndEvaluation extends AggregatedEvaluation {
         }
 
     }
-
+    
     @Override
     public Resultat result() {
         return first().result().and(second().result());
