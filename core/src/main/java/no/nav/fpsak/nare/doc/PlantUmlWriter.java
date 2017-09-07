@@ -108,21 +108,14 @@ public class PlantUmlWriter {
 
     private void toAndSpecPlantUml(RuleDescription ruledesc, boolean alreadyNested, StringBuffer buf) {
         if (!alreadyNested) {
-            buf.append("if (" + label(ruledesc) + ") then \n");
+            toSinglePlantUml(ruledesc, alreadyNested, buf);
         }
         for (int i = 0; i < ruledesc.getChildren().size(); i++) {
             buf.append("fork " + (i > 0 ? "again" : "") + " \n");
             RuleDescription child = ruledesc.getChildren().get(i);
-            buf.append(toPlantUmlText(child, !alreadyNested)).append('\n');
+            buf.append(toPlantUmlText(child, false)).append('\n');
         }
         buf.append("end fork \n");
-
-        if (!alreadyNested) {
-            buf.append("else \n");
-            buf.append(" stop \n");
-
-            buf.append("endif \n");
-        }
 
     }
 

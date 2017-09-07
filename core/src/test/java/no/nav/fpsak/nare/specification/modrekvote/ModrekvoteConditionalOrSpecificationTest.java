@@ -34,7 +34,7 @@ public class ModrekvoteConditionalOrSpecificationTest {
         
         EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
         Collection<String> leafReasons = evaluationSummary.leafReasons(Resultat.NEI, Resultat.MANUELL_BEHANDLING);
-        Assertions.assertThat(leafReasons).containsOnly(ModrekvoteUtfall.UTFALL_09);
+        Assertions.assertThat(leafReasons).containsOnly("UTFALL_09");
 
         // TODO: unngå teste på string innhold, hent ut fra evaluation
         Assertions.assertThat(asJson)

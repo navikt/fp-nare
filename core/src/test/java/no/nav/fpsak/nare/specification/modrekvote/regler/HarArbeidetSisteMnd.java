@@ -27,10 +27,8 @@ public class HarArbeidetSisteMnd extends LeafSpecification<Soknad> {
     public Evaluation evaluate(Soknad soknad) {
         int mndArbeid = soknad.getHovedsøker().getMndArbeid();
         return (mndArbeid > month)
-                ? ja(ModrekvoteUtfall.UTFALL_01, "Person har jobbet {0} måneder, som er tilstrekkelig", mndArbeid)
-                : nei(ModrekvoteUtfall.UTFALL_02, "Person er oppfort med {0} mnd arbeid. Dekker ikke kravet til {1} mnd med arbeid",
-                        mndArbeid, month);
+                ? ja(ModrekvoteUtfall.ARBEIDET_TILSTREKKELIG, mndArbeid)
+                : nei(ModrekvoteUtfall.ARBEIDET_UTILSTREKKELIG, mndArbeid, month);
     }
-
 
 }

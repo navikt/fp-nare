@@ -46,7 +46,7 @@ public class ModrekvoteTest {
 
         EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
         Collection<String> leafReasons = evaluationSummary.leafReasons(Resultat.NEI, Resultat.MANUELL_BEHANDLING);
-        Assertions.assertThat(leafReasons).containsOnly(ModrekvoteUtfall.UTFALL_09, ModrekvoteUtfall.UTFALL_11);
+        Assertions.assertThat(leafReasons).containsOnly("UTFALL_09", "UTFALL_11");
 
     }
 }

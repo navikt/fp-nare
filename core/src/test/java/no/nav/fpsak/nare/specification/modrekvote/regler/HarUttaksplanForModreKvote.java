@@ -36,15 +36,15 @@ public class HarUttaksplanForModreKvote extends LeafSpecification<Soknad> {
     public Evaluation evaluate(Soknad soknad) {
         Optional<Person> soker = soknad.getSøker(MOR);
         if (!soker.isPresent()) {
-            return nei(ModrekvoteUtfall.UTFALL_06, "Ingen søker med rolle {0}", MOR);
+            return nei(ModrekvoteUtfall.ROLLE_INGEN_SØKER_MED_ROLLE, MOR);
         }
 
         if (!soker.get().getUttaksplan().isPresent()) {
-            return nei(ModrekvoteUtfall.UTFALL_07, "Det foreligger ingen uttaksplan for {0}", MOR);
+            return nei(ModrekvoteUtfall.UTTAKSPLAN_MANGLER, MOR);
         }
 
         return (uttaksplanModreKvote.equals(soker.get().getUttaksplan().get()))
-                ? ja(ModrekvoteUtfall.UTFALL_08, "Mødrekvote tas {0}", uttaksplanModreKvote.description(), soknadstype)
-                : nei(ModrekvoteUtfall.UTFALL_09, "Mødrekvote tas ikke {0} {1}", uttaksplanModreKvote.description(), soknadstype);
+                ? ja(ModrekvoteUtfall.UTTAKSPLAN_MODREKVOTE_TAS, uttaksplanModreKvote.description(), soknadstype)
+                : nei(ModrekvoteUtfall.UTTAKSPLAN_MODREKVOTE_TAS_IKKE, uttaksplanModreKvote.description(), soknadstype);
     }
 }

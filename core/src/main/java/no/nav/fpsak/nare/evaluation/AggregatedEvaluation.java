@@ -63,5 +63,11 @@ public abstract class AggregatedEvaluation implements Evaluation {
     protected Evaluation second() {
         return children.get(1);
     }
+    
+    @Override
+    public DetailReasonKey getOutcome() {
+        // definers kun i løvnoder
+        return null;
+    }
 
 }

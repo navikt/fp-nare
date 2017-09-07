@@ -22,9 +22,9 @@ public class SoknadGjelder extends LeafSpecification<Soknad> {
     @Override
     public Evaluation evaluate(Soknad soknad) {
         if (soknad.getSoknadstype().equals(soknadstype)) {
-            return ja(ModrekvoteUtfall.UTFALL_10, "Søknad gjelder {0}", soknadstype);
+            return ja(ModrekvoteUtfall.SOEKNADSTYPE_GJELDER, soknadstype);
         } else {
-            return nei(ModrekvoteUtfall.UTFALL_11, "Søknad gjelder ikke {0}", soknadstype);
+            return nei(ModrekvoteUtfall.SOEKNADSTYPE_GJELDER_IKKE, soknadstype);
         }
     }
 

@@ -16,6 +16,10 @@ public class PlantUmlWriterTest {
         
         RuleDescription ruleDescription = modrekvote.getSpecification().ruleDescription();
         String output = new PlantUmlWriter().toPlantUmlActivityDiagram(ruleDescription);
-        System.out.println(output);
+        assertThat(output).isNotNull();
+        assertThat(output).contains("fork again");
+        assertThat(output).contains(":FK_VK 10.6:");
+        
+//        System.out.println(output);
     }
 }
