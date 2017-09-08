@@ -47,6 +47,10 @@ public abstract class AggregatedEvaluation implements Evaluation {
         if (!visited) {
             return; // allerede besøkt tidligere
         }
+        visitChildren(visitor);
+    }
+
+    protected void visitChildren(EvaluationVisitor visitor) {
         for (Evaluation child : children) {
             child.visit(this, visitor); // NOSONAR
         }
@@ -65,7 +69,7 @@ public abstract class AggregatedEvaluation implements Evaluation {
     }
     
     @Override
-    public DetailReasonKey getOutcome() {
+    public RuleReasonRef getOutcome() {
         // definers kun i løvnoder
         return null;
     }

@@ -3,7 +3,7 @@ package no.nav.fpsak.nare.evaluation;
 public enum Resultat {
 
     JA(-1, "NEI"),
-    MANUELL_BEHANDLING(0, "MANUELL_BEHANDLING"),
+    IKKE_VURDERT(0, "IKKE_VURDERT"),
     NEI(1, "JA");
 
     private final int weight;

@@ -51,12 +51,20 @@ public class RuleDescription {
     public String getRuleDescription() {
         return ruleDescription;
     }
-    
+
     public String getRuleIdentification() {
         return ruleIdentification;
     }
 
     public List<RuleDescription> getChildren() {
         return children;
+    }
+
+    public RuleDescription lastChild() {
+        return children.get(children.size() - 1);
+    }
+
+    public boolean hasChildren() {
+        return !children.isEmpty();
     }
 }

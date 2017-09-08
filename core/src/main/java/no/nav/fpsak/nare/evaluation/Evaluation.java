@@ -2,7 +2,7 @@ package no.nav.fpsak.nare.evaluation;
 
 public interface Evaluation {
 
-    DetailReasonKey getOutcome();
+    RuleReasonRef getOutcome();
     
     String reason();
     

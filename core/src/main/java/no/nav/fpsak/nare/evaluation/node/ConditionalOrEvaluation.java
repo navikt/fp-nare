@@ -2,10 +2,12 @@ package no.nav.fpsak.nare.evaluation.node;
 
 import no.nav.fpsak.nare.evaluation.AggregatedEvaluation;
 import no.nav.fpsak.nare.evaluation.Evaluation;
+import no.nav.fpsak.nare.evaluation.EvaluationVisitor;
 import no.nav.fpsak.nare.evaluation.Operator;
 import no.nav.fpsak.nare.evaluation.Resultat;
 
 public class ConditionalOrEvaluation extends AggregatedEvaluation {
+
     public ConditionalOrEvaluation(String id, String ruleDescription, Evaluation testEval, Evaluation flowEval) {
         super(Operator.COND_OR, id, ruleDescription, testEval, flowEval);
     }
@@ -18,6 +20,12 @@ public class ConditionalOrEvaluation extends AggregatedEvaluation {
             return "Tilfredstiller ikke flyt (test=" + first().ruleIdentification() + ")/" + second().ruleIdentification();
         }
 
+    }
+
+    /** Skipper testEvals, kun flowEval */
+    @Override
+    protected void visitChildren(EvaluationVisitor visitor) {
+        second().visit(this, visitor);
     }
 
     @Override

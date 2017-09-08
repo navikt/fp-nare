@@ -5,12 +5,12 @@ import no.nav.fpsak.nare.specification.LeafSpecification;
 /**
  * Representerer en unik output fra en kjøring av Specifications. Produseres normalt av {@link LeafSpecification}.
  */
-public class DetailReasonKeyImpl implements DetailReasonKey {
+public class RuleReasonRefImpl implements RuleReasonRef {
 
     private final String reasonCode;
     private final String reason;
 
-    public DetailReasonKeyImpl(String reasonCode, String reason) {
+    public RuleReasonRefImpl(String reasonCode, String reason) {
         this.reasonCode = reasonCode;
         this.reason = reason;
     }
