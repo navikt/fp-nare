@@ -1,6 +1,5 @@
 package no.nav.fpsak.nare.specification.modrekvote;
 
-import static no.nav.fpsak.nare.specification.NotSpecification.ikke;
 import static no.nav.fpsak.nare.specification.modrekvote.input.Rolle.FAR;
 import static no.nav.fpsak.nare.specification.modrekvote.input.Rolle.MOR;
 import static no.nav.fpsak.nare.specification.modrekvote.input.Soknadstype.ADOPSJON;
@@ -21,8 +20,6 @@ import no.nav.fpsak.nare.specification.modrekvote.input.Soknad;
 
 public class ModrekvoteConditional implements RuleService<Soknad> {
 
-    private final Ruleset ruleset = new Ruleset();
-
     public ModrekvoteConditional() {
     }
 
@@ -33,7 +30,7 @@ public class ModrekvoteConditional implements RuleService<Soknad> {
 
     @Override
     public Specification<Soknad> getSpecification() {
-        Ruleset rs = ruleset;
+        Ruleset rs = new Ruleset();
 
         Specification<Soknad> harBeggeForeldreRettTilForeldrepenger = rs.regel("FK_VK_10.1",
                 "Har begge foreldre rett til foreldrepenger?",
@@ -60,8 +57,8 @@ public class ModrekvoteConditional implements RuleService<Soknad> {
 
         return rs.regel("FK_VK.10", "Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?",
                 ConditionalOrSpecification.<Soknad> regel()
-                        .ellersHvis(gjelderSøknadFødsel, vilkårForFødsel)
-                        .ellersHvis(gjelderSøknadAdopsjon, vilkårForAdopsjon).build());
+                        .hvis(gjelderSøknadFødsel, vilkårForFødsel)
+                        .hvis(gjelderSøknadAdopsjon, vilkårForAdopsjon).build());
     }
 
 }

@@ -1,6 +1,10 @@
-package no.nav.fpsak.nare.evaluation;
+package no.nav.fpsak.nare.evaluation.node;
 
 import java.text.MessageFormat;
+
+import no.nav.fpsak.nare.evaluation.Evaluation;
+import no.nav.fpsak.nare.evaluation.Resultat;
+import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 
 public class SingleEvaluation implements Evaluation {
 
@@ -8,25 +12,28 @@ public class SingleEvaluation implements Evaluation {
     private String ruleDescription;
     private Resultat resultat;
     private String reason;
-    private DetailReasonKey outcomeReason;
+    private RuleReasonRef outcomeReason;
 
-    public SingleEvaluation(Resultat resultat, String ruleIdentification, String ruleDescription, DetailReasonKey outcome,
+    public SingleEvaluation(Resultat resultat, String ruleIdentification, String ruleDescription, RuleReasonRef outcome,
             Object... stringformatArguments) {
         this.ruleIdentification = ruleIdentification;
         this.ruleDescription = ruleDescription;
         this.resultat = resultat;
-        this.outcomeReason = outcome;
-        // TODO (FC): Lookup message text I18N
-        this.reason = MessageFormat.format(outcomeReason.getReasonTextTemplate(), stringformatArguments);
+
+        if (outcome != null) {
+            this.outcomeReason = outcome;
+            // TODO (FC): Lookup message text I18N
+            this.reason = MessageFormat.format(outcomeReason.getReasonTextTemplate(), stringformatArguments);
+        }
     }
 
     @Override
     public String reason() {
         return reason;
     }
-    
+
     @Override
-    public DetailReasonKey getOutcome() {
+    public RuleReasonRef getOutcome() {
         return outcomeReason;
     }
 

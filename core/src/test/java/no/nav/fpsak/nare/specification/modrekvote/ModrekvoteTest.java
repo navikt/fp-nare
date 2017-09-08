@@ -45,7 +45,7 @@ public class ModrekvoteTest {
                 .contains("FK_VK.10.B");
 
         EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
-        Collection<String> leafReasons = evaluationSummary.leafReasons(Resultat.NEI, Resultat.MANUELL_BEHANDLING);
+        Collection<String> leafReasons = evaluationSummary.leafReasons(Resultat.NEI, Resultat.IKKE_VURDERT);
         Assertions.assertThat(leafReasons).containsOnly("UTFALL_09", "UTFALL_11");
 
     }

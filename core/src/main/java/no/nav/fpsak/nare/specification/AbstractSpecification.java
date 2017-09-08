@@ -5,9 +5,9 @@ import com.google.gson.GsonBuilder;
 import no.nav.fpsak.nare.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
-import no.nav.fpsak.nare.evaluation.DetailReasonKey;
+import no.nav.fpsak.nare.evaluation.RuleReasonRef;
+import no.nav.fpsak.nare.evaluation.node.SingleEvaluation;
 import no.nav.fpsak.nare.evaluation.Resultat;
-import no.nav.fpsak.nare.evaluation.SingleEvaluation;
 
 public abstract class AbstractSpecification<T> implements Specification<T> {
     protected String beskrivelse = "";
@@ -39,12 +39,17 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
         }
     }
 
-    public Evaluation ja(DetailReasonKey reasonKey, Object... reasonArgs) {
+    /** Ubegrunnet ja. */
+    public Evaluation ja() {
+        return new SingleEvaluation(Resultat.JA, identifikator(), beskrivelse(), null);
+    }
+    
+    public Evaluation ja(RuleReasonRef reasonKey, Object... reasonArgs) {
         return new SingleEvaluation(Resultat.JA, identifikator(), beskrivelse(), reasonKey, reasonArgs);
     }
 
-    public Evaluation manuell(DetailReasonKey reasonKey, Object... reasonArgs) {
-        return new SingleEvaluation(Resultat.MANUELL_BEHANDLING, identifikator(), beskrivelse(), reasonKey, reasonArgs);
+    public Evaluation kanIkkeVurdere(RuleReasonRef reasonKey, Object... reasonArgs) {
+        return new SingleEvaluation(Resultat.IKKE_VURDERT, identifikator(), beskrivelse(), reasonKey, reasonArgs);
     }
 
     @Override
@@ -59,10 +64,15 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
         return this;
     }
 
-    public Evaluation nei(DetailReasonKey reasonKey, Object... reasonArgs) {
+    public Evaluation nei(RuleReasonRef reasonKey, Object... reasonArgs) {
         return new SingleEvaluation(Resultat.NEI, identifikator(), beskrivelse(), reasonKey, reasonArgs);
     }
 
+    /** Ubegrunnet nei. */
+    public Evaluation nei() {
+        return new SingleEvaluation(Resultat.NEI, identifikator(), beskrivelse(),null);
+    }
+    
     @Override
     public Specification<T> og(final Specification<T> specification) {
         return new AndSpecification<T>(this, specification);
