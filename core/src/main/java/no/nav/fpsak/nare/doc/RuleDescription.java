@@ -1,4 +1,4 @@
-package no.nav.fpsak.nare;
+package no.nav.fpsak.nare.doc;
 
 import java.util.Arrays;
 import java.util.Collections;

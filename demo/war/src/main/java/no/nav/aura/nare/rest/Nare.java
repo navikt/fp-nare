@@ -16,7 +16,7 @@ import no.nav.aura.nare.input.Soknad;
 import no.nav.aura.nare.input.Uttaksplan;
 import no.nav.aura.nare.regelsettyper.Modrekvote;
 import no.nav.fpsak.nare.evaluation.Evaluation;
-import no.nav.fpsak.nare.evaluation.EvaluationSerializer;
+import no.nav.fpsak.nare.evaluation.summary.EvaluationSerializer;
 
 @Component
 @Path("/vurdering")

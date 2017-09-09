@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import no.nav.fpsak.nare.evaluation.summary.EvaluationVisitor;
+
 public abstract class AggregatedEvaluation implements Evaluation {
 
     private String ruleIdentification;

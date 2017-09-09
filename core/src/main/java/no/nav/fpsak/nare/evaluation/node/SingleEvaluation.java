@@ -1,6 +1,7 @@
 package no.nav.fpsak.nare.evaluation.node;
 
 import java.text.MessageFormat;
+import java.util.Properties;
 
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Resultat;
@@ -13,6 +14,8 @@ public class SingleEvaluation implements Evaluation {
     private Resultat resultat;
     private String reason;
     private RuleReasonRef outcomeReason;
+
+    private Properties evaluationProperties;
 
     public SingleEvaluation(Resultat resultat, String ruleIdentification, String ruleDescription, RuleReasonRef outcome,
             Object... stringformatArguments) {
@@ -50,5 +53,21 @@ public class SingleEvaluation implements Evaluation {
     @Override
     public String ruleIdentification() {
         return ruleIdentification;
+    }
+
+    public void setEvaluationProperties(Properties props) {
+        this.evaluationProperties = props;
+    }
+
+    @Override
+    public Properties getEvaluationProperties() {
+        return evaluationProperties;
+    }
+
+    public void setEvaluationProperty(String key, int val) {
+        if (this.evaluationProperties == null) {
+            this.evaluationProperties = new Properties();
+        }
+        this.evaluationProperties.setProperty(key, String.valueOf(val));
     }
 }

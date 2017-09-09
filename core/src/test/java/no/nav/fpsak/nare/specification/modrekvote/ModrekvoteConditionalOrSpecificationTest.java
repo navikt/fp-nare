@@ -7,9 +7,9 @@ import org.junit.Test;
 
 import no.nav.fpsak.nare.RuleService;
 import no.nav.fpsak.nare.evaluation.Evaluation;
-import no.nav.fpsak.nare.evaluation.EvaluationSerializer;
-import no.nav.fpsak.nare.evaluation.EvaluationSummary;
 import no.nav.fpsak.nare.evaluation.Resultat;
+import no.nav.fpsak.nare.evaluation.summary.EvaluationSerializer;
+import no.nav.fpsak.nare.evaluation.summary.EvaluationSummary;
 import no.nav.fpsak.nare.specification.modrekvote.input.Person;
 import no.nav.fpsak.nare.specification.modrekvote.input.Rolle;
 import no.nav.fpsak.nare.specification.modrekvote.input.Soknad;
