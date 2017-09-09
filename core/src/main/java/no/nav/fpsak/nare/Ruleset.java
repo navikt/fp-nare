@@ -14,7 +14,7 @@ public class Ruleset<V> {
         return specification.medBeskrivelse(beskrivelse).medID(id);
     }
 
-    public Builder<V> nyHvisRegel(String id, String beskrivelse) {
+    public Builder<V> hvisRegel(String id, String beskrivelse) {
         return ConditionalOrSpecification.<V> regel(id, beskrivelse);
     }
 

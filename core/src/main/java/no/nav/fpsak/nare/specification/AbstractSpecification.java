@@ -2,12 +2,11 @@ package no.nav.fpsak.nare.specification;
 
 import com.google.gson.GsonBuilder;
 
-import no.nav.fpsak.nare.RuleDescription;
-import no.nav.fpsak.nare.evaluation.Evaluation;
+import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Operator;
+import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 import no.nav.fpsak.nare.evaluation.node.SingleEvaluation;
-import no.nav.fpsak.nare.evaluation.Resultat;
 
 public abstract class AbstractSpecification<T> implements Specification<T> {
     protected String beskrivelse = "";
@@ -40,16 +39,25 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
     }
 
     /** Ubegrunnet ja. */
-    public Evaluation ja() {
+    public SingleEvaluation ja() {
         return new SingleEvaluation(Resultat.JA, identifikator(), beskrivelse(), null);
     }
-    
-    public Evaluation ja(RuleReasonRef reasonKey, Object... reasonArgs) {
+
+    public SingleEvaluation ja(RuleReasonRef reasonKey, Object... reasonArgs) {
         return new SingleEvaluation(Resultat.JA, identifikator(), beskrivelse(), reasonKey, reasonArgs);
     }
 
-    public Evaluation kanIkkeVurdere(RuleReasonRef reasonKey, Object... reasonArgs) {
+    public SingleEvaluation kanIkkeVurdere(RuleReasonRef reasonKey, Object... reasonArgs) {
         return new SingleEvaluation(Resultat.IKKE_VURDERT, identifikator(), beskrivelse(), reasonKey, reasonArgs);
+    }
+
+    /** Ubegrunnet nei. */
+    public SingleEvaluation nei() {
+        return new SingleEvaluation(Resultat.NEI, identifikator(), beskrivelse(), null);
+    }
+
+    public SingleEvaluation nei(RuleReasonRef reasonKey, Object... reasonArgs) {
+        return new SingleEvaluation(Resultat.NEI, identifikator(), beskrivelse(), reasonKey, reasonArgs);
     }
 
     @Override
@@ -64,15 +72,6 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
         return this;
     }
 
-    public Evaluation nei(RuleReasonRef reasonKey, Object... reasonArgs) {
-        return new SingleEvaluation(Resultat.NEI, identifikator(), beskrivelse(), reasonKey, reasonArgs);
-    }
-
-    /** Ubegrunnet nei. */
-    public Evaluation nei() {
-        return new SingleEvaluation(Resultat.NEI, identifikator(), beskrivelse(),null);
-    }
-    
     @Override
     public Specification<T> og(final Specification<T> specification) {
         return new AndSpecification<T>(this, specification);

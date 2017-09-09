@@ -1,6 +1,8 @@
-package no.nav.fpsak.nare.evaluation;
+package no.nav.fpsak.nare.evaluation.summary;
 
 import com.google.gson.GsonBuilder;
+
+import no.nav.fpsak.nare.evaluation.Evaluation;
 
 public class EvaluationSerializer {
 

@@ -2,9 +2,9 @@ package no.nav.fpsak.nare.evaluation.node;
 
 import no.nav.fpsak.nare.evaluation.AggregatedEvaluation;
 import no.nav.fpsak.nare.evaluation.Evaluation;
-import no.nav.fpsak.nare.evaluation.EvaluationVisitor;
 import no.nav.fpsak.nare.evaluation.Operator;
 import no.nav.fpsak.nare.evaluation.Resultat;
+import no.nav.fpsak.nare.evaluation.summary.EvaluationVisitor;
 
 public class ConditionalOrEvaluation extends AggregatedEvaluation {
 

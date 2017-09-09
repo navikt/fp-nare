@@ -7,7 +7,9 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
-import no.nav.fpsak.nare.RuleDescription;
+import com.google.gson.GsonBuilder;
+
+import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
 import no.nav.fpsak.nare.evaluation.Resultat;
@@ -78,6 +80,10 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
             return testSpec;
         }
 
+        @Override
+        public String toString() {
+            return new GsonBuilder().setPrettyPrinting().create().toJson(this);
+        }
     }
 
     public static <T> Builder<T> regel() {
@@ -137,7 +143,7 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
     public RuleDescription ruleDescription() {
         String rootSpecId = identifikator();
         List<RuleDescription> ruleDescriptions = conditionalEntries.stream().map(coe -> {
-            return new RuleDescription(Operator.AND, rootSpecId + "->" + coe.testSpec().identifikator(),
+            return new RuleDescription(Operator.AND, rootSpecId + "\u2192" + coe.testSpec().identifikator(),
                     coe.testSpec().beskrivelse(), coe.testSpec().ruleDescription(), coe.flowSpec.ruleDescription());
         }).collect(Collectors.toList());
 
