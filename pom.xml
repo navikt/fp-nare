@@ -22,7 +22,7 @@
 
 		
         <!-- Dependency versions -->
-        <fpsak.felles.version>1.9.0-SNAPSHOT</fpsak.felles.version>
+        <fpsak.felles.version>1.10.0-SNAPSHOT</fpsak.felles.version>
 		
 		<gson.version>2.7</gson.version>
 		
