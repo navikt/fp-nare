@@ -50,7 +50,7 @@ public class RuleDescriptionDigraph {
             if (child.getOperator() == Operator.AND) {
                 RuleNode testChild = process(child.firstChild());
                 RuleNode flowChild = process(child.secondChild());
-                String edgeRole = testChild.nodeId;
+                String edgeRole = testChild.id;
                 edges.add(new RuleEdge(condorNode, flowChild, edgeRole));
             } else {
                 RuleNode childNode = process(child);
@@ -61,7 +61,7 @@ public class RuleDescriptionDigraph {
 
     @SuppressWarnings("unused")
     public static class RuleNode {
-        private final String nodeId = UUID.randomUUID().toString();
+        private final String id = UUID.randomUUID().toString();
 
         private final String ruleId;
         private final String ruleDescription;
@@ -83,13 +83,13 @@ public class RuleDescriptionDigraph {
     }
 
     public static class RuleEdge {
-        String sourceNodeId;
-        String targetNodeId;
+        String source;
+        String target;
         String role;
 
         public RuleEdge(RuleNode source, RuleNode target, String edgeRole) {
-            this.sourceNodeId = source.nodeId;
-            this.targetNodeId = target.nodeId;
+            this.source = source.id;
+            this.target = target.id;
             role = edgeRole;
         }
     }
