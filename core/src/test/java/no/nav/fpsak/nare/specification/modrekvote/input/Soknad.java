@@ -11,7 +11,6 @@ public class Soknad implements Soker {
     public static Soknad fodselSøknad(Person hovedsøker) {
         return new Soknad(hovedsøker, Soknadstype.FODSEL);
     }
-    private Person barn;
     private Person hovedsøker;
 
     private Person medsøker;
@@ -23,11 +22,6 @@ public class Soknad implements Soker {
     private Soknad(Person hovedsøker, Soknadstype soknadstype) {
         this.hovedsøker = hovedsøker;
         this.soknadstype = soknadstype;
-    }
-
-    public Soknad forBarn(Person barn) {
-        this.barn = barn;
-        return this;
     }
 
     public Person getHovedsøker() {

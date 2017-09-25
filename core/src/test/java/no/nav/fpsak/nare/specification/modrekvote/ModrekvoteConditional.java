@@ -30,7 +30,7 @@ public class ModrekvoteConditional implements RuleService<Soknad> {
 
     @Override
     public Specification<Soknad> getSpecification() {
-        Ruleset rs = new Ruleset();
+        Ruleset<Soknad> rs = new Ruleset<>();
 
         Specification<Soknad> harBeggeForeldreRettTilForeldrepenger = rs.regel("FK_VK_10.1",
                 "Har begge foreldre rett til foreldrepenger?",

@@ -132,7 +132,7 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public void visit(Specification<T> parentSpecification, SpecificationVisitor<T> visitor) {
-        // TODO: riktig visit?
+        // TODO (FC): riktig visit?
         for (CondOrEntry<T> entry : conditionalEntries) {
             entry.testSpec.visit(this, visitor);
             entry.flowSpec.visit(this, visitor);

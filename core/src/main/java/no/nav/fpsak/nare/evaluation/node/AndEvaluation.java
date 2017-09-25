@@ -3,7 +3,6 @@ package no.nav.fpsak.nare.evaluation.node;
 import no.nav.fpsak.nare.evaluation.AggregatedEvaluation;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
-import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 import no.nav.fpsak.nare.evaluation.Resultat;
 
 public class AndEvaluation extends AggregatedEvaluation {

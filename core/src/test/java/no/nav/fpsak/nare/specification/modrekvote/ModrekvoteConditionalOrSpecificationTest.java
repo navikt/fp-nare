@@ -30,20 +30,17 @@ public class ModrekvoteConditionalOrSpecificationTest {
         Evaluation evaluation = modrekvote.evaluer(soknad);
         
         String asJson = EvaluationSerializer.asJson(evaluation);
-//        System.out.println(asJson);
         
         EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
         Collection<String> leafReasons = evaluationSummary.leafReasons(Resultat.NEI, Resultat.IKKE_VURDERT);
         Assertions.assertThat(leafReasons).containsOnly("UTFALL_09");
 
-        // TODO: unngå teste på string innhold, hent ut fra evaluation
         Assertions.assertThat(asJson)
                 .doesNotContain("FK_VK 10.4")
                 .doesNotContain("FK_VK 10.5")
                 .doesNotContain("FK_VK.10.A")
                 .contains("FK_VK 10.6")
                 .contains("FK_VK.10.B");
-
 
     }
 
