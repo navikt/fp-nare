@@ -9,8 +9,8 @@ import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 import no.nav.fpsak.nare.evaluation.node.SingleEvaluation;
 
 public abstract class AbstractSpecification<T> implements Specification<T> {
-    protected String beskrivelse = "";
-    protected String id = "";
+    private String beskrivelse = "";
+    private String id = "";
 
     protected AbstractSpecification() {
     }
@@ -31,11 +31,7 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
 
     @Override
     public String identifikator() {
-        if (id.isEmpty()) {
-            return Integer.toString(this.hashCode());
-        } else {
-            return id;
-        }
+        return id;
     }
 
     /** Ubegrunnet ja. */

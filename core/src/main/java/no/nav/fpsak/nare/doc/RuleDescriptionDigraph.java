@@ -12,13 +12,15 @@ public class RuleDescriptionDigraph {
 
     private transient IdentityHashMap<RuleDescription, Boolean> processed = new IdentityHashMap<>();
 
+    @SuppressWarnings("unused")
+    private RuleNode root;
+
     private LinkedHashSet<RuleNode> nodes = new LinkedHashSet<>();
 
     private LinkedHashSet<RuleEdge> edges = new LinkedHashSet<>();
 
     public RuleDescriptionDigraph(RuleDescription root) {
-
-        process(root);
+        this.root = process(root);
     }
 
     private RuleNode process(RuleDescription ruledesc) {
@@ -48,13 +50,12 @@ public class RuleDescriptionDigraph {
     protected void processCondOrNodes(RuleDescription ruledesc, RuleNode condorNode) {
         for (RuleDescription child : ruledesc.getChildren()) {
             if (child.getOperator() == Operator.AND) {
-                RuleNode testChild = process(child.firstChild());
-                RuleNode flowChild = process(child.secondChild());
-                String edgeRole = testChild.id;
+                RuleNode flowChild = process(child.firstChild());
+                String edgeRole = child.getRuleDescription();
                 edges.add(new RuleEdge(condorNode, flowChild, edgeRole));
             } else {
                 RuleNode childNode = process(child);
-                edges.add(new RuleEdge(condorNode, childNode, "else"));
+                edges.add(new RuleEdge(condorNode, childNode, "ellers"));
             }
         }
     }

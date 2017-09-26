@@ -16,6 +16,7 @@ public class AndSpecification<T> extends BinarySpecification<T> {
 
     @Override
     public String beskrivelse() {
+        String beskrivelse = super.beskrivelse();
         if (beskrivelse.isEmpty()) {
             return "(" + spec1.beskrivelse() + " OG " + spec2.beskrivelse() + ")";
         } else {
@@ -30,6 +31,7 @@ public class AndSpecification<T> extends BinarySpecification<T> {
 
     @Override
     public String identifikator() {
+        String id = super.identifikator();
         if (id.isEmpty()) {
             return "(" + spec1.identifikator() + " OG " + spec2.identifikator() + ")";
         } else {
