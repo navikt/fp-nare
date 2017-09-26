@@ -144,7 +144,7 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
         String rootSpecId = identifikator();
         List<RuleDescription> ruleDescriptions = conditionalEntries.stream().map(coe -> {
             return new RuleDescription(Operator.AND, rootSpecId + "\u2192" + coe.testSpec().identifikator(),
-                    coe.testSpec().beskrivelse(), coe.testSpec().ruleDescription(), coe.flowSpec.ruleDescription());
+                    coe.testSpec().beskrivelse(), coe.flowSpec.ruleDescription());
         }).collect(Collectors.toList());
 
         List<RuleDescription> allRuleDescriptions = new ArrayList<>(ruleDescriptions);
