@@ -19,7 +19,7 @@ public class Ruleset<V> {
         return ConditionalOrSpecification.<V> regel(id, beskrivelse);
     }
 
-    public Specification<V> sekvensRegel(Specification<V> spec1, Specification<V> spec2) {
+    public Specification<V> beregningsRegel(Specification<V> spec1, Specification<V> spec2) {
         return new SequenceSpecification<>(spec1, spec2);
     }
 

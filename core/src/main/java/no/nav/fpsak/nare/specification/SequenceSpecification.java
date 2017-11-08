@@ -42,6 +42,6 @@ public class SequenceSpecification<T> extends BinarySpecification<T> {
 
     @Override
     public RuleDescription ruleDescription() {
-        return new RuleDescription(Operator.AND, identifikator(), beskrivelse(), spec1.ruleDescription(), spec2.ruleDescription());
+        return new RuleDescription(Operator.SEQUENCE, identifikator(), beskrivelse(), spec1.ruleDescription(), spec2.ruleDescription());
     }
 }
