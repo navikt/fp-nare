@@ -1,5 +1,7 @@
 package no.nav.fpsak.nare;
 
+import java.util.List;
+
 import no.nav.fpsak.nare.specification.ConditionalOrSpecification;
 import no.nav.fpsak.nare.specification.ConditionalOrSpecification.Builder;
 import no.nav.fpsak.nare.specification.SequenceSpecification;
@@ -21,6 +23,28 @@ public class Ruleset<V> {
 
     public Specification<V> beregningsRegel(Specification<V> spec1, Specification<V> spec2) {
         return new SequenceSpecification<>(spec1, spec2);
+    }
+
+    public Specification<V> beregningsRegel(Class<? extends RuleService<V>> spec1, List<Object> args1, Specification<V> spec2) {
+        Specification<V> denne = null;
+        try {
+            for (Object arg : args1) {
+                RuleService<V> ny;
+                ny = spec1.newInstance();
+                ny.medArgument(arg);
+                if (denne == null) {
+                    denne = ny.getSpecification();
+                } else {
+                    Specification<V> neste = ny.getSpecification();
+                    denne = new SequenceSpecification<V>(denne, neste);
+                }
+            }
+            return new SequenceSpecification<>(denne, spec2);
+        } catch (InstantiationException | IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
