@@ -61,4 +61,9 @@ public class ModrekvoteConditional implements RuleService<Soknad> {
                         .hvis(gjelderSøknadAdopsjon, vilkårForAdopsjon).build());
     }
 
+    @Override
+    public RuleService<Soknad> medArgument(Object argument) {
+        return this;
+    }
+
 }

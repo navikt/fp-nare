@@ -8,4 +8,6 @@ public interface RuleService<T> {
     Evaluation evaluer(T data);
 
     Specification<T> getSpecification();
+
+    RuleService<T> medArgument(Object argument);
 }
