@@ -1,6 +1,7 @@
 package no.nav.fpsak.nare;
 
 import java.util.List;
+import java.util.Objects;
 
 import no.nav.fpsak.nare.specification.ConditionalOrSpecification;
 import no.nav.fpsak.nare.specification.ConditionalOrSpecification.Builder;
@@ -25,7 +26,13 @@ public class Ruleset<V> {
         return new SequenceSpecification<>(spec1, spec2);
     }
 
-    public Specification<V> beregningsRegel(Class<? extends RuleService<V>> spec1, List<Object> args1, Specification<V> spec2) {
+    public Specification<V> beregningsRegel(Class<? extends RuleService<V>> spec1, List<? extends Object> args1, Specification<V> spec2) {
+        Objects.requireNonNull(spec1, "spec1");
+        Objects.requireNonNull(args1, "args1");
+        Objects.requireNonNull(spec2, "spec2");
+        if (args1.isEmpty()) {
+            throw new IllegalArgumentException("Argumentlisten kan ikke være tom");
+        }
         Specification<V> denne = null;
         try {
             for (Object arg : args1) {
