@@ -54,9 +54,4 @@ public class Modrekvote extends Ruleset implements RuleService<Soknad> {
         return regel("FK_VK.10", "Er vilkår for mødrekvote oppfylt for enten fødsel eller adopsjon?",
                 vilkårForFødsel.eller(vilkårForAdopsjon));
     }
-
-    @Override
-    public RuleService<Soknad> medArgument(Object argument) {
-        return this;
-    }
 }
