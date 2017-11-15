@@ -1,5 +1,7 @@
 package no.nav.fpsak.nare.specification;
 
+import java.util.Properties;
+
 import com.google.gson.GsonBuilder;
 
 import no.nav.fpsak.nare.doc.RuleDescription;
@@ -54,6 +56,13 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
 
     public SingleEvaluation nei(RuleReasonRef reasonKey, Object... reasonArgs) {
         return new SingleEvaluation(Resultat.NEI, identifikator(), beskrivelse(), reasonKey, reasonArgs);
+    }
+
+    /** For beregningsregel: beregnet med mellomresultater. */
+    public SingleEvaluation beregnet(Properties mellomresultater) {
+        SingleEvaluation resultat = ja();
+        resultat.setEvaluationProperties(mellomresultater);
+        return resultat;
     }
 
     @Override

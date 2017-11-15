@@ -9,5 +9,7 @@ public interface RuleService<T> {
 
     Specification<T> getSpecification();
 
-    RuleService<T> medArgument(Object argument);
+    default RuleService<T> medArgument(@SuppressWarnings("unused") Object argument) {
+        return this;
+    }
 }
