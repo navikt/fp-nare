@@ -53,9 +53,4 @@ public class Modrekvote implements RuleService<Soknad> {
                 vilkårForFødsel.eller(vilkårForAdopsjon));
     }
 
-    @Override
-    public RuleService<Soknad> medArgument(Object argument) {
-        return this;
-    }
-
 }
