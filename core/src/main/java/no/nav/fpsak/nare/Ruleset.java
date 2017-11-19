@@ -26,7 +26,7 @@ public class Ruleset<V> {
         return new SequenceSpecification<>(spec1, spec2);
     }
 
-    public Specification<V> beregningsRegel(Class<? extends RuleService<V>> spec1, List<? extends Object> args1, Specification<V> spec2) {
+    public Specification<V> beregningsRegel(Class<? extends DynamicRuleService<V>> spec1, V regelmodell, List<? extends Object> args1, Specification<V> spec2) {
         Objects.requireNonNull(spec1, "spec1");
         Objects.requireNonNull(args1, "args1");
         Objects.requireNonNull(spec2, "spec2");
@@ -36,8 +36,9 @@ public class Ruleset<V> {
         Specification<V> denne = null;
         try {
             for (Object arg : args1) {
-                RuleService<V> ny;
-                ny = spec1.newInstance();
+                DynamicRuleService<V> ny;
+                ny = spec1.newInstance();  // TODO (bts) bruk reflection med regelmodell som argument, fjerne constructor uten argument fra regelklassene
+                ny.setRegelmodell(regelmodell);
                 ny.medArgument(arg);
                 if (denne == null) {
                     denne = ny.getSpecification();

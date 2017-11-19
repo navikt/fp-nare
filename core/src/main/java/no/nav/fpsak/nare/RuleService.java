@@ -8,8 +8,4 @@ public interface RuleService<T> {
     Evaluation evaluer(T data);
 
     Specification<T> getSpecification();
-
-    default RuleService<T> medArgument(@SuppressWarnings("unused") Object argument) {
-        return this;
-    }
 }
