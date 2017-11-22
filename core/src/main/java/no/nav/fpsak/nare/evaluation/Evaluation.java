@@ -21,8 +21,8 @@ public interface Evaluation {
     }
 
     /** Properties generert som del av evaluering. Kan brukes til å angi custom resultater. */
-    default Properties getEvaluationProperties() {
-        return null;
-    }
+    Properties getEvaluationProperties();
+
+    void setEvaluationProperty(String key, String value);
 
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import no.nav.fpsak.nare.ServiceArgument;
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
@@ -15,6 +16,8 @@ import no.nav.fpsak.nare.evaluation.node.SequenceEvaluation;
  * ignoring the result of the first specification (ie assumed always JA)
  */
 public class SequenceSpecification<T> extends AbstractSpecification<T> {
+
+    private ServiceArgument scope;
 
     private List<Specification<T>> specs = new ArrayList<>();
 
@@ -53,7 +56,11 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
         for (int ix = 0; ix < specs.size(); ix++) {
             evaluations[ix] = specs.get(ix).evaluate(t);
         }
-        return new SequenceEvaluation(identifikator(), beskrivelse(), evaluations);
+        SequenceEvaluation evaluation = new SequenceEvaluation(identifikator(), beskrivelse(), evaluations);
+        if (scope != null) {
+            evaluation.setEvaluationProperty(scope.getBeskrivelse(), scope.getVerdi().toString());
+        }
+        return evaluation;
     }
 
     @Override
@@ -78,5 +85,11 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
         for (Specification<T> entry : specs) {
             entry.visit(this, visitor);
         }
+    }
+
+    @Override
+    public Specification<T> medScope(ServiceArgument scope) {
+        this.scope = scope;
+        return this;
     }
 }
