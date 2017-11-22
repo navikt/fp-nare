@@ -32,7 +32,7 @@ public class Ruleset<V> {
         return new SequenceSpecification<>(id, beskrivelse, spec1, spec2);
     }
 
-    public Specification<V> beregningsRegel(String id, String beskrivelse, Class<? extends DynamicRuleService<V>> spec1, V regelmodell, List<? extends Object> args1, Specification<V> spec2) {
+    public Specification<V> beregningsRegel(String id, String beskrivelse, Class<? extends DynamicRuleService<V>> spec1, V regelmodell, String argumentBeskrivelse, List<? extends Object> args1, Specification<V> spec2) {
         Objects.requireNonNull(spec1, "spec1");
         Objects.requireNonNull(args1, "args1");
         Objects.requireNonNull(spec2, "spec2");
@@ -45,7 +45,7 @@ public class Ruleset<V> {
             try {
                 ny = spec1.newInstance();  // TODO (bts) bruk reflection med regelmodell som argument, fjerne constructor uten argument fra regelklassene
                 ny.setRegelmodell(regelmodell);
-                ny.medArgument(arg);
+                ny.medServiceArgument(new ServiceArgument(argumentBeskrivelse, arg));
                 specs.add(ny.getSpecification());
             } catch (InstantiationException | IllegalAccessException e) {
                 // TODO Auto-generated catch block

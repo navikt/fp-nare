@@ -1,5 +1,6 @@
 package no.nav.fpsak.nare.specification;
 
+import no.nav.fpsak.nare.ServiceArgument;
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 
@@ -36,6 +37,11 @@ public interface Specification<T> {
     Specification<T> medBeskrivelse(String beskrivelse);
 
     Specification<T> medID(String id);
+
+    @SuppressWarnings("unused")
+    default Specification<T> medScope(ServiceArgument scope) {
+        return this;
+    }
 
     /**
      * Create a new specification that is the AND operation of {@code this} specification of another specification.

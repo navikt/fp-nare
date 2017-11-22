@@ -3,6 +3,7 @@ package no.nav.fpsak.nare.evaluation;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 import no.nav.fpsak.nare.evaluation.summary.EvaluationVisitor;
 
@@ -17,6 +18,8 @@ public abstract class AggregatedEvaluation implements Evaluation {
 
     @SuppressWarnings("unused")
     private String reason;
+
+    private Properties evaluationProperties;
 
     private List<Evaluation> children;
 
@@ -76,4 +79,16 @@ public abstract class AggregatedEvaluation implements Evaluation {
         return null;
     }
 
+    @Override
+    final public Properties getEvaluationProperties() {
+        return evaluationProperties;
+    }
+
+    @Override
+    final public void setEvaluationProperty(String key, String value) {
+        if (evaluationProperties == null) {
+            evaluationProperties = new Properties();
+        }
+        evaluationProperties.setProperty(key, value);
+    }
 }

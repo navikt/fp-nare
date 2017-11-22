@@ -64,10 +64,15 @@ public class SingleEvaluation implements Evaluation {
         return evaluationProperties;
     }
 
-    public void setEvaluationProperty(String key, int val) {
+    @Override
+    public void setEvaluationProperty(String key, String value) {
         if (this.evaluationProperties == null) {
             this.evaluationProperties = new Properties();
         }
-        this.evaluationProperties.setProperty(key, String.valueOf(val));
+        this.evaluationProperties.setProperty(key, value);
+    }
+
+    public void setEvaluationProperty(String key, int value) {
+        setEvaluationProperty(key, String.valueOf(value));
     }
 }
