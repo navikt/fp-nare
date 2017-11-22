@@ -13,12 +13,7 @@ public class SequenceEvaluation extends AggregatedEvaluation {
 
     @Override
     public String reason() {
-        if (result().equals(Resultat.JA)) {
-            return "Utført " + first().ruleIdentification() + " og tilfredsstiller " + second().ruleIdentification();
-        } else {
-            return "Utført " + first().ruleIdentification() + " men tilfredsstiller ikke " + second().ruleIdentification();
-        }
-
+        return "Utført " + first().ruleIdentification() + " og " + second().ruleIdentification();
     }
     
     @Override
