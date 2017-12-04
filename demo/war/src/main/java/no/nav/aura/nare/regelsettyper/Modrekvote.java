@@ -18,6 +18,7 @@ import no.nav.fpsak.nare.Ruleset;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.specification.Specification;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class Modrekvote extends Ruleset implements RuleService<Soknad> {
 
     private final Ruleset ruleset = new Ruleset();
