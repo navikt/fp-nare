@@ -4,7 +4,7 @@
     <parent>
         <groupId>no.nav.fpsak.nare</groupId>
 		<artifactId>fpsak-nare</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>1.1.1-SNAPSHOT</version>
     </parent>
 
 	<name>FPSAK NARE :: Demo</name>
