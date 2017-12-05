@@ -366,10 +366,9 @@
     </profiles>
 
     <scm>
-        <connection>scm:git:ssh://git@stash.devillo.no:7999/vedfp/vl-felles.git</connection>
-        <developerConnection>scm:git:ssh://git@stash.devillo.no:7999/vedfp/vl-felles.git</developerConnection>
-        <url>http://stash.devillo.no/projects/VEDFP/repos/vl-felles</url>
-        <tag>felles-1.4.0</tag>
+        <connection>scm:git:ssh://git@stash.devillo.no:7999/vedfp/fpsak-nare.git</connection>
+        <developerConnection>scm:git:ssh://git@stash.devillo.no:7999/vedfp/fpsak-nare.git</developerConnection>
+        <url>http://stash.devillo.no/projects/VEDFP/repos/fpsak-nare</url>
     </scm>
     <distributionManagement>
         <repository>
