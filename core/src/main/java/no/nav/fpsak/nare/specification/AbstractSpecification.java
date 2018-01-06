@@ -1,9 +1,8 @@
 package no.nav.fpsak.nare.specification;
 
-import java.util.Properties;
+import java.util.Map;
 
-import com.google.gson.GsonBuilder;
-
+import no.nav.fpsak.nare.doc.JsonOutput;
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Operator;
 import no.nav.fpsak.nare.evaluation.Resultat;
@@ -59,7 +58,7 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
     }
 
     /** For beregningsregel: beregnet med mellomresultater. */
-    public SingleEvaluation beregnet(Properties mellomresultater) {
+    public SingleEvaluation beregnet(Map<String, Object> mellomresultater) {
         SingleEvaluation resultat = ja();
         resultat.setEvaluationProperties(mellomresultater);
         return resultat;
@@ -84,11 +83,11 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
 
     @Override
     public RuleDescription ruleDescription() {
-        return new RuleDescription(Operator.SINGLE, identifikator(), beskrivelse());
+        return new SpecificationRuleDescription(Operator.SINGLE, identifikator(), beskrivelse());
     }
 
     @Override
     public String toString() {
-        return new GsonBuilder().setPrettyPrinting().create().toJson(this);
+        return JsonOutput.asJson(this);
     }
 }

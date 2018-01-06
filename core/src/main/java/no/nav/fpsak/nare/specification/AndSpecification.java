@@ -1,5 +1,6 @@
 package no.nav.fpsak.nare.specification;
 
+import no.nav.fpsak.nare.doc.BasicRuleDescription;
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
@@ -41,7 +42,7 @@ public class AndSpecification<T> extends BinarySpecification<T> {
 
     @Override
     public RuleDescription ruleDescription() {
-        return new RuleDescription(Operator.AND, identifikator(), beskrivelse(), spec1.ruleDescription(), spec2.ruleDescription());
+        return new SpecificationRuleDescription(Operator.AND, identifikator(), beskrivelse(), spec1.ruleDescription(), spec2.ruleDescription());
     }
 
 }

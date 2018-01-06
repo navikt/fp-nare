@@ -77,7 +77,7 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
         for (int ix = 0; ix < specs.size(); ix++) {
             ruleDescriptions[ix] = specs.get(ix).ruleDescription();
         }
-        return new RuleDescription(Operator.SEQUENCE, identifikator(), beskrivelse(), ruleDescriptions);
+        return new SpecificationRuleDescription(Operator.SEQUENCE, identifikator(), beskrivelse(), ruleDescriptions);
     }
 
     @Override

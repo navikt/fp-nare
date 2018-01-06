@@ -53,7 +53,7 @@ public class NotSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public RuleDescription ruleDescription() {
-        return new RuleDescription(Operator.NOT, identifikator(), beskrivelse(), spec1.ruleDescription());
+        return new SpecificationRuleDescription(Operator.NOT, identifikator(), beskrivelse(), spec1.ruleDescription());
     }
 
 }

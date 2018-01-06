@@ -1,7 +1,8 @@
 package no.nav.fpsak.nare.evaluation;
 
-import java.util.Properties;
+import java.util.Map;
 
+import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationVisitor;
 
 public interface Evaluation {
@@ -12,7 +13,7 @@ public interface Evaluation {
 
     Resultat result();
 
-    String ruleDescription();
+    String ruleDescriptionText();
 
     String ruleIdentification();
 
@@ -21,8 +22,11 @@ public interface Evaluation {
     }
 
     /** Properties generert som del av evaluering. Kan brukes til å angi custom resultater. */
-    Properties getEvaluationProperties();
+    Map<String, Object> getEvaluationProperties();
 
-    void setEvaluationProperty(String key, String value);
+    void setEvaluationProperty(String key, Object value);
+
+    /** Utled en RuleDescription som beskriver denne noden i Evalueringen. */
+    RuleDescription toRuleDescription();
 
 }
