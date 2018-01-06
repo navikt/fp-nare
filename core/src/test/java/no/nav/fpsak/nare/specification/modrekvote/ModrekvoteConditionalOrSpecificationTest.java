@@ -1,5 +1,6 @@
 package no.nav.fpsak.nare.specification.modrekvote;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 import org.assertj.core.api.Assertions;
@@ -29,8 +30,8 @@ public class ModrekvoteConditionalOrSpecificationTest {
         RuleService<Soknad> modrekvote = new ModrekvoteConditional();
         Evaluation evaluation = modrekvote.evaluer(soknad);
         
-        String asJson = EvaluationSerializer.asJson(evaluation);
-        
+        @SuppressWarnings("deprecation")
+        String asJson = EvaluationSerializer.asLegacyJsonTree(evaluation);
         EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
         Collection<String> leafReasons = evaluationSummary.leafReasons(Resultat.NEI, Resultat.IKKE_VURDERT);
         Assertions.assertThat(leafReasons).containsOnly("UTFALL_09");
@@ -42,6 +43,10 @@ public class ModrekvoteConditionalOrSpecificationTest {
                 .contains("FK_VK 10.6")
                 .contains("FK_VK.10.B");
 
+        System.out.println(asJson);
+        
+        System.out.println("\n\n\n\n\n-------------\n\n\n");
+        System.out.println(EvaluationSerializer.asJson(evaluation));
     }
 
 }

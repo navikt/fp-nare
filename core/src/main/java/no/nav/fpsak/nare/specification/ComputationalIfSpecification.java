@@ -45,7 +45,7 @@ public class ComputationalIfSpecification<T> extends BinarySpecification<T> {
 
     @Override
     public RuleDescription ruleDescription() {
-        return new RuleDescription(Operator.COMPUTATIONAL_IF, identifikator(), beskrivelse(), testSpec.ruleDescription(), spec1.ruleDescription(), spec2.ruleDescription());
+        return new SpecificationRuleDescription(Operator.COMPUTATIONAL_IF, identifikator(), beskrivelse(), testSpec.ruleDescription(), spec1.ruleDescription(), spec2.ruleDescription());
     }
 
     @Override

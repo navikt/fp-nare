@@ -42,6 +42,12 @@ public class EvaluationSummary {
                 (op, parent, child) -> op == null && accepted.contains(child.result()));
 
         rootEvaluation.visit(rootEvaluation, visitor);
-        return visitor.getCollected().stream().map(e -> e.getOutcome().getReasonCode()).distinct().collect(Collectors.toList());
+        return visitor.getCollected().stream()
+                .filter(e -> e.getOutcome() != null)
+                .map(this::getReasonCode).distinct().collect(Collectors.toList());
+    }
+
+    private String getReasonCode(Evaluation e) {
+        return e.getOutcome() == null ? null : e.getOutcome().getReasonCode();
     }
 }

@@ -1,38 +1,25 @@
 package no.nav.fpsak.nare.evaluation.node;
 
 import java.text.MessageFormat;
-import java.util.Properties;
 
-import no.nav.fpsak.nare.evaluation.Evaluation;
+import no.nav.fpsak.nare.doc.RuleDescription;
+import no.nav.fpsak.nare.evaluation.BasicEvaluation;
+import no.nav.fpsak.nare.evaluation.EvaluationRuleDescription;
+import no.nav.fpsak.nare.evaluation.Operator;
 import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 
-public class SingleEvaluation implements Evaluation {
+public class SingleEvaluation extends BasicEvaluation {
 
-    private String ruleIdentification;
-    private String ruleDescription;
-    private Resultat resultat;
-    private String reason;
     private RuleReasonRef outcomeReason;
-
-    private Properties evaluationProperties;
 
     public SingleEvaluation(Resultat resultat, String ruleIdentification, String ruleDescription, RuleReasonRef outcome,
             Object... stringformatArguments) {
-        this.ruleIdentification = ruleIdentification;
-        this.ruleDescription = ruleDescription;
-        this.resultat = resultat;
+        super(ruleIdentification, ruleDescription);
 
-        if (outcome != null) {
-            this.outcomeReason = outcome;
-            // TODO (FC): Lookup message text I18N
-            this.reason = MessageFormat.format(outcomeReason.getReasonTextTemplate(), stringformatArguments);
-        }
-    }
-
-    @Override
-    public String reason() {
-        return reason;
+        super.resultat = resultat;
+        super.reason = outcome == null ? null : MessageFormat.format(outcome.getReasonTextTemplate(), stringformatArguments);
+        this.outcomeReason = outcome;
     }
 
     @Override
@@ -41,38 +28,18 @@ public class SingleEvaluation implements Evaluation {
     }
 
     @Override
-    public Resultat result() {
-        return resultat;
+    public RuleDescription toRuleDescription() {
+        return new SingleEvaluationRuleDescription(this);
     }
 
-    @Override
-    public String ruleDescription() {
-        return ruleDescription;
-    }
+    static class SingleEvaluationRuleDescription extends EvaluationRuleDescription {
+        @SuppressWarnings("unused")
+        private final RuleReasonRef outcomeReason;
 
-    @Override
-    public String ruleIdentification() {
-        return ruleIdentification;
-    }
-
-    public void setEvaluationProperties(Properties props) {
-        this.evaluationProperties = props;
-    }
-
-    @Override
-    public Properties getEvaluationProperties() {
-        return evaluationProperties;
-    }
-
-    @Override
-    public void setEvaluationProperty(String key, String value) {
-        if (this.evaluationProperties == null) {
-            this.evaluationProperties = new Properties();
+        public SingleEvaluationRuleDescription(SingleEvaluation evaluation) {
+            super(Operator.SINGLE, evaluation);
+            outcomeReason = evaluation.getOutcome();
         }
-        this.evaluationProperties.setProperty(key, value);
     }
 
-    public void setEvaluationProperty(String key, int value) {
-        setEvaluationProperty(key, String.valueOf(value));
-    }
 }
