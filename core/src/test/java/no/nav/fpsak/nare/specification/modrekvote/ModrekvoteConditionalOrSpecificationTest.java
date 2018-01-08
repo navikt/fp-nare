@@ -1,6 +1,5 @@
 package no.nav.fpsak.nare.specification.modrekvote;
 
-import java.time.LocalDate;
 import java.util.Collection;
 
 import org.assertj.core.api.Assertions;
