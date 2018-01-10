@@ -13,12 +13,11 @@ public class SequenceEvaluation extends AggregatedEvaluation {
 
     @Override
     public String reason() {
-        return "Utført " + first().ruleIdentification() + " og " + second().ruleIdentification();
+        return "Utført " + firstChild().ruleIdentification() + " og " + secondChild().ruleIdentification();
     }
     
     @Override
     public Resultat result() {
-        return second().result();
+        return secondChild().result();
     }
-
 }

@@ -14,16 +14,16 @@ public class AndEvaluation extends AggregatedEvaluation {
     @Override
     public String reason() {
         if (result().equals(Resultat.JA)) {
-            return "Tilfredstiller både " + first().ruleIdentification() + " og " + second().ruleIdentification();
+            return "Tilfredstiller både " + firstChild().ruleIdentification() + " og " + secondChild().ruleIdentification();
         } else {
-            return "Tilfredstiller ikke både " + first().ruleIdentification() + " og " + second().ruleIdentification();
+            return "Tilfredstiller ikke både " + firstChild().ruleIdentification() + " og " + secondChild().ruleIdentification();
         }
 
     }
     
     @Override
     public Resultat result() {
-        return first().result().and(second().result());
+        return firstChild().result().and(secondChild().result());
     }
 
 }

@@ -16,18 +16,18 @@ public class OrEvaluation extends AggregatedEvaluation {
         if (result().equals(Resultat.JA)) {
             return "Tilfredstiller " + ruleOrIdentification();
         } else {
-            return "Tilfredstiller hverken " + first().ruleIdentification() + " eller " + second().ruleIdentification();
+            return "Tilfredstiller hverken " + firstChild().ruleIdentification() + " eller " + secondChild().ruleIdentification();
         }
     }
 
     @Override
     public Resultat result() {
-        return first().result().or(second().result());
+        return firstChild().result().or(secondChild().result());
     }
 
     private String ruleOrIdentification() {
-        String firstID = first().result().equals(Resultat.JA) ? first().ruleIdentification() : "";
-        String secondID = second().result().equals(Resultat.JA) ? second().ruleIdentification() : "";
+        String firstID = firstChild().result().equals(Resultat.JA) ? firstChild().ruleIdentification() : "";
+        String secondID = secondChild().result().equals(Resultat.JA) ? secondChild().ruleIdentification() : "";
         if (firstID.isEmpty())
             return secondID;
         if (secondID.isEmpty())

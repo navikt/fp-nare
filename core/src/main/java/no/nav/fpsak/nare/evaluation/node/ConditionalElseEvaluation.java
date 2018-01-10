@@ -14,17 +14,17 @@ public class ConditionalElseEvaluation extends AggregatedEvaluation {
     @Override
     public String reason() {
         if (result().equals(Resultat.JA)) {
-            return "Tilfredstiller flyt (*/" + first().ruleIdentification();
+            return "Tilfredstiller flyt (*/" + firstChild().ruleIdentification();
         } else {
             // er dette mulig?
-            return "Tilfredstiller ikke flyt (*/" + first().ruleIdentification();
+            return "Tilfredstiller ikke flyt (*/" + firstChild().ruleIdentification();
         }
 
     }
 
     @Override
     public Resultat result() {
-        return first().result();
+        return firstChild().result();
     }
 
 }

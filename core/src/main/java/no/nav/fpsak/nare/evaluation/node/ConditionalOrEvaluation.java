@@ -15,9 +15,9 @@ public class ConditionalOrEvaluation extends AggregatedEvaluation {
     @Override
     public String reason() {
         if (result().equals(Resultat.JA)) {
-            return "Tilfredstiller flyt (test=" + first().ruleIdentification() + ")/" + second().ruleIdentification();
+            return "Tilfredstiller flyt (test=" + firstChild().ruleIdentification() + ")/" + secondChild().ruleIdentification();
         } else {
-            return "Tilfredstiller ikke flyt (test=" + first().ruleIdentification() + ")/" + second().ruleIdentification();
+            return "Tilfredstiller ikke flyt (test=" + firstChild().ruleIdentification() + ")/" + secondChild().ruleIdentification();
         }
 
     }
@@ -25,12 +25,12 @@ public class ConditionalOrEvaluation extends AggregatedEvaluation {
     /** Skipper testEvals, kun flowEval */
     @Override
     protected void visitChildren(EvaluationVisitor visitor) {
-        second().visit(this, visitor);
+        secondChild().visit(this, visitor);
     }
 
     @Override
     public Resultat result() {
-        return first().result().and(second().result());
+        return firstChild().result().and(secondChild().result());
     }
 
 }

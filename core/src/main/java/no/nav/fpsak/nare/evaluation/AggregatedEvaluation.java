@@ -42,16 +42,21 @@ public abstract class AggregatedEvaluation extends BasicEvaluation {
         }
     }
 
-    protected Evaluation first() {
+    public Evaluation firstChild() {
         return children.get(0);
     }
 
-    protected Operator getOperator() {
+    @Override
+    public Operator getOperator() {
         return operator;
     }
 
-    protected Evaluation second() {
+    protected Evaluation secondChild() {
         return children.get(1);
+    }
+
+    public Evaluation lastChild() {
+        return children.get(children.size() - 1);
     }
 
     @Override

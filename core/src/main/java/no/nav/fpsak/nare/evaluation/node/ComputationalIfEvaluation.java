@@ -13,12 +13,12 @@ public class ComputationalIfEvaluation extends AggregatedEvaluation {
 
     @Override
     public String reason() {
-        return "Utført " + first().ruleIdentification() + (Resultat.JA.equals(first().result()) ? " (ja)" : " (nei)") + " og " + second().ruleIdentification();
+        return "Utført " + firstChild().ruleIdentification() + (Resultat.JA.equals(firstChild().result()) ? " (ja)" : " (nei)") + " og " + secondChild().ruleIdentification();
     }
     
     @Override
     public Resultat result() {
-        return second().result();
+        return secondChild().result();
     }
 
 }
