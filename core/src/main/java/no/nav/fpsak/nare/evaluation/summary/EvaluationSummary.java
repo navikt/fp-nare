@@ -13,6 +13,19 @@ import no.nav.fpsak.nare.evaluation.Resultat;
 /** Hjelpeklasse for å lage sammendrag av en evaluering. */
 public class EvaluationSummary {
 
+    private final class LeafNodeVisitorCondition implements EvaluationVisitorCondition {
+        private final Set<Resultat> accepted;
+
+        private LeafNodeVisitorCondition(Set<Resultat> accepted) {
+            this.accepted = accepted;
+        }
+
+        @Override
+        public boolean check(Operator op, Evaluation parent, Evaluation child) {
+            return Operator.SINGLE.equals(op) && accepted.contains(child.result());
+        }
+    }
+
     interface EvaluationVisitorCondition {
         boolean check(Operator operator, Evaluation parent, Evaluation child);
     }
@@ -27,8 +40,7 @@ public class EvaluationSummary {
         Set<Resultat> accepted = acceptedResults.length > 0 ? EnumSet.copyOf(Arrays.asList(acceptedResults))
                 : EnumSet.allOf(Resultat.class);
 
-        NonCircularVisitorEvaluationCollector visitor = new NonCircularVisitorEvaluationCollector(
-                (op, parent, child) -> op == null && accepted.contains(child.result()));
+        NonCircularVisitorEvaluationCollector visitor = new NonCircularVisitorEvaluationCollector(new LeafNodeVisitorCondition(accepted));
         rootEvaluation.visit(rootEvaluation, visitor);
         return visitor.getCollected();
     }
@@ -38,13 +50,7 @@ public class EvaluationSummary {
         Set<Resultat> accepted = acceptedResults.length > 0 ? EnumSet.copyOf(Arrays.asList(acceptedResults))
                 : EnumSet.allOf(Resultat.class);
 
-        NonCircularVisitorEvaluationCollector visitor = new NonCircularVisitorEvaluationCollector(
-                new EvaluationVisitorCondition() {
-                    @Override
-                    public boolean check(Operator op, Evaluation parent, Evaluation child) {
-                        return Operator.SINGLE.equals(op) && accepted.contains(child.result());
-                    }
-                });
+        NonCircularVisitorEvaluationCollector visitor = new NonCircularVisitorEvaluationCollector(new LeafNodeVisitorCondition(accepted));
 
         rootEvaluation.visit(rootEvaluation, visitor);
         return visitor.getCollected().stream()
