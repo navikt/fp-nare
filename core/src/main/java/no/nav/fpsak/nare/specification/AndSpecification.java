@@ -1,6 +1,5 @@
 package no.nav.fpsak.nare.specification;
 
-import no.nav.fpsak.nare.doc.BasicRuleDescription;
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;

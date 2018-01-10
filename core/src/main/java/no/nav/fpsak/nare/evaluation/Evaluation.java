@@ -17,9 +17,7 @@ public interface Evaluation {
 
     String ruleIdentification();
 
-    default void visit(Evaluation parent, EvaluationVisitor visitor) {
-        visitor.visiting(null, parent, this); // NOSONAR
-    }
+    void visit(Evaluation parent, EvaluationVisitor visitor);
 
     /** Properties generert som del av evaluering. Kan brukes til å angi custom resultater. */
     Map<String, Object> getEvaluationProperties();
