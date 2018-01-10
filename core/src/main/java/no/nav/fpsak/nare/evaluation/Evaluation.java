@@ -16,6 +16,8 @@ public interface Evaluation {
     String ruleDescriptionText();
 
     String ruleIdentification();
+    
+    Operator getOperator();
 
     void visit(Evaluation parent, EvaluationVisitor visitor);
 

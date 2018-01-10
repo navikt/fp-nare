@@ -6,6 +6,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import no.nav.fpsak.nare.evaluation.AggregatedEvaluation;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
 import no.nav.fpsak.nare.evaluation.Resultat;
@@ -22,7 +23,18 @@ public class EvaluationSummary {
 
         @Override
         public boolean check(Operator op, Evaluation parent, Evaluation child) {
-            return Operator.SINGLE.equals(op) && accepted.contains(child.result());
+            if (!(Operator.SINGLE.equals(op) && accepted.contains(child.result()))) {
+                return false;
+            }
+
+            // special case, kun prosessere siste SingleEvaluation barn av SequenceEvaluation siden alle andre returnerer ja.
+            if (Operator.SEQUENCE.equals(parent.getOperator())) {
+                String childRuleId = child.ruleIdentification();
+                String lastChildOfParentRuleId = ((AggregatedEvaluation)parent).lastChild().ruleIdentification();
+                return (childRuleId.equals(lastChildOfParentRuleId));
+            } else {
+                return true;
+            }
         }
     }
 

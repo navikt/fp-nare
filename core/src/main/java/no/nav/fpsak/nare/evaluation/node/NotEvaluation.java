@@ -14,16 +14,16 @@ public class NotEvaluation extends AggregatedEvaluation {
     @Override
     public String reason() {
         if (result().equals(Resultat.JA)) {
-            return "Tilfredstiller det motsatte av " + first().ruleIdentification();
+            return "Tilfredstiller det motsatte av " + firstChild().ruleIdentification();
         } else {
-            return "Tilfredstiller ikke det motsatte av " + first().ruleIdentification();
+            return "Tilfredstiller ikke det motsatte av " + firstChild().ruleIdentification();
         }
 
     }
 
     @Override
     public Resultat result() {
-        return first().result().not();
+        return firstChild().result().not();
     }
 
 }

@@ -13,6 +13,7 @@ import no.nav.fpsak.nare.evaluation.summary.EvaluationVisitor;
 
 public class SingleEvaluation extends BasicEvaluation {
 
+    private static final Operator OPERATOR = Operator.SINGLE;
     private RuleReasonRef outcomeReason;
 
     public SingleEvaluation(Resultat resultat, String ruleIdentification, String ruleDescription, RuleReasonRef outcome,
@@ -33,10 +34,15 @@ public class SingleEvaluation extends BasicEvaluation {
     public RuleDescription toRuleDescription() {
         return new SingleEvaluationRuleDescription(this);
     }
+    
+    @Override
+    public Operator getOperator() {
+        return OPERATOR;
+    }
 
     @Override
     public void visit(Evaluation parent, EvaluationVisitor visitor) {
-        visitor.visiting(Operator.SINGLE, parent, this); // NOSONAR
+        visitor.visiting(OPERATOR, parent, this); // NOSONAR
     }
     
     static class SingleEvaluationRuleDescription extends EvaluationRuleDescription {
@@ -44,7 +50,7 @@ public class SingleEvaluation extends BasicEvaluation {
         private final RuleReasonRef outcomeReason;
 
         public SingleEvaluationRuleDescription(SingleEvaluation evaluation) {
-            super(Operator.SINGLE, evaluation);
+            super(OPERATOR, evaluation);
             outcomeReason = evaluation.getOutcome();
         }
     }
