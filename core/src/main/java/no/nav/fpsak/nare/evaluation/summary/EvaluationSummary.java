@@ -39,7 +39,12 @@ public class EvaluationSummary {
                 : EnumSet.allOf(Resultat.class);
 
         NonCircularVisitorEvaluationCollector visitor = new NonCircularVisitorEvaluationCollector(
-                (op, parent, child) -> op == null && accepted.contains(child.result()));
+                new EvaluationVisitorCondition() {
+                    @Override
+                    public boolean check(Operator op, Evaluation parent, Evaluation child) {
+                        return Operator.SINGLE.equals(op) && accepted.contains(child.result());
+                    }
+                });
 
         rootEvaluation.visit(rootEvaluation, visitor);
         return visitor.getCollected().stream()
