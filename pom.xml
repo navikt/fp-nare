@@ -3,7 +3,7 @@
 
     <groupId>no.nav.fpsak.nare</groupId>
     <artifactId>fpsak-nare</artifactId>
-    <version>1.4.2-SNAPSHOT</version>
+    <version>1.4.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>FPSAK NARE ::</name>
 
