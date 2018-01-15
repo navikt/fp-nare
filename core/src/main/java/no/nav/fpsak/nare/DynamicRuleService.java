@@ -34,7 +34,7 @@ public abstract class DynamicRuleService<T> implements RuleService<T> {
         setRegelmodell(regelmodell);
         Evaluation evaluation = getSpecification().evaluate(regelmodell);
         if (serviceArgument != null) {
-            evaluation.setEvaluationProperty(serviceArgument.getBeskrivelse(), serviceArgument.getVerdi().toString());
+            evaluation.setEvaluationProperty(serviceArgument.getBeskrivelse(), serviceArgument.getVerdi());
         }
         return evaluation;
     }
