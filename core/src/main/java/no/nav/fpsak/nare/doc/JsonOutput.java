@@ -8,7 +8,9 @@ import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
@@ -21,7 +23,10 @@ public class JsonOutput {
 
         OM.registerModule(new JavaTimeModule());
         SimpleModule module = new SimpleModule();
-
+        
+        OM.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        OM.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        
         module.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ISO_LOCAL_DATE));
         module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
 

@@ -28,6 +28,7 @@ public class ModrekvoteConditional implements RuleService<Soknad> {
         return getSpecification().evaluate(data);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Specification<Soknad> getSpecification() {
         Ruleset<Soknad> rs = new Ruleset<>();
