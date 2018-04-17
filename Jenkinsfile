@@ -1,16 +1,17 @@
 import groovy.json.JsonSlurperClassic
+import java.security.MessageDigest;
 
 
 timestamps {
     def skipITests = '-DskipITs'
     def skipUTests = '-DskipUTs'
+	def schemaNavn = ''
 
     properties([disableConcurrentBuilds(), parameters([
             booleanParam(defaultValue: true, description: '', name: 'build'),
             booleanParam(defaultValue: false, description: '', name: 'skip_UTests'),
-            booleanParam(defaultValue: false, description: '', name: 'skip_ITests'),]),
-                pipelineTriggers([pollSCM('')])
-    ])
+            booleanParam(defaultValue: false, description: '', name: 'skip_ITests')])
+            ])
 
     if (!params.skip_UTests) {
         skipUTests = ''
@@ -26,6 +27,7 @@ timestamps {
 
             stage("Init") {
                 printStage("Init")
+                info(schemaNavn)
                 env.JAVA_HOME = "${tool 'jdk-1.8'}"
                 env.PATH = "${tool 'default-maven'}/bin:${env.PATH}"
                 step([$class: 'WsCleanup'])
@@ -39,7 +41,11 @@ timestamps {
                     printStage("Build")
                     configFileProvider(
                             [configFile(fileId: 'navMavenSettingsUtenProxy', variable: 'MAVEN_SETTINGS')]) {
-                        sh 'mvn -s $MAVEN_SETTINGS ' + skipUTests + ' ' + skipITests + ' clean deploy'
+                        
+                        version=getMavenVersion()
+                        
+			mavenProps=" -Dfile.encoding=UTF-8 -Djava.security.egd=file:///dev/urandom -DinstallAtEnd=true -DdeployAtEnd=true "
+                        sh 'mvn -B ' + version + ' -s $MAVEN_SETTINGS ' + skipUTests + ' ' + skipITests + ' ' + mavenProps + ' clean deploy'
                     }
 
                     if (!skipITests) {
@@ -82,4 +88,24 @@ void printStage(stage) {
     ansiColor('xterm') {
         println "\033[46m Entered stage " + stage + " \033[0m"
     }
+}
+
+@NonCPS
+def String schema() {
+	def s = env.BRANCH_NAME;
+	return MessageDigest
+	.getInstance("MD5")
+	.digest(s.bytes)
+	.encodeHex()
+	.toString()
+	.substring(0,15)
+	.toLowerCase();
+}
+
+def String getMavenVersion(){
+    revision=sh(returnStdout: true, script: 'cat .mvn/version').trim()
+    commitHash = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+    timestamp= new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("UTC"))
+    sha= '_' + timestamp + '_' + commitHash
+    return '-Drevision="' + revision + '" -Dchangelist="" -Dsha1="' + sha + '"'
 }
