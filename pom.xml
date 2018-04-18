@@ -12,7 +12,7 @@
     </modules>
 
     <properties>
-        <revision>2.0</revision>
+        <revision>1.5</revision>
         <sha1></sha1>
         <changelist>-SNAPSHOT</changelist>
         <java.version>1.8</java.version>
