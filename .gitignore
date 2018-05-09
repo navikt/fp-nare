@@ -28,3 +28,4 @@ _*.sh
 *.log
 .mvn/maven.config
 .flattened.xml
+.flattened-pom.xml
