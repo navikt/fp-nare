@@ -32,6 +32,7 @@
 			<!-- for å bygge markup for sysdoc -->
 			<groupId>io.github.swagger2markup</groupId>
 			<artifactId>markup-document-builder</artifactId>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>
