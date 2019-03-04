@@ -60,7 +60,7 @@ pipeline {
                 script {
                     maven = new maven()
                     def mRevision = maven.revision()
-                    def tagName = branch + "-" + mRevision + "-SNAPSHOT"
+                    def tagName = env.BRANCH_NAME + "-" + mRevision + "-SNAPSHOT"
                     currentBuild.displayName = tagName
 
                     configFileProvider(
