@@ -60,8 +60,8 @@ pipeline {
                 script {
                     maven = new maven()
                     def mRevision = maven.revision()
-                    def tagName = env.BRANCH_NAME + "-" + mRevision
-                    currentBuild.displayName = tagName + "-SNAPSHOT"
+                    def tagName = env.BRANCH_NAME.tokenize('/')[-1] + "-" + mRevision
+                    currentBuild.displayName = tagName
 
                     configFileProvider(
                             [configFile(fileId: 'navMavenSettings', variable: 'MAVEN_SETTINGS')]) {
@@ -71,7 +71,7 @@ pipeline {
                             buildEnvironment.overrideJDK(maven.javaVersion())
                         }
 
-                        sh "mvn -U -B -s $MAVEN_SETTINGS -Dfile.encoding=UTF-8 -DinstallAtEnd=true -DdeployAtEnd=true -Dsha1= -Dchangelist= -Drevision=$tagName clean deploy"
+                        sh "mvn -U -B -s $MAVEN_SETTINGS -Dfile.encoding=UTF-8 -DinstallAtEnd=true -DdeployAtEnd=true -Dsha1= -Dchangelist=-SNAPSHOT -Drevision=$tagName clean deploy"
 
                     }
                 }
