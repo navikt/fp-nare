@@ -61,7 +61,7 @@ pipeline {
                     maven = new maven()
                     def mRevision = maven.revision()
                     def tagName = env.BRANCH_NAME.tokenize('/')[-1] + "-" + mRevision
-                    currentBuild.displayName = tagName
+                    currentBuild.displayName = tagName + "-SNAPSHOT"
 
                     configFileProvider(
                             [configFile(fileId: 'navMavenSettings', variable: 'MAVEN_SETTINGS')]) {
