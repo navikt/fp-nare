@@ -320,20 +320,20 @@
 	</profiles>
 
 	<scm>
-		<connection>scm:git:ssh://git@stash.devillo.no:7999/vedfp/fpsak-nare.git</connection>
-		<developerConnection>scm:git:ssh://git@stash.devillo.no:7999/vedfp/fpsak-nare.git</developerConnection>
-		<url>http://stash.devillo.no/projects/VEDFP/repos/fpsak-nare</url>
+		<connection>scm:git@github.com:navikt/fp-nare.git</connection>
+		<developerConnection>scm:git@github.com:navikt/fp-nare.git</developerConnection>
+		<url>https://github.com/navikt/fp-nare</url>
 	</scm>
 	<distributionManagement>
 		<repository>
 			<id>m2internal</id>
 			<name>NAV Maven2 Internal Repository</name>
-			<url>http://maven.adeo.no/nexus/content/repositories/m2internal</url>
+			<url>https://repo.adeo.no/repository/maven-releases</url>
 		</repository>
 		<snapshotRepository>
 			<id>m2snapshot</id>
 			<name>NAV Maven2 Snapshot Repository</name>
-			<url>http://maven.adeo.no/nexus/content/repositories/m2snapshot</url>
+			<url>https://repo.adeo.no/repository/maven-snapshots</url>
 			<uniqueVersion>false</uniqueVersion>
 		</snapshotRepository>
 	</distributionManagement>
