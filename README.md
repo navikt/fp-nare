@@ -30,3 +30,4 @@ See tests for examples
 # Contact 
 * **External**: Raise an issue here on GitHub
 * **Internal**: Slack channel #teamforeldrepenger.
+
