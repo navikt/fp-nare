@@ -4,10 +4,12 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>no.nav.fpsak.nare</groupId>
-    <artifactId>fpsak-nare-core</artifactId>
     <version>${sha1}</version>
+    <description>NARE - Not A Rule Engine</description>
+    <url>https://github.com/navikt/fp-nare</url>
+
+    <artifactId>fpsak-nare-core</artifactId>
 
     <name>FPSAK NARE :: Core</name>
     <packaging>jar</packaging>
@@ -32,12 +34,12 @@
         <connection>scm:git:git@github.com:navikt/fp-nare.git</connection>
         <url>https://github.com/navikt/fp-nare</url>
     </scm>
-    
+
     <distributionManagement>
         <repository>
-                <id>github</id>
-                <name>Github navikt Maven Packages</name>
-                <url>https://maven.pkg.github.com/navikt/fp-nare/</url>
+            <id>github</id>
+            <name>Github navikt Maven Packages</name>
+            <url>https://maven.pkg.github.com/navikt/fp-nare/</url>
         </repository>
     </distributionManagement>
 
@@ -105,7 +107,6 @@
 
         </dependencies>
     </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -128,6 +129,7 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -215,7 +217,6 @@
         </pluginManagement>
 
         <plugins>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
@@ -286,5 +287,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
