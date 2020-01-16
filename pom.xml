@@ -62,74 +62,49 @@
             <organizationUrl>https://www.nav.no</organizationUrl>
         </developer>
     </developers>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-engine</artifactId>
-                <version>${jupiter.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.vintage</groupId>
-                <artifactId>junit-vintage-engine</artifactId>
-                <version>${jupiter.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.assertj</groupId>
-                <artifactId>assertj-core</artifactId>
-                <version>3.14.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>${jackson-datatype.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ca.szc.thirdparty.nl.jworks.markdown_to_asciidoc</groupId>
-                <artifactId>markdown_to_asciidoc</artifactId>
-                <!-- Keep in sync with markup-document-builder's dependency -->
-                <version>1.0</version>
-            </dependency>
-            <dependency>
-                <!-- for å bygge markup for sysdoc -->
-                <groupId>io.github.swagger2markup</groupId>
-                <artifactId>markup-document-builder</artifactId>
-                <version>1.1.2</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>nl.jworks.markdown_to_asciidoc</groupId>
-                        <artifactId>markdown_to_asciidoc</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-        </dependencies>
-    </dependencyManagement>
     <dependencies>
         <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${jupiter.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
+            <version>${jupiter.version}</version>
+            <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.14.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-datatype.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ca.szc.thirdparty.nl.jworks.markdown_to_asciidoc</groupId>
+            <artifactId>markdown_to_asciidoc</artifactId>
+            <!-- Keep in sync with markup-document-builder's dependency -->
+            <version>1.0</version>
+        </dependency>
         <dependency>
             <!-- for å bygge markup for sysdoc -->
             <groupId>io.github.swagger2markup</groupId>
             <artifactId>markup-document-builder</artifactId>
-            <scope>provided</scope>
+            <version>1.1.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>nl.jworks.markdown_to_asciidoc</groupId>
+                    <artifactId>markdown_to_asciidoc</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
-
     <build>
         <pluginManagement>
             <plugins>
