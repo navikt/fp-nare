@@ -21,7 +21,7 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          echo "Building $TAG
+          echo "Building $TAG"
           mvn package -e --batch-mode --settings ./.github/.m2/settings.xml -Dsha1=$TAG
         env:
           GITHUB_USERNAME: x-access-token
