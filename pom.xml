@@ -4,7 +4,7 @@
 
 	<groupId>no.nav.fpsak.nare</groupId>
 	<artifactId>fpsak-nare</artifactId>
-	<version>${revision}${sha1}${changelist}</version>
+	<version>${sha1}</version>
 	<packaging>pom</packaging>
 	<name>FPSAK NARE ::</name>
 	<description>NARE - Not A Rule Engine</description>
@@ -40,31 +40,37 @@
 	</modules>
 
 	<properties>
-		<revision>2.1</revision>
-		<sha1></sha1>
-		<changelist>-SNAPSHOT</changelist>
-		<java.version>10</java.version>
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<sha1>2.1.0-SNAPSHOT</sha1>
+		<java.version>11</java.version>
+                <jupiter.version>5.5.2</jupiter.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<additionalparam>-Xdoclint:none</additionalparam>
 		<jackson-datatype.version>2.10.2</jackson-datatype.version>
-		
-		<!-- SonarCloud options -->
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<!-- Organization and project keys are displayed in the right sidebar of the project homepage -->
 		<sonar.organization>navit</sonar.organization>
+               <sonar.projectKey>navikt_fp-nare</sonar.projectKey>
 	</properties>
 
 	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.13</version>
-			</dependency>
-			<dependency>
+	    <dependencies>
+	      <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.vintage</groupId>
+                <artifactId>junit-vintage-engine</artifactId>
+                <version>${jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+	    <dependency>
 				<groupId>org.assertj</groupId>
 				<artifactId>assertj-core</artifactId>
 				<version>3.14.0</version>
@@ -252,9 +258,7 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
-
 	</build>
 
 	<distributionManagement>

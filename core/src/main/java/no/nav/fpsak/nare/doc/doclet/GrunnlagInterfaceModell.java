@@ -13,7 +13,6 @@ import io.github.swagger2markup.markup.builder.MarkupDocBuilder;
 import io.github.swagger2markup.markup.builder.MarkupTableColumn;
 import jdk.javadoc.doclet.DocletEnvironment;
 
-@SuppressWarnings("restriction")
 public class GrunnlagInterfaceModell implements MarkupOutput {
     private final List<GrunnlagInterfaceModell.Entry> entries = new ArrayList<>();
     private DocletEnvironment docEnv;
@@ -48,26 +47,28 @@ public class GrunnlagInterfaceModell implements MarkupOutput {
 
         entries.forEach(entry -> {
             ElementFilter.methodsIn(entry.typeElement.getEnclosedElements())
-                .stream()
-                .filter(m -> m.getModifiers().contains(Modifier.PUBLIC) && m.getSimpleName().toString().startsWith("get")
-                    && m.getReturnType().getKind() != TypeKind.VOID)
-                .forEach(m -> {
-                    String methodName = m.getSimpleName().toString();
-                    TypeMirror returnType = m.getReturnType();
-                    String returnTypeName;
-                    if (returnType.getKind() == TypeKind.DECLARED) {
-                        TypeElement returnTypeElement = (TypeElement) docEnv.getTypeUtils().asElement(m.getReturnType());
-                        returnTypeName = returnTypeElement.getQualifiedName().toString();
-                    } else {
-                        returnTypeName = returnType.toString();
-                    }
-                    String docComment = docEnv.getElementUtils().getDocComment(m);
-                    List<String> row = new ArrayList<>();
-                    row.add(methodName);
-                    row.add(returnTypeName);
-                    row.add(docComment);
-                    cells.add(row);
-                });
+                    .stream()
+                    .filter(m -> m.getModifiers().contains(Modifier.PUBLIC)
+                            && m.getSimpleName().toString().startsWith("get")
+                            && m.getReturnType().getKind() != TypeKind.VOID)
+                    .forEach(m -> {
+                        String methodName = m.getSimpleName().toString();
+                        TypeMirror returnType = m.getReturnType();
+                        String returnTypeName;
+                        if (returnType.getKind() == TypeKind.DECLARED) {
+                            TypeElement returnTypeElement = (TypeElement) docEnv.getTypeUtils()
+                                    .asElement(m.getReturnType());
+                            returnTypeName = returnTypeElement.getQualifiedName().toString();
+                        } else {
+                            returnTypeName = returnType.toString();
+                        }
+                        String docComment = docEnv.getElementUtils().getDocComment(m);
+                        List<String> row = new ArrayList<>();
+                        row.add(methodName);
+                        row.add(returnTypeName);
+                        row.add(docComment);
+                        cells.add(row);
+                    });
         });
 
         if (cells.size() > 0)
