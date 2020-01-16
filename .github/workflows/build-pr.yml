@@ -22,7 +22,7 @@ jobs:
         shell: bash
         run: |
           echo "Building $TAG"
-          mvn sonar:sonar ackage -e --batch-mode --settings ./.github/.m2/settings.xml -Dsha1=$TAG
+          mvn -batch-mode --settings ./.github/.m2/settings.xml -Dsha1=$TAG  org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
         env:
           GITHUB_USERNAME: x-access-token
           GITHUB_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
