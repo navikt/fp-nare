@@ -23,7 +23,8 @@ import no.nav.fpsak.nare.evaluation.node.ConditionalOrEvaluation;
  */
 public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
 
-    private static final RuleReasonRefImpl INVALID_EXIT = new RuleReasonRefImpl(Operator.COND_OR.name(), "{0} har ingen gyldige utganger");
+    private static final RuleReasonRefImpl INVALID_EXIT = new RuleReasonRefImpl(Operator.COND_OR.name(),
+            "{0} har ingen gyldige utganger");
 
     public static class Builder<T> {
         private final List<CondOrEntry<T>> conditionalEntries = new ArrayList<>();
@@ -79,7 +80,7 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
         Specification<T> testSpec() {
             return testSpec;
         }
-        
+
         @Override
         public String toString() {
             return JsonOutput.asJson(this);
@@ -88,7 +89,7 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
     }
 
     public static <T> Builder<T> regel() {
-        return new Builder<T>();
+        return new Builder<>();
     }
 
     public static <V> Builder<V> regel(String id, String beskrivelse) {
@@ -110,7 +111,7 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public Evaluation evaluate(final T t) {
-        AtomicReference<Evaluation> lastTestResult = new AtomicReference<Evaluation>();
+        AtomicReference<Evaluation> lastTestResult = new AtomicReference<>();
         Optional<CondOrEntry<T>> firstMatch = this.conditionalEntries.stream().filter(coe -> {
             Evaluation testEval = coe.testSpec().evaluate(t);
             lastTestResult.set(testEval);

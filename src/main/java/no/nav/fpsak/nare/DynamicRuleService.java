@@ -30,7 +30,7 @@ public abstract class DynamicRuleService<T> implements RuleService<T> {
     }
 
     @Override
-    final public Evaluation evaluer(T regelmodell) {
+    public final Evaluation evaluer(T regelmodell) {
         setRegelmodell(regelmodell);
         Evaluation evaluation = getSpecification().evaluate(regelmodell);
         if (serviceArgument != null) {

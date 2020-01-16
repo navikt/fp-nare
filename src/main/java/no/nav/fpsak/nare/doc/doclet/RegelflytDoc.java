@@ -34,7 +34,7 @@ public class RegelflytDoc {
     public boolean accept(TypeElement cls) {
         try {
             boolean accept = (hasRuleDocumentationAnnotation(cls) && (hasRuleServiceInterface(cls)))
-                || isRuleDocumentationGrunnlagClass(cls) || isRuleDocumentationGrunnlagInterface(cls);
+                    || isRuleDocumentationGrunnlagClass(cls) || isRuleDocumentationGrunnlagInterface(cls);
 
             return accept;
 
@@ -62,12 +62,12 @@ public class RegelflytDoc {
 
     private boolean hasRuleServiceInterface(TypeElement cls) throws ClassNotFoundException {
         Class<?> clazz = this.getClass().getClassLoader().loadClass(cls.getQualifiedName().toString());
-        return Arrays.stream(clazz.getInterfaces()).filter(interfaze -> interfaze.getTypeName().equals(RuleService.class.getName())).count() == 1 ? true
-            : false;
+        return Arrays.stream(clazz.getInterfaces())
+                .filter(interfaze -> interfaze.getTypeName().equals(RuleService.class.getName())).count() == 1;
     }
 
     public void process(TypeElement element) {
-        if(!accept(element)) {
+        if (!accept(element)) {
             return;
         }
         TypeElement e = element;
@@ -100,17 +100,18 @@ public class RegelflytDoc {
     private void processGrunnlagInterface(TypeElement typeElement) throws ClassNotFoundException {
         GrunnlagInterfaceModell resultat = new GrunnlagInterfaceModell(docEnv);
         resultat.leggTil(typeElement, docEnv.getElementUtils().getDocComment(typeElement));
-        
+
         String name = typeElement.getQualifiedName().toString();
         File outputFileAdoc = new File(getOutputLocation(), name);
         new AsciidocMapper().writeTo(outputFileAdoc.toPath(), resultat);
     }
 
     private void processRegelflytForRuleService(Class<?> targetClass, TypeElement doc)
-            throws InstantiationException, IllegalAccessException, FileNotFoundException, UnsupportedEncodingException, InvocationTargetException, NoSuchMethodException, SecurityException {
+            throws InstantiationException, IllegalAccessException, FileNotFoundException, UnsupportedEncodingException,
+            InvocationTargetException, NoSuchMethodException {
         Optional<Constructor<?>> defaultConstructor = Arrays.stream(targetClass.getConstructors())
-            .filter(c -> c.getParameterCount() == 0)
-            .findFirst();
+                .filter(c -> c.getParameterCount() == 0)
+                .findFirst();
         if (defaultConstructor.isPresent()) {
             @SuppressWarnings("rawtypes")
             RuleService ruleService = (RuleService) targetClass.getDeclaredConstructor().newInstance();

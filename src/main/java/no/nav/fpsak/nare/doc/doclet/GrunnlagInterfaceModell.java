@@ -71,7 +71,7 @@ public class GrunnlagInterfaceModell implements MarkupOutput {
                     });
         });
 
-        if (cells.size() > 0)
+        if (!cells.isEmpty())
             doc.tableWithColumnSpecs(columnSpecs, cells);
     }
 

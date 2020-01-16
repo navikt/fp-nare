@@ -108,7 +108,7 @@ public class Ruleset<V> {
             }
         });
         specs.add(spec2);
-        return new SequenceSpecification<V>(id, beskrivelse, specs);
+        return new SequenceSpecification<>(id, beskrivelse, specs);
     }
 
     private DynamicRuleService<V> opprettSpesifikasjon(Class<? extends DynamicRuleService<V>> spec1, V regelmodell)

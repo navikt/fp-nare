@@ -23,13 +23,14 @@ public class BasicRuleDescription implements RuleDescription {
     @JsonIgnore
     private final List<RuleDescription> children;
 
-    public BasicRuleDescription(Operator operator, String ruleIdentification, String ruleDescription, RuleDescription... children) {
+    public BasicRuleDescription(Operator operator, String ruleIdentification, String ruleDescription,
+            RuleDescription... children) {
         this(operator, ruleIdentification, ruleDescription,
                 children == null || children.length == 0 ? Collections.emptyList() : Arrays.asList(children));
     }
 
-    public BasicRuleDescription(Operator operator, String ruleIdentification, String ruleDescription, List<RuleDescription> children) {
-        // Objects.requireNonNull(operator, "operator");
+    public BasicRuleDescription(Operator operator, String ruleIdentification, String ruleDescription,
+            List<RuleDescription> children) {
         Objects.requireNonNull(ruleIdentification, "ruleIdentification");
         Objects.requireNonNull(ruleDescription, "ruleDescription");
 

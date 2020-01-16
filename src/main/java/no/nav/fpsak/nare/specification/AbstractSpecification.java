@@ -27,7 +27,7 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
 
     @Override
     public Specification<T> eller(final Specification<T> specification) {
-        return new OrSpecification<T>(this, specification);
+        return new OrSpecification<>(this, specification);
     }
 
     @Override
@@ -78,7 +78,7 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
 
     @Override
     public Specification<T> og(final Specification<T> specification) {
-        return new AndSpecification<T>(this, specification);
+        return new AndSpecification<>(this, specification);
     }
 
     @Override

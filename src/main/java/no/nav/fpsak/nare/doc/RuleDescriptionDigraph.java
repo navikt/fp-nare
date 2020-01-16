@@ -7,7 +7,7 @@ import no.nav.fpsak.nare.evaluation.Operator;
 
 public class RuleDescriptionDigraph {
 
-    private transient IdentityHashMap<RuleDescription, Boolean> processed = new IdentityHashMap<>();
+    private IdentityHashMap<RuleDescription, Boolean> processed = new IdentityHashMap<>();
 
     @SuppressWarnings("unused")
     private RuleNode root;
