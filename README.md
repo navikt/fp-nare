@@ -3,7 +3,8 @@
 [![SonarCloud Coverage](https://sonarcloud.io/api/project_badges/measure?project=navikt_fp-nare&metric=coverage)](https://sonarcloud.io/component_measures/metric/coverage/list?id=navikt_fp-nare)
 [![SonarCloud Bugs](https://sonarcloud.io/api/project_badges/measure?project=navikt_fp-nare&metric=bugs)](https://sonarcloud.io/component_measures/metric/reliability_rating/list?id=navikt_fp-nare)
 [![SonarCloud Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=navikt_fp-nare&metric=vulnerabilities)](https://sonarcloud.io/component_measures/metric/security_rating/list?id=navikt_fp-nare)
-
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/navikt/fp-nare)
+![GitHub](https://img.shields.io/github/license/navikt/fp-nare)
 # NARE - Not A Rule Engine
 
 NARE a variation of the Specification pattern, as described by Eric Evans & Martin Fowler here: https://martinfowler.com/apsupp/spec.pdf, adapter to handled more complex cases.  
