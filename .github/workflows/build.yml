@@ -7,7 +7,8 @@ on:
 
 jobs:
   build:
-
+    env:
+      VERSION: 2.1
     runs-on: ubuntu-latest
 
     steps:
@@ -25,6 +26,7 @@ jobs:
       - name: Hent maven version    
         run: |
           echo "::set-env name=MVN_VERSION::$(mvn help:evaluate -Dsha1=${TAG} -Dexpression=project.version -q -DforceStdout)"
+          echo "::set-env name=MVN_VERSION:1:${VERSION}-${TAG}"
           
       - name: Build artifacts & deploy
         shell: bash
