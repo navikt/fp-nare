@@ -43,9 +43,8 @@ jobs:
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-          VERSION: 
         with:
-          tag_name:${{ env.MVN_VERSION }}
+          tag_name: ${{ env.MVN_VERSION }}
           release_name: Release ${{ env.MVN_VERSION }}
           draft: false
           prerelease: false  
