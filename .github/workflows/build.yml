@@ -26,7 +26,7 @@ jobs:
       - name: Hent maven version    
         run: |
           echo "::set-env name=MVN_VERSION::$(mvn help:evaluate -Dsha1=${TAG} -Dexpression=project.version -q -DforceStdout)"
-          echo "::set-env name=MVN_VERSION:1:${VERSION}-${TAG}"
+          echo "::set-env name=MVN_VERSION1:${VERSION}-${TAG}"
           
       - name: Build artifacts & deploy
         shell: bash

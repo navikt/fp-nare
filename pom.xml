@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.nav.fpsak.nare</groupId>
-    <version>${revision}-${sha1}</version>
+    <version>${versjon}</version>
     <description>NARE - Not A Rule Engine</description>
     <url>https://github.com/navikt/fp-nare</url>
 
@@ -16,8 +16,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <revision>2.1</revision>
-        <sha1>-SNAPSHOT</sha1>
+        <revision>1.0-SNAPSHOT</revision>
         <java.version>11</java.version>
         <jupiter.version>5.6.0</jupiter.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
