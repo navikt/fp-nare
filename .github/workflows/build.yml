@@ -26,13 +26,13 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 1.11
-      - name: Hent tag    
-        run: echo "::set-env name=TAG::$(git log -1 --pretty='%ad' --date=format:'%Y%m%d%H%M%S')-$(echo $GITHUB_SHA | cut -c1-7)"  
-      
-      - name: Hent maven version    
+      - name: Hent tag
+        run: echo "TAG=$(git log -1 --pretty='%ad' --date=format:'%Y%m%d%H%M%S')-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+
+      - name: Hent maven version
         run: |
-          echo "::set-env name=MVN_VERSION::${VERSION}-${TAG}"
-          
+          echo "MVN_VERSION=${VERSION}-${TAG}" >> $GITHUB_ENV
+
       - name: Build artifacts & deploy
         shell: bash
         run: |
@@ -42,16 +42,16 @@ jobs:
           GITHUB_USERNAME: x-access-token
           GITHUB_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
-      
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.MVN_VERSION }}
           release_name: Release ${{ env.MVN_VERSION }}
           draft: false
-          prerelease: false  
-          
+          prerelease: false
+
