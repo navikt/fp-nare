@@ -16,8 +16,7 @@ import no.nav.fpsak.nare.specification.Specification;
  * @param <T> type av input
  */
 public interface RuleService<T> {
-    
-    
+   
 
     /**
      * Evaluer regel, all informasjon om kjøring returneres i Evaluation objektet.
