@@ -53,7 +53,4 @@ public abstract class BasicEvaluation implements Evaluation {
         this.evaluationProperties.put(key, value);
     }
 
-    public void setEvaluationProperty(String key, int value) {
-        setEvaluationProperty(key, String.valueOf(value));
-    }
 }
