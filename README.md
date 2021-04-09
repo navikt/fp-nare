@@ -8,7 +8,7 @@
 # NARE - Not A Rule Engine
 
 NARE a variation of the Specification pattern, as described by Eric Evans & Martin Fowler here: https://martinfowler.com/apsupp/spec.pdf, adapter to handled more complex cases.  
-More generally, it is an implementation of an [Expression Tree](https://en.wikipedia.org/wiki/Binary_expression_tree), but one which can support both unary, binary and ternary nodes expressions.
+More generally, it is an implementation of an [Expression Tree](https://en.wikipedia.org/wiki/Binary_expression_tree), but one which can support both unary, binary and ternary nodes expressions. 
 
 # Purpose
 To model decision trees so they can be visualised, documented, and traced (inputs, outputs, evaluation), for legal and regulatory review. Both the specification of a rule as well as its execution can be documented.
