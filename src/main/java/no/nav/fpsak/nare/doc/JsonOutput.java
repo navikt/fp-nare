@@ -22,6 +22,7 @@ public class JsonOutput {
         OM = new ObjectMapper();
 
         OM.registerModule(new JavaTimeModule());
+        OM.registerModule(new Jdk8Module());
         SimpleModule module = new SimpleModule();
         
         OM.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
