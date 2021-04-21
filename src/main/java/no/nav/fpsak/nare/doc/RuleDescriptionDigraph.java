@@ -5,15 +5,24 @@ import java.util.LinkedHashSet;
 
 import no.nav.fpsak.nare.evaluation.Operator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RuleDescriptionDigraph {
 
-    private IdentityHashMap<RuleDescription, Boolean> processed = new IdentityHashMap<>();
+    @JsonIgnore
+    private transient IdentityHashMap<RuleDescription, Boolean> processed = new IdentityHashMap<>();
 
     @SuppressWarnings("unused")
+    @JsonProperty(value="root")
     private RuleNode root;
 
+    @JsonProperty(value="nodes")
     private LinkedHashSet<RuleNode> nodes = new LinkedHashSet<>();
 
+    @JsonProperty(value="edges")
     private LinkedHashSet<RuleEdge> edges = new LinkedHashSet<>();
 
     public RuleDescriptionDigraph(RuleDescription root) {
