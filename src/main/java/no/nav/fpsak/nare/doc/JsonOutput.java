@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 public class JsonOutput {
     private static final ObjectMapper OM;
@@ -22,6 +23,7 @@ public class JsonOutput {
         OM = new ObjectMapper();
 
         OM.registerModule(new JavaTimeModule());
+        OM.registerModule(new Jdk8Module());
         SimpleModule module = new SimpleModule();
         
         OM.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
