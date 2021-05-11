@@ -50,7 +50,7 @@ public class RegelmodellDoclet implements Doclet {
         RegelflytDoc regelflytDoc = new RegelflytDoc(docEnv, regelModell, getOutputLocation());
         try {
             Set<TypeElement> types = ElementFilter.typesIn(docEnv.getIncludedElements());
-            types.stream().forEach(t -> regelflytDoc.process(t));
+            types.stream().forEach(regelflytDoc::process);
             File outputFileAdoc = new File(getOutputLocation(), "regler");
             new AsciidocMapper().writeTo(outputFileAdoc.toPath(), regelModell);
             return true;

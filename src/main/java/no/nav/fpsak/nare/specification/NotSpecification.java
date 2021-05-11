@@ -11,7 +11,7 @@ import no.nav.fpsak.nare.evaluation.node.NotEvaluation;
 public class NotSpecification<T> extends AbstractSpecification<T> {
 
     public static <V> NotSpecification<V> ikke(final Specification<V> spec1) {
-        return new NotSpecification<V>(spec1);
+        return new NotSpecification<>(spec1);
     }
 
     private Specification<T> spec1;
