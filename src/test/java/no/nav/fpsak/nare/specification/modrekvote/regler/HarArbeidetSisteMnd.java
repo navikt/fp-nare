@@ -25,7 +25,7 @@ public class HarArbeidetSisteMnd extends LeafSpecification<Soknad> {
 
     @Override
     public Evaluation evaluate(Soknad soknad) {
-        int mndArbeid = soknad.hovedsøker().getMndArbeid();
+        int mndArbeid = soknad.getHovedsøker().getMndArbeid();
         return (mndArbeid > month)
                 ? ja(ModrekvoteUtfall.ARBEIDET_TILSTREKKELIG, mndArbeid)
                 : nei(ModrekvoteUtfall.ARBEIDET_UTILSTREKKELIG, mndArbeid, month);
