@@ -35,11 +35,11 @@ public class HarUttaksplanForModreKvote extends LeafSpecification<Soknad> {
     @Override
     public Evaluation evaluate(Soknad soknad) {
         Optional<Person> soker = soknad.getSøker(MOR);
-        if (!soker.isPresent()) {
+        if (soker.isEmpty()) {
             return nei(ModrekvoteUtfall.ROLLE_INGEN_SØKER_MED_ROLLE, MOR);
         }
 
-        if (!soker.get().getUttaksplan().isPresent()) {
+        if (soker.get().getUttaksplan().isEmpty()) {
             return nei(ModrekvoteUtfall.UTTAKSPLAN_MANGLER, MOR);
         }
 

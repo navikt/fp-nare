@@ -16,16 +16,7 @@ class GrunnlagModell implements MarkupOutput {
     private final List<Entry> entries = new ArrayList<>();
     private DocletEnvironment docEnv;
 
-    static class Entry {
-        TypeElement targetClass;
-        String name;
-        String classDoc;
-
-        Entry(TypeElement targetClass, String name, String classDoc) {
-            this.targetClass = targetClass;
-            this.name = name;
-            this.classDoc = classDoc;
-        }
+    static record Entry(TypeElement targetClass, String name, String classDoc) {
     }
 
     public GrunnlagModell(DocletEnvironment docEnv) {

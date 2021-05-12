@@ -31,7 +31,7 @@ public class HarRettTilForeldrePenger extends LeafSpecification<Soknad> {
     public Evaluation evaluate(Soknad soknad) {
 
         Optional<Person> søker = soknad.getSøker(rolle);
-        if (!søker.isPresent()) {
+        if (søker.isEmpty()) {
             return nei(ModrekvoteUtfall.ROLLE_INGEN_SØKER_MED_ROLLE, rolle);
         } else if (!søker.get().harRettTilForeldrepenger()) {
             return nei(ModrekvoteUtfall.ROLLE_HAR_IKKE_RETT, rolle);
