@@ -28,7 +28,7 @@ public class EvaluationRuleDescription extends BasicRuleDescription {
             List<? extends Evaluation> children) {
         super(operator, evaluation.ruleIdentification(), evaluation.ruleDescriptionText(),
                 children == null ? Collections.emptyList()
-                        : children.stream().map(c -> c.toRuleDescription()).collect(Collectors.toList()));
+                        : children.stream().map(Evaluation::toRuleDescription).collect(Collectors.toList()));
         this.resultat = evaluation.result();
         this.reason = evaluation.reason();
         this.evaluationProperties = evaluation.getEvaluationProperties();
