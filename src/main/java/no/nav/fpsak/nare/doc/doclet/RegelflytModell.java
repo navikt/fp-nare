@@ -9,17 +9,9 @@ class RegelflytModell implements MarkupOutput {
 
     private final List<Entry> entries = new ArrayList<>();
 
-    static class Entry {
-        String name;
-        String simpleName;
-
-        private Entry(String qualifiedName) {
-            this.name = qualifiedName;
-            this.simpleName = simplifyName(qualifiedName);
-        }
-
-        private String simplifyName(String name) {
-            return name.replaceAll("\\.",  "_").toLowerCase();
+    static record Entry(String name, String simpleName) {
+        Entry(String name) {
+             this(name, name.replaceAll("\\.",  "_").toLowerCase());
         }
     }
 

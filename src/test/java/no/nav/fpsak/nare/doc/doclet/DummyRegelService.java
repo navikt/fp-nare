@@ -12,11 +12,11 @@ public class DummyRegelService implements RuleService<DummyRegelInput> {
     @SuppressWarnings("unchecked")
     @Override
     public Specification<DummyRegelInput> getSpecification() {
-        return new LeafSpecification<DummyRegelInput>("hello.spec") {
+        return new LeafSpecification<>("hello.spec") {
 
             @Override
             public Evaluation evaluate(DummyRegelInput t) {
-                throw new  UnsupportedOperationException("not implemented");
+                throw new UnsupportedOperationException("not implemented");
             }
         };
     }

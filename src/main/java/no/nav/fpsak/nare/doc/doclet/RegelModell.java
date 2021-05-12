@@ -37,7 +37,7 @@ class RegelModell implements MarkupOutput {
     private static Optional<String> getRuleServiceITypeName(Type[] interfaces) {
         Optional<String> getGenericInterfaceTypeName = Optional.empty();
         Optional<Type> ruleServiceType = Arrays.stream(interfaces)
-            .filter(interfaze -> isRuleService(interfaze))
+            .filter(RegelModell::isRuleService)
             .findFirst();
 
         if (ruleServiceType.isPresent()) {
@@ -96,7 +96,7 @@ class RegelModell implements MarkupOutput {
         Type[] interfaces = entry.targetClass.getGenericInterfaces();
         Optional<String> genericTypeName = getRuleServiceITypeName(interfaces);
 
-        if (!genericTypeName.isPresent()) {
+        if (genericTypeName.isEmpty()) {
             Class<?> c = entry.targetClass.getSuperclass();
             Type[] superclassGenericTypes = c.getGenericInterfaces();
             if (superclassGenericTypes == null || superclassGenericTypes.length == 0) {
