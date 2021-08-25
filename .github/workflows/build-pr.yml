@@ -16,14 +16,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
       - uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
           java-version: 16
+          cache: 'maven'
       - name: Hent tag
         run: echo "TAG=$(git log -1 --pretty='%ad' --date=format:'%Y%m%d%H%M%S')-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
       - name: Build
