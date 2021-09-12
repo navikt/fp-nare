@@ -9,6 +9,7 @@ import no.nav.fpsak.nare.ServiceArgument;
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
+import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.node.SequenceEvaluation;
 
 /**
@@ -52,9 +53,13 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public Evaluation evaluate(final T t) {
-        Evaluation[] evaluations = new Evaluation[specs.size()];
-        for (int ix = 0; ix < specs.size(); ix++) {
+        var specSize = specs.size();
+        Evaluation[] evaluations = new Evaluation[specSize];
+        for (int ix = 0; ix < specSize; ix++) {
             evaluations[ix] = specs.get(ix).evaluate(t);
+            if (ix < specSize - 1 && !Resultat.JA.equals(evaluations[ix].result())) {
+                throw new IllegalArgumentException("Utviklerfeil: SequenceSpecification evaluering annet enn JA før siste spec.");
+            }
         }
         SequenceEvaluation evaluation = new SequenceEvaluation(identifikator(), beskrivelse(), evaluations);
         if (scope != null) {

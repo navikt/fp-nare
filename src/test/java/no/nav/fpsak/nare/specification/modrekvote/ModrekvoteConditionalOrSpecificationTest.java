@@ -1,6 +1,8 @@
 package no.nav.fpsak.nare.specification.modrekvote;
 
 import java.util.Collection;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -8,6 +10,7 @@ import org.junit.Test;
 import no.nav.fpsak.nare.RuleService;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Resultat;
+import no.nav.fpsak.nare.evaluation.RuleReasonRefImpl;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSerializer;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSummary;
 import no.nav.fpsak.nare.specification.modrekvote.input.Person;
@@ -32,7 +35,12 @@ public class ModrekvoteConditionalOrSpecificationTest {
         @SuppressWarnings("deprecation")
         String asJson = EvaluationSerializer.asLegacyJsonTree(evaluation);
         EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
-        Collection<String> leafReasons = evaluationSummary.leafReasons(Resultat.NEI, Resultat.IKKE_VURDERT);
+        Collection<String> leafReasons = evaluationSummary.leafEvaluations(Resultat.NEI, Resultat.IKKE_VURDERT).stream()
+                .map(Evaluation::getOutcome)
+                .filter(Objects::nonNull)
+                .filter(r -> r instanceof RuleReasonRefImpl)
+                .map(r -> ((RuleReasonRefImpl)r).getReason())
+                .collect(Collectors.toList());
         Assertions.assertThat(leafReasons).containsOnly("UTFALL_09");
 
         Assertions.assertThat(asJson)

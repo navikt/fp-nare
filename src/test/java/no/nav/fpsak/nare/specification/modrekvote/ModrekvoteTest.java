@@ -3,6 +3,7 @@ package no.nav.fpsak.nare.specification.modrekvote;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import no.nav.fpsak.nare.RuleService;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Resultat;
+import no.nav.fpsak.nare.evaluation.RuleReasonRefImpl;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSerializer;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSummary;
 import no.nav.fpsak.nare.specification.modrekvote.input.Person;
@@ -45,7 +47,11 @@ public class ModrekvoteTest {
                 .contains("FK_VK.10.B");
 
         EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
-        Collection<String> leafReasons = evaluationSummary.leafReasons(Resultat.NEI, Resultat.IKKE_VURDERT);
+        Collection<String> leafReasons = evaluationSummary.leafEvaluations(Resultat.NEI, Resultat.IKKE_VURDERT).stream()
+                .map(Evaluation::getOutcome)
+                .filter(r -> r instanceof RuleReasonRefImpl)
+                .map(r -> ((RuleReasonRefImpl)r).getReason())
+                .collect(Collectors.toList());
         Assertions.assertThat(leafReasons).containsOnly("UTFALL_09", "UTFALL_11");
 
     }
