@@ -5,19 +5,19 @@ import no.nav.fpsak.nare.specification.LeafSpecification;
 /**
  * Representerer en unik output fra en kjøring av Specifications. Produseres normalt av {@link LeafSpecification}.
  */
-public class RuleReasonRefImpl implements RuleReasonRef<String> {
+public class RuleReasonRefImpl implements RuleReasonRef {
 
     private final String reasonCode;
-    private final String reasonTextTemplate;
+    private final String reason;
 
-    public RuleReasonRefImpl(String reasonCode, String reasonTextTemplate) {
+    public RuleReasonRefImpl(String reasonCode, String reason) {
         this.reasonCode = reasonCode;
-        this.reasonTextTemplate = reasonTextTemplate;
+        this.reason = reason;
     }
 
     @Override
     public String getReasonTextTemplate() {
-        return reasonTextTemplate;
+        return reason;
     }
 
     @Override
@@ -25,8 +25,4 @@ public class RuleReasonRefImpl implements RuleReasonRef<String> {
         return reasonCode;
     }
 
-    @Override
-    public String getReason() {
-        return reasonCode;
-    }
 }

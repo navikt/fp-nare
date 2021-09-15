@@ -11,7 +11,7 @@ import org.junit.Test;
 import no.nav.fpsak.nare.RuleService;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Resultat;
-import no.nav.fpsak.nare.evaluation.RuleReasonRefImpl;
+import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSerializer;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSummary;
 import no.nav.fpsak.nare.specification.modrekvote.input.Person;
@@ -49,8 +49,7 @@ public class ModrekvoteTest {
         EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
         Collection<String> leafReasons = evaluationSummary.leafEvaluations(Resultat.NEI, Resultat.IKKE_VURDERT).stream()
                 .map(Evaluation::getOutcome)
-                .filter(r -> r instanceof RuleReasonRefImpl)
-                .map(r -> ((RuleReasonRefImpl)r).getReason())
+                .map(RuleReasonRef::getReasonCode)
                 .collect(Collectors.toList());
         Assertions.assertThat(leafReasons).containsOnly("UTFALL_09", "UTFALL_11");
 

@@ -2,12 +2,14 @@ package no.nav.fpsak.nare;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 import no.nav.fpsak.nare.specification.ComputationalIfSpecification;
 import no.nav.fpsak.nare.specification.ConditionalOrSpecification;
 import no.nav.fpsak.nare.specification.ConditionalOrSpecification.Builder;
+import no.nav.fpsak.nare.specification.ForeachSpecification;
 import no.nav.fpsak.nare.specification.SequenceSpecification;
 import no.nav.fpsak.nare.specification.Specification;
 
@@ -70,6 +72,26 @@ public class Ruleset<V> {
         specs.addAll(spec1list);
         specs.add(spec2);
         return new SequenceSpecification<>(id, beskrivelse, specs);
+    }
+
+    /**
+     * Realiserer sekvens der en regel utføres N ganger - 1 gang for hvert element i en collection
+     *
+     * @param id
+     * @param beskrivelse
+     * @param spec          regel som utføres 1 gang for hvert element i argumentlisten, med argName + arg som "scope"
+     * @param argName
+     * @param args          argumentlisten, inneholder N argumenter
+     * @return
+     */
+    public Specification<V> beregningsForeachRegel(String id, String beskrivelse, Specification<V> spec,
+                                                   String argName, Collection<?> args) {
+        Objects.requireNonNull(spec, "spec1");
+        Objects.requireNonNull(args, "args1");
+        if (args.isEmpty()) {
+            throw new IllegalArgumentException("Argumentlisten kan ikke være tom");
+        }
+        return new ForeachSpecification<>(id, beskrivelse, spec, args, argName);
     }
 
     /**

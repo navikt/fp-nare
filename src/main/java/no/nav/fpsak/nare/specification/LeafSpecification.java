@@ -11,8 +11,4 @@ public abstract class LeafSpecification<T> extends AbstractSpecification<T> {
         medBeskrivelse(beskrivelse);
     }
 
-    @Override
-    public void visit(Specification<T> parentSpecification, SpecificationVisitor<T> visitor) {
-        visitor.visiting(parentSpecification, this);
-    }
 }

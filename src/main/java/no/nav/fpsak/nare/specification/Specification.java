@@ -1,5 +1,7 @@
 package no.nav.fpsak.nare.specification;
 
+import java.util.List;
+
 import no.nav.fpsak.nare.ServiceArgument;
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
@@ -17,8 +19,7 @@ public interface Specification<T> {
     /**
      * Create a new specification that is the OR operation of {@code this} specification of another specification.
      *
-     * @param specification
-     *            Specification to OR.
+     * @param specification Specification to OR.
      * @return A new specification.
      */
     Specification<T> eller(Specification<T> specification);
@@ -26,11 +27,14 @@ public interface Specification<T> {
     /**
      * Check if {@code t} is satisfied by the specification.
      *
-     * @param t
-     *            Object to test.
+     * @param t Object to test.
      * @return {@code true} if {@code t} satisfies the specification.
      */
     Evaluation evaluate(T t);
+
+    default Evaluation evaluate(T t, List<ServiceArgument> serviceArguments) {
+        return evaluate(t);
+    }
 
     String identifikator();
 
@@ -46,13 +50,10 @@ public interface Specification<T> {
     /**
      * Create a new specification that is the AND operation of {@code this} specification of another specification.
      *
-     * @param specification
-     *            Specification to AND.
+     * @param specification Specification to AND.
      * @return A new specification.
      */
     Specification<T> og(Specification<T> specification);
 
     RuleDescription ruleDescription();
-    
-    void visit(Specification<T> parentSpecification, SpecificationVisitor<T> visitor);
 }

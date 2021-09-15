@@ -53,10 +53,15 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public Evaluation evaluate(final T t) {
+        return evaluate(t, List.of());
+    }
+
+    @Override
+    public Evaluation evaluate(final T t, List<ServiceArgument> serviceArguments) {
         var specSize = specs.size();
         Evaluation[] evaluations = new Evaluation[specSize];
         for (int ix = 0; ix < specSize; ix++) {
-            evaluations[ix] = specs.get(ix).evaluate(t);
+            evaluations[ix] = specs.get(ix).evaluate(t, serviceArguments);
             if (ix < specSize - 1 && !Resultat.JA.equals(evaluations[ix].result())) {
                 throw new IllegalArgumentException("Utviklerfeil: SequenceSpecification evaluering annet enn JA før siste spec.");
             }
@@ -65,6 +70,7 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
         if (scope != null) {
             evaluation.setEvaluationProperty(scope.getBeskrivelse(), scope.getVerdi().toString());
         }
+        serviceArguments.forEach(serviceArgument -> evaluation.setEvaluationProperty(serviceArgument.getBeskrivelse(), serviceArgument.getVerdi().toString()));
         return evaluation;
     }
 
@@ -83,13 +89,6 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
             ruleDescriptions[ix] = specs.get(ix).ruleDescription();
         }
         return new SpecificationRuleDescription(Operator.SEQUENCE, identifikator(), beskrivelse(), ruleDescriptions);
-    }
-
-    @Override
-    public void visit(Specification<T> parentSpecification, SpecificationVisitor<T> visitor) {
-        for (Specification<T> entry : specs) {
-            entry.visit(this, visitor);
-        }
     }
 
     @Override

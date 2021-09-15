@@ -38,6 +38,8 @@ public class EvaluationSummary {
                 String childRuleId = child.ruleIdentification();
                 String lastChildOfParentRuleId = ((AggregatedEvaluation) parent).lastChild().ruleIdentification();
                 return (childRuleId.equals(lastChildOfParentRuleId));
+            } else if (Operator.FOREACH.equals(parent.getOperator())) {
+                return allSequenceLeaves;
             } else {
                 return true;
             }
