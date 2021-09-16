@@ -8,6 +8,7 @@ public abstract class BasicEvaluation implements Evaluation {
     private String ruleDescription;
     protected Resultat resultat;
     protected String reason;
+    private Object output;
 
     private Map<String, Object> evaluationProperties;
 
@@ -24,6 +25,12 @@ public abstract class BasicEvaluation implements Evaluation {
     @Override
     public Resultat result() {
         return resultat;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T output() {
+        return (T)output;
     }
 
     @Override
@@ -51,6 +58,10 @@ public abstract class BasicEvaluation implements Evaluation {
             this.evaluationProperties = new TreeMap<>();
         }
         this.evaluationProperties.put(key, value);
+    }
+
+    public void setOutput(Object output) {
+        this.output = output;
     }
 
 }

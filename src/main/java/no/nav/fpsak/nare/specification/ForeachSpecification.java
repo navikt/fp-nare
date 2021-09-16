@@ -51,18 +51,27 @@ public class ForeachSpecification<T> extends AbstractSpecification<T> {
     @Override
     public Evaluation evaluate(final T t, List<ServiceArgument> serviceArguments) {
         int ix = 0;
+        var useForNextIteration = t;
         Evaluation[] evaluations = new Evaluation[args.size()];
         for (var arg : args) {
             var extendedArguments = new ArrayList<>(serviceArguments);
             var serviceArgument = new ServiceArgument(argName, arg);
             extendedArguments.add(serviceArgument);
-            evaluations[ix] = spec.medScope(serviceArgument).evaluate(t, extendedArguments);
+            var eval = spec.medScope(serviceArgument).evaluate(useForNextIteration, extendedArguments);
+            evaluations[ix] = eval;
+            if (eval.output() != null) {
+                useForNextIteration = eval.output();
+            }
             if (!Resultat.JA.equals(evaluations[ix].result())) {
                 throw new IllegalArgumentException("Utviklerfeil: ForeachSpecification evaluering annet enn JA.");
             }
             ix++;
         }
-        return new ForeachEvaluation(identifikator(), beskrivelse(), argName, evaluations);
+        var resultingEval = new ForeachEvaluation(identifikator(), beskrivelse(), argName, evaluations);
+        if (!Objects.equals(t, useForNextIteration)) {
+            resultingEval.setOutput(useForNextIteration);
+        }
+        return resultingEval;
     }
 
     @Override

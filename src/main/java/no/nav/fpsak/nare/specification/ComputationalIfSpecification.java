@@ -1,6 +1,7 @@
 package no.nav.fpsak.nare.specification;
 
 import java.util.List;
+import java.util.Objects;
 
 import no.nav.fpsak.nare.ServiceArgument;
 import no.nav.fpsak.nare.doc.RuleDescription;
@@ -41,8 +42,14 @@ public class ComputationalIfSpecification<T> extends BinarySpecification<T> {
     @Override
     public Evaluation evaluate(final T t, List<ServiceArgument> serviceArguments) {
         testEvaluation = testSpec.evaluate(t, serviceArguments);
-        Evaluation evaluation = new ComputationalIfEvaluation(identifikator(), beskrivelse(), testEvaluation,
-                Resultat.JA.equals(testEvaluation.result()) ? spec1.evaluate(t, serviceArguments) : spec2.evaluate(t, serviceArguments));
+        if (testEvaluation.output() != null && !Objects.equals(t, testEvaluation.output())) {
+            throw new IllegalStateException("Testregel med sideeffekt");
+        }
+        var conditionalEvaluation = Resultat.JA.equals(testEvaluation.result()) ? spec1.evaluate(t, serviceArguments) : spec2.evaluate(t, serviceArguments);
+        var evaluation = new ComputationalIfEvaluation(identifikator(), beskrivelse(), testEvaluation, conditionalEvaluation);
+        if (conditionalEvaluation.output() != null && !Objects.equals(t, conditionalEvaluation.output())) {
+            evaluation.setOutput(conditionalEvaluation.output());
+        }
         if (scope != null) {
             evaluation.setEvaluationProperty(scope.getBeskrivelse(), scope.getVerdi().toString());
         }

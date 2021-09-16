@@ -113,19 +113,30 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
     public Evaluation evaluate(final T t) {
         AtomicReference<Evaluation> lastTestResult = new AtomicReference<>();
         Optional<CondOrEntry<T>> firstMatch = this.conditionalEntries.stream().filter(coe -> {
-            Evaluation testEval = coe.testSpec().evaluate(t);
+            var testEval = coe.testSpec().evaluate(t);
+            if (testEval.output() != null && !Objects.equals(testEval.output(), t)) {
+                throw new IllegalStateException("Testregel med sideeffekt");
+            }
             lastTestResult.set(testEval);
             // kun JA som skal fortsette, kast exception dersom testflyt returnerer Manuell?
             return Objects.equals(Resultat.JA, testEval.result());
         }).findFirst();
 
         if (firstMatch.isPresent()) {
-            Evaluation testResult = lastTestResult.get();
-            Evaluation flowResult = firstMatch.get().flowSpec().evaluate(t);
-            return new ConditionalOrEvaluation(identifikator(), beskrivelse(), testResult, flowResult);
+            var testResult = lastTestResult.get();
+            var flowResult = firstMatch.get().flowSpec().evaluate(t);
+            var resultEval = new ConditionalOrEvaluation(identifikator(), beskrivelse(), testResult, flowResult);
+            if (flowResult.output() != null && !Objects.equals(t, flowResult.output())) {
+                resultEval.setOutput(flowResult.output());
+            }
+            return resultEval;
         } else if (elseCondition != null) {
-            Evaluation elseEvaluation = elseCondition.evaluate(t);
-            return new ConditionalElseEvaluation(identifikator(), beskrivelse(), elseEvaluation);
+            var elseEvaluation = elseCondition.evaluate(t);
+            var resultEval =  new ConditionalElseEvaluation(identifikator(), beskrivelse(), elseEvaluation);
+            if (elseEvaluation.output() != null && !Objects.equals(t, elseEvaluation.output())) {
+                resultEval.setOutput(elseEvaluation.output());
+            }
+            return resultEval;
         } else {
             // varlse en kritisk feil? Er inne i en blindvei
             return nei(INVALID_EXIT, identifikator());
@@ -134,8 +145,8 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public RuleDescription ruleDescription() {
-        String rootSpecId = identifikator();
-        List<RuleDescription> ruleDescriptions = conditionalEntries.stream().map(coe -> {
+        var rootSpecId = identifikator();
+        var ruleDescriptions = conditionalEntries.stream().map(coe -> {
             return new BasicRuleDescription(Operator.AND, rootSpecId + "\u2192" + coe.testSpec().identifikator(),
                     coe.testSpec().beskrivelse(), coe.flowSpec.ruleDescription());
         }).collect(Collectors.toList());

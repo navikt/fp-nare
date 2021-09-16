@@ -58,15 +58,23 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public Evaluation evaluate(final T t, List<ServiceArgument> serviceArguments) {
+        var useForNextChild = t;
         var specSize = specs.size();
         Evaluation[] evaluations = new Evaluation[specSize];
         for (int ix = 0; ix < specSize; ix++) {
-            evaluations[ix] = specs.get(ix).evaluate(t, serviceArguments);
+            var result = specs.get(ix).evaluate(useForNextChild, serviceArguments);
+            evaluations[ix] = result;
+            if (result.output() != null) {
+                useForNextChild = result.output();
+            }
             if (ix < specSize - 1 && !Resultat.JA.equals(evaluations[ix].result())) {
                 throw new IllegalArgumentException("Utviklerfeil: SequenceSpecification evaluering annet enn JA før siste spec.");
             }
         }
         SequenceEvaluation evaluation = new SequenceEvaluation(identifikator(), beskrivelse(), evaluations);
+        if (!Objects.equals(t, useForNextChild)) {
+            evaluation.setOutput(useForNextChild);
+        }
         if (scope != null) {
             evaluation.setEvaluationProperty(scope.getBeskrivelse(), scope.getVerdi().toString());
         }
