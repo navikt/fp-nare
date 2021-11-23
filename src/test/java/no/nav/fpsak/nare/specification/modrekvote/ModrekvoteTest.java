@@ -2,16 +2,12 @@ package no.nav.fpsak.nare.specification.modrekvote;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
-
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import no.nav.fpsak.nare.RuleService;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Resultat;
-import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSerializer;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSummary;
 import no.nav.fpsak.nare.specification.modrekvote.input.Person;
@@ -47,11 +43,13 @@ public class ModrekvoteTest {
                 .contains("FK_VK.10.B");
 
         EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
-        Collection<String> leafReasons = evaluationSummary.leafEvaluations(Resultat.NEI, Resultat.IKKE_VURDERT).stream()
+        var leafReasons = evaluationSummary.leafEvaluations(Resultat.NEI, Resultat.IKKE_VURDERT).stream()
                 .map(Evaluation::getOutcome)
-                .map(RuleReasonRef::getReasonCode)
-                .collect(Collectors.toList());
-        Assertions.assertThat(leafReasons).containsOnly("UTFALL_09", "UTFALL_11");
+                .filter(l -> l instanceof ModrekvoteRuleReason)
+                .map(l -> (ModrekvoteRuleReason)l)
+                .map(ModrekvoteRuleReason::utfall)
+                .toList();
+        Assertions.assertThat(leafReasons).containsOnly(ModrekvoteUtfall.UTFALL_09, ModrekvoteUtfall.UTFALL_11);
 
     }
 }

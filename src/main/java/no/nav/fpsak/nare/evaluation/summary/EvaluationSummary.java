@@ -76,9 +76,4 @@ public class EvaluationSummary {
         return visitor.getCollected();
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> T output() {
-        return rootEvaluation.output();
-    }
-
 }

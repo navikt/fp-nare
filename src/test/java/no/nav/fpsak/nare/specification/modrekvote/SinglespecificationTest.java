@@ -4,7 +4,6 @@ import static no.nav.fpsak.nare.specification.modrekvote.input.Rolle.MOR;
 import static no.nav.fpsak.nare.specification.modrekvote.regler.HarRettTilForeldrePenger.harRettTilForeldrePenger;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.assertj.core.api.Assertions;
@@ -14,7 +13,6 @@ import no.nav.fpsak.nare.RuleService;
 import no.nav.fpsak.nare.Ruleset;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Resultat;
-import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSerializer;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSummary;
 import no.nav.fpsak.nare.specification.Specification;
@@ -43,7 +41,7 @@ public class SinglespecificationTest {
         Assertions.assertThat(asJson).contains("FK_VK_10.1");
 
         EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
-        Collection<RuleReasonRef> leafReasons = evaluationSummary.leafEvaluations().stream()
+        var leafReasons = evaluationSummary.leafEvaluations().stream()
                 .map(Evaluation::getOutcome)
                 .collect(Collectors.toList());
         Assertions.assertThat(leafReasons).hasSize(1);
@@ -51,7 +49,7 @@ public class SinglespecificationTest {
 
     }
 
-    private class SingleSpecification implements RuleService<Soknad> {
+    private static class SingleSpecification implements RuleService<Soknad> {
 
         public SingleSpecification() {
         }

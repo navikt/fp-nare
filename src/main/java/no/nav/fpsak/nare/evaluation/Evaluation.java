@@ -19,8 +19,6 @@ public interface Evaluation {
     
     Operator getOperator();
 
-    <T> T output();
-
     void visit(Evaluation parent, EvaluationVisitor visitor);
 
     /** Properties generert som del av evaluering. Kan brukes til å angi custom resultater. */

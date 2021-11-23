@@ -3,104 +3,116 @@ package no.nav.fpsak.nare.specification.modrekvote.regler;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import no.nav.fpsak.nare.RuleService;
-import no.nav.fpsak.nare.Ruleset;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Resultat;
+import no.nav.fpsak.nare.evaluation.RuleOutcome;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSummary;
 import no.nav.fpsak.nare.specification.ConditionalOrSpecification;
 import no.nav.fpsak.nare.specification.ForeachSpecification;
 import no.nav.fpsak.nare.specification.LeafSpecification;
 import no.nav.fpsak.nare.specification.SequenceSpecification;
 import no.nav.fpsak.nare.specification.Specification;
-import no.nav.fpsak.nare.specification.modrekvote.input.Soknad;
 
 public class CountingpecificationTest {
 
     @Test
     public void skal_evaluere_regel_med_hvis_branch()  {
         var singleSpecification = new SingleRule();
-        var evaluation = singleSpecification.evaluer(1);
+        var evaluation = singleSpecification.evaluer(new MellomregnInt(1));
 
         assertThat(evaluation.result()).isEqualTo(Resultat.JA);
 
         var evaluationSummary = new EvaluationSummary(evaluation);
-        Assertions.assertThat((Integer) evaluationSummary.output()).isEqualTo(8);
+        var outcome = hentOutcome(evaluationSummary);
+        assertThat(outcome).contains(8); // input = 1 + foreach (3 * 1) * cond/IfBranch (2) = 8
     }
 
     @Test
     public void skal_evaluere_regel_med_ellers_branch()  {
         var singleSpecification = new SingleRule();
-        var evaluation = singleSpecification.evaluer(2);
+        var evaluation = singleSpecification.evaluer(new MellomregnInt(2));
 
         assertThat(evaluation.result()).isEqualTo(Resultat.JA);
 
         var evaluationSummary = new EvaluationSummary(evaluation);
-        Assertions.assertThat((Integer) evaluationSummary.output()).isEqualTo(6);
+        var outcome = hentOutcome(evaluationSummary);
+        assertThat(outcome).contains(6); // input = 2 + foreach (3 * 1) + cond/OrBranch (1) = 6
     }
 
-    private static class SingleRule implements RuleService<Integer> {
+    private Optional<Integer> hentOutcome(EvaluationSummary evaluationSummary) {
+        return evaluationSummary.singleLeafEvaluation(Resultat.JA)
+                .map(Evaluation::getOutcome)
+                .map(o -> o instanceof RuleOutcome p ? p.calculated() : null)
+                .map(o -> o instanceof Integer i ? i : null);
+    }
+
+    private static class MellomregnInt {
+        private Integer carryon;
+        MellomregnInt(Integer integer) {
+            this.carryon = integer;
+        }
+    }
+    private static class SingleRule implements RuleService<MellomregnInt> {
 
         public SingleRule() {
         }
 
         @Override
-        public Evaluation evaluer(Integer data) {
+        public Evaluation evaluer(MellomregnInt data) {
             return getSpecification().evaluate(data);
         }
 
         @SuppressWarnings("unchecked")
         @Override
-        public Specification<Integer> getSpecification() {
-            Ruleset<Soknad> rs = new Ruleset<>();
-
+        public Specification<MellomregnInt> getSpecification() {
             return new SequenceSpecification<>("Seq", "Seq",
                     new ForeachSpecification<>("Sum", "Sum", new AddOneLeaf(), List.of("A", "B", "C"), "bokstav"),
-                    ConditionalOrSpecification.<Integer>regel("Hvis", "Så")
+                    ConditionalOrSpecification.<MellomregnInt>regel("Hvis", "Så")
                             .hvis(new EvenLeaf(), new MultiplyByTwoLeaf())
                             .ellers(new AddOneLeaf()));
         }
 
     }
 
-    private static class AddOneLeaf extends LeafSpecification<Integer> {
+    private static class AddOneLeaf extends LeafSpecification<MellomregnInt> {
         private AddOneLeaf() {
-            super("CarryOn");
+            super("AddOne");
         }
 
         @Override
-        public Evaluation evaluate(Integer input) {
-            var eval = ja();
-            eval.setOutput(input + 1);
-            return eval;
+        public Evaluation evaluate(MellomregnInt input) {
+            input.carryon = input.carryon + 1;
+            var outcome = new RuleOutcome<>(input.carryon);
+            return ja(outcome);
         }
     }
 
-    private static class MultiplyByTwoLeaf extends LeafSpecification<Integer> {
+    private static class MultiplyByTwoLeaf extends LeafSpecification<MellomregnInt> {
         private MultiplyByTwoLeaf() {
-            super("CarryOn");
+            super("TimesTwo");
         }
 
         @Override
-        public Evaluation evaluate(Integer input) {
-            var eval = ja();
-            eval.setOutput(input * 2);
-            return eval;
+        public Evaluation evaluate(MellomregnInt input) {
+            input.carryon = input.carryon * 2;
+            var outcome = new RuleOutcome<>(input.carryon);
+            return ja(outcome);
         }
     }
 
-    private static class EvenLeaf extends LeafSpecification<Integer> {
+    private static class EvenLeaf extends LeafSpecification<MellomregnInt> {
         private EvenLeaf() {
             super("CarryOn");
         }
 
         @Override
-        public Evaluation evaluate(Integer input) {
-            return input % 2 == 0 ? ja() : nei();
+        public Evaluation evaluate(MellomregnInt input) {
+            return input.carryon % 2 == 0 ? ja() : nei();
         }
     }
 }

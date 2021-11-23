@@ -2,7 +2,6 @@ package no.nav.fpsak.nare;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -85,7 +84,7 @@ public class Ruleset<V> {
      * @return
      */
     public Specification<V> beregningsForeachRegel(String id, String beskrivelse, Specification<V> spec,
-                                                   String argName, Collection<?> args) {
+                                                   String argName, List<?> args) {
         Objects.requireNonNull(spec, "spec1");
         Objects.requireNonNull(args, "args1");
         if (args.isEmpty()) {

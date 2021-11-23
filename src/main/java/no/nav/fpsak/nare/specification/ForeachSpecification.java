@@ -1,7 +1,6 @@
 package no.nav.fpsak.nare.specification;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,10 +17,10 @@ import no.nav.fpsak.nare.evaluation.node.ForeachEvaluation;
 public class ForeachSpecification<T> extends AbstractSpecification<T> {
 
     private Specification<T> spec;
-    private Collection<?> args;
+    private List<?> args;
     private String argName;
 
-    public ForeachSpecification(String id, String beskrivelse, Specification<T> spec, Collection<?> args, String argName) {
+    public ForeachSpecification(String id, String beskrivelse, Specification<T> spec, List<?> args, String argName) {
         super();
         Objects.requireNonNull(id, "ID");
         Objects.requireNonNull(beskrivelse, "beskrivelse");
@@ -51,26 +50,19 @@ public class ForeachSpecification<T> extends AbstractSpecification<T> {
     @Override
     public Evaluation evaluate(final T t, List<ServiceArgument> serviceArguments) {
         int ix = 0;
-        var useForNextIteration = t;
         Evaluation[] evaluations = new Evaluation[args.size()];
         for (var arg : args) {
             var extendedArguments = new ArrayList<>(serviceArguments);
             var serviceArgument = new ServiceArgument(argName, arg);
             extendedArguments.add(serviceArgument);
-            var eval = spec.medScope(serviceArgument).evaluate(useForNextIteration, extendedArguments);
+            var eval = spec.medScope(serviceArgument).evaluate(t, extendedArguments);
             evaluations[ix] = eval;
-            if (eval.output() != null) {
-                useForNextIteration = eval.output();
-            }
             if (!Resultat.JA.equals(evaluations[ix].result())) {
                 throw new IllegalArgumentException("Utviklerfeil: ForeachSpecification evaluering annet enn JA.");
             }
             ix++;
         }
         var resultingEval = new ForeachEvaluation(identifikator(), beskrivelse(), argName, evaluations);
-        if (!Objects.equals(t, useForNextIteration)) {
-            resultingEval.setOutput(useForNextIteration);
-        }
         return resultingEval;
     }
 

@@ -13,7 +13,7 @@ import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
 import no.nav.fpsak.nare.evaluation.Resultat;
-import no.nav.fpsak.nare.evaluation.RuleReasonRefImpl;
+import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 import no.nav.fpsak.nare.evaluation.node.ConditionalElseEvaluation;
 import no.nav.fpsak.nare.evaluation.node.ConditionalOrEvaluation;
 
@@ -23,8 +23,7 @@ import no.nav.fpsak.nare.evaluation.node.ConditionalOrEvaluation;
  */
 public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
 
-    private static final RuleReasonRefImpl INVALID_EXIT = new RuleReasonRefImpl(Operator.COND_OR.name(),
-            "{0} har ingen gyldige utganger");
+    private static final IllegalExit INVALID_EXIT = new IllegalExit(Operator.COND_OR.name(), "{0} har ingen gyldige utganger");
 
     public static class Builder<T> {
         private final List<CondOrEntry<T>> conditionalEntries = new ArrayList<>();
@@ -114,9 +113,6 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
         AtomicReference<Evaluation> lastTestResult = new AtomicReference<>();
         Optional<CondOrEntry<T>> firstMatch = this.conditionalEntries.stream().filter(coe -> {
             var testEval = coe.testSpec().evaluate(t);
-            if (testEval.output() != null && !Objects.equals(testEval.output(), t)) {
-                throw new IllegalStateException("Testregel med sideeffekt");
-            }
             lastTestResult.set(testEval);
             // kun JA som skal fortsette, kast exception dersom testflyt returnerer Manuell?
             return Objects.equals(Resultat.JA, testEval.result());
@@ -125,18 +121,10 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
         if (firstMatch.isPresent()) {
             var testResult = lastTestResult.get();
             var flowResult = firstMatch.get().flowSpec().evaluate(t);
-            var resultEval = new ConditionalOrEvaluation(identifikator(), beskrivelse(), testResult, flowResult);
-            if (flowResult.output() != null && !Objects.equals(t, flowResult.output())) {
-                resultEval.setOutput(flowResult.output());
-            }
-            return resultEval;
+            return new ConditionalOrEvaluation(identifikator(), beskrivelse(), testResult, flowResult);
         } else if (elseCondition != null) {
             var elseEvaluation = elseCondition.evaluate(t);
-            var resultEval =  new ConditionalElseEvaluation(identifikator(), beskrivelse(), elseEvaluation);
-            if (elseEvaluation.output() != null && !Objects.equals(t, elseEvaluation.output())) {
-                resultEval.setOutput(elseEvaluation.output());
-            }
-            return resultEval;
+            return new ConditionalElseEvaluation(identifikator(), beskrivelse(), elseEvaluation);
         } else {
             // varlse en kritisk feil? Er inne i en blindvei
             return nei(INVALID_EXIT, identifikator());
@@ -160,6 +148,18 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
         RuleDescription[] arrayRuleDesc = allRuleDescriptions.toArray(new RuleDescription[allRuleDescriptions.size()]);
 
         return new SpecificationRuleDescription(Operator.COND_OR, identifikator(), beskrivelse(), arrayRuleDesc);
+    }
+
+    private static record IllegalExit(String reasonCode, String reason) implements RuleReasonRef {
+        @Override
+        public String getReasonTextTemplate() {
+            return reason;
+        }
+
+        @Override
+        public String getReasonCode() {
+            return reasonCode;
+        }
     }
 
 }
