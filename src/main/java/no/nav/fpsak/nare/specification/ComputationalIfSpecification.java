@@ -1,7 +1,5 @@
 package no.nav.fpsak.nare.specification;
 
-import java.util.List;
-
 import no.nav.fpsak.nare.ServiceArgument;
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
@@ -35,18 +33,27 @@ public class ComputationalIfSpecification<T> extends BinarySpecification<T> {
 
     @Override
     public Evaluation evaluate(final T t) {
-        return evaluate(t, List.of());
-    }
-
-    @Override
-    public Evaluation evaluate(final T t, List<ServiceArgument> serviceArguments) {
-        testEvaluation = testSpec.evaluate(t, serviceArguments);
-        var conditionalEvaluation = Resultat.JA.equals(testEvaluation.result()) ? spec1.evaluate(t, serviceArguments) : spec2.evaluate(t, serviceArguments);
+        testEvaluation = testSpec.evaluate(t);
+        var conditionalEvaluation = Resultat.JA.equals(testEvaluation.result()) ? spec1.evaluate(t) : spec2.evaluate(t);
         var evaluation = new ComputationalIfEvaluation(identifikator(), beskrivelse(), testEvaluation, conditionalEvaluation);
         if (scope != null) {
             evaluation.setEvaluationProperty(scope.getBeskrivelse(), scope.getVerdi().toString());
         }
-        serviceArguments.forEach(serviceArgument -> evaluation.setEvaluationProperty(serviceArgument.getBeskrivelse(), serviceArgument.getVerdi().toString()));
+        return evaluation;
+    }
+
+    @Override
+    public Evaluation evaluate(final T t, ServiceArgument serviceArgument) {
+        if (serviceArgument == null) {
+            throw new IllegalArgumentException("Utviklerfeil: Førsøker evaluere ComputationalIf med argument null");
+        }
+        testEvaluation = testSpec.evaluate(t, serviceArgument);
+        var conditionalEvaluation = Resultat.JA.equals(testEvaluation.result()) ? spec1.evaluate(t, serviceArgument) : spec2.evaluate(t, serviceArgument);
+        var evaluation = new ComputationalIfEvaluation(identifikator(), beskrivelse(), testEvaluation, conditionalEvaluation);
+        if (scope != null) {
+            evaluation.setEvaluationProperty(scope.getBeskrivelse(), scope.getVerdi().toString());
+        }
+        evaluation.setEvaluationProperty(serviceArgument.getBeskrivelse(), serviceArgument.getVerdi().toString());
         return evaluation;
     }
 

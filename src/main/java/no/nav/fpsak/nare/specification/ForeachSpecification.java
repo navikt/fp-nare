@@ -1,6 +1,5 @@
 package no.nav.fpsak.nare.specification;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,26 +43,27 @@ public class ForeachSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public Evaluation evaluate(final T t) {
-        return evaluate(t, List.of());
-    }
-
-    @Override
-    public Evaluation evaluate(final T t, List<ServiceArgument> serviceArguments) {
         int ix = 0;
         Evaluation[] evaluations = new Evaluation[args.size()];
         for (var arg : args) {
-            var extendedArguments = new ArrayList<>(serviceArguments);
             var serviceArgument = new ServiceArgument(argName, arg);
-            extendedArguments.add(serviceArgument);
-            var eval = spec.medScope(serviceArgument).evaluate(t, extendedArguments);
+            var eval = spec.evaluate(t, serviceArgument);
             evaluations[ix] = eval;
             if (!Resultat.JA.equals(evaluations[ix].result())) {
                 throw new IllegalArgumentException("Utviklerfeil: ForeachSpecification evaluering annet enn JA.");
             }
             ix++;
         }
-        var resultingEval = new ForeachEvaluation(identifikator(), beskrivelse(), argName, evaluations);
+        var resultingEval = new ForeachEvaluation(identifikator(), beskrivelse(), evaluations);
         return resultingEval;
+    }
+
+    @Override
+    public Evaluation evaluate(final T t, ServiceArgument serviceArgument) {
+        if (serviceArgument != null) {
+            throw new IllegalArgumentException("Utviklerfeil: Støtter ikke (nøstet) FOREACH med argumenter");
+        }
+        return evaluate(t);
     }
 
     @Override

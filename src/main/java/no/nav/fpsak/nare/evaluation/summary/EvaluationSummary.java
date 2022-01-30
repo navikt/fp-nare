@@ -27,14 +27,11 @@ public class EvaluationSummary {
                 return false;
             }
 
-            // special case, kun prosessere siste SingleEvaluation barn av SequenceEvaluation siden alle andre
-            // returnerer ja.
-            if (Operator.SEQUENCE.equals(parent.getOperator())) {
+            // special case, kun prosessere siste SingleEvaluation barn av SequenceEvaluation siden alle andre returnerer ja.
+            if (Operator.SEQUENCE.equals(parent.getOperator()) || Operator.FOREACH.equals(parent.getOperator())) {
                 String childRuleId = child.ruleIdentification();
                 String lastChildOfParentRuleId = ((AggregatedEvaluation) parent).lastChild().ruleIdentification();
                 return (childRuleId.equals(lastChildOfParentRuleId));
-            } else if (Operator.FOREACH.equals(parent.getOperator())) {
-                return false;
             } else {
                 return true;
             }

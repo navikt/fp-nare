@@ -1,7 +1,5 @@
 package no.nav.fpsak.nare.specification;
 
-import java.util.List;
-
 import no.nav.fpsak.nare.ServiceArgument;
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
@@ -14,15 +12,13 @@ import no.nav.fpsak.nare.evaluation.Evaluation;
  * implemented.
  */
 public interface Specification<T> {
+
+    // ID og beskrivelse av regel
+    String identifikator();
+
     String beskrivelse();
 
-    /**
-     * Create a new specification that is the OR operation of {@code this} specification of another specification.
-     *
-     * @param specification Specification to OR.
-     * @return A new specification.
-     */
-    Specification<T> eller(Specification<T> specification);
+
 
     /**
      * Check if {@code t} is satisfied by the specification.
@@ -32,12 +28,13 @@ public interface Specification<T> {
      */
     Evaluation evaluate(T t);
 
-    default Evaluation evaluate(T t, List<ServiceArgument> serviceArguments) {
+    default Evaluation evaluate(T t, ServiceArgument serviceArgument) {
         return evaluate(t);
     }
 
-    String identifikator();
-
+    /**
+     * Specification Builder methods
+     */
     Specification<T> medBeskrivelse(String beskrivelse);
 
     Specification<T> medID(String id);
@@ -55,5 +52,14 @@ public interface Specification<T> {
      */
     Specification<T> og(Specification<T> specification);
 
+    /**
+     * Create a new specification that is the OR operation of {@code this} specification of another specification.
+     *
+     * @param specification Specification to OR.
+     * @return A new specification.
+     */
+    Specification<T> eller(Specification<T> specification);
+
+    // For produksjon av regelgraf
     RuleDescription ruleDescription();
 }

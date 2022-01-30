@@ -3,11 +3,13 @@ package no.nav.fpsak.nare.specification.modrekvote.regler;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.junit.Test;
 
 import no.nav.fpsak.nare.RuleService;
+import no.nav.fpsak.nare.ServiceArgument;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.RuleOutcome;
@@ -29,7 +31,7 @@ public class CountingpecificationTest {
 
         var evaluationSummary = new EvaluationSummary(evaluation);
         var outcome = hentOutcome(evaluationSummary);
-        assertThat(outcome).contains(8); // input = 1 + foreach (3 * 1) * cond/IfBranch (2) = 8
+        assertThat(outcome).contains(12);
     }
 
     @Test
@@ -41,14 +43,16 @@ public class CountingpecificationTest {
 
         var evaluationSummary = new EvaluationSummary(evaluation);
         var outcome = hentOutcome(evaluationSummary);
-        assertThat(outcome).contains(6); // input = 2 + foreach (3 * 1) + cond/OrBranch (1) = 6
+        assertThat(outcome).contains(24);
     }
 
     private Optional<Integer> hentOutcome(EvaluationSummary evaluationSummary) {
-        return evaluationSummary.singleLeafEvaluation(Resultat.JA)
+        return evaluationSummary.leafEvaluations(Resultat.JA).stream()
                 .map(Evaluation::getOutcome)
+                .filter(Objects::nonNull)
                 .map(o -> o instanceof RuleOutcome p ? p.calculated() : null)
-                .map(o -> o instanceof Integer i ? i : null);
+                .map(o -> o instanceof Integer i ? i : null)
+                .findFirst();
     }
 
     private static class MellomregnInt {
@@ -57,11 +61,16 @@ public class CountingpecificationTest {
             this.carryon = integer;
         }
     }
+
+
     private static class SingleRule implements RuleService<MellomregnInt> {
 
-        public SingleRule() {
-        }
-
+        /*
+         * Del 1: Input + 1 + (3*1)
+         * Del 2: Input = partall -> input*2 ellers input+1
+         * Del 3: input * 2
+         * Del 4: Sink som oppretter outcome
+         */
         @Override
         public Evaluation evaluer(MellomregnInt data) {
             return getSpecification().evaluate(data);
@@ -71,10 +80,14 @@ public class CountingpecificationTest {
         @Override
         public Specification<MellomregnInt> getSpecification() {
             return new SequenceSpecification<>("Seq", "Seq",
-                    new ForeachSpecification<>("Sum", "Sum", new AddOneLeaf(), List.of("A", "B", "C"), "bokstav"),
+                    new AddOneLeaf(),
+                    new ForeachSpecification<>("Sum", "Sum for Bokstav", new AddOneLeaf(), List.of("A", "B", "C"), "bokstav"),
                     ConditionalOrSpecification.<MellomregnInt>regel("Hvis", "Så")
                             .hvis(new EvenLeaf(), new MultiplyByTwoLeaf())
-                            .ellers(new AddOneLeaf()));
+                            .ellers(new AddOneLeaf()),
+                    new MultiplyByTwoLeaf(),
+                    new SinkLeaf()
+            );
         }
 
     }
@@ -88,7 +101,14 @@ public class CountingpecificationTest {
         public Evaluation evaluate(MellomregnInt input) {
             input.carryon = input.carryon + 1;
             var outcome = new RuleOutcome<>(input.carryon);
-            return ja(outcome);
+            return ja();
+        }
+
+        @Override
+        public Evaluation evaluate(MellomregnInt input, ServiceArgument args) {
+            var bokstav = Optional.ofNullable(args).filter(a -> "bokstav".equals(args.beskrivelse())).map(a -> (String)a.verdi()).orElse(null);
+            input.carryon = input.carryon + 1;
+            return ja();
         }
     }
 
@@ -100,8 +120,7 @@ public class CountingpecificationTest {
         @Override
         public Evaluation evaluate(MellomregnInt input) {
             input.carryon = input.carryon * 2;
-            var outcome = new RuleOutcome<>(input.carryon);
-            return ja(outcome);
+            return ja();
         }
     }
 
@@ -113,6 +132,19 @@ public class CountingpecificationTest {
         @Override
         public Evaluation evaluate(MellomregnInt input) {
             return input.carryon % 2 == 0 ? ja() : nei();
+        }
+    }
+
+    private static class SinkLeaf extends LeafSpecification<MellomregnInt> {
+
+        private SinkLeaf() {
+            super("Collect");
+        }
+
+        @Override
+        public Evaluation evaluate(MellomregnInt input) {
+            var outcome = new RuleOutcome<>(input.carryon);
+            return ja(outcome);
         }
     }
 }

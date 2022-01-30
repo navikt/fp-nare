@@ -35,6 +35,12 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
         medBeskrivelse(beskrivelse);
     }
 
+
+    @SafeVarargs
+    public SequenceSpecification(final String id, final String beskrivelse, final Specification<T>... specs) {
+        this(id, beskrivelse, Arrays.asList(specs));
+    }
+
     public SequenceSpecification(final String id, final String beskrivelse, final Specification<T> spec1, final Specification<T> spec2) {
         this(id, beskrivelse, Arrays.asList(spec1, spec2));
     }
@@ -53,26 +59,38 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public Evaluation evaluate(final T t) {
-        return evaluate(t, List.of());
+        var evaluation = doEvaluate(t, null);
+        if (scope != null) {
+            evaluation.setEvaluationProperty(scope.getBeskrivelse(), scope.getVerdi().toString());
+        }
+        return evaluation;
     }
 
     @Override
-    public Evaluation evaluate(final T t, List<ServiceArgument> serviceArguments) {
+    public Evaluation evaluate(final T t, ServiceArgument serviceArgument) {
+        if (serviceArgument == null) {
+            throw new IllegalArgumentException("Utviklerfeil: Førsøker evaluere ComputationalIf med argument null");
+        }
+        var evaluation = doEvaluate(t, serviceArgument);
+        if (scope != null) {
+            evaluation.setEvaluationProperty(scope.getBeskrivelse(), scope.getVerdi().toString());
+        }
+        evaluation.setEvaluationProperty(serviceArgument.getBeskrivelse(), serviceArgument.getVerdi().toString());
+        return evaluation;
+    }
+
+    private SequenceEvaluation doEvaluate(final T t, ServiceArgument serviceArgument) {
         var specSize = specs.size();
         Evaluation[] evaluations = new Evaluation[specSize];
         for (int ix = 0; ix < specSize; ix++) {
-            var result = specs.get(ix).evaluate(t, serviceArguments);
+            var result = serviceArgument != null ? specs.get(ix).evaluate(t, serviceArgument) : specs.get(ix).evaluate(t);
             evaluations[ix] = result;
             if (ix < specSize - 1 && !Resultat.JA.equals(evaluations[ix].result())) {
                 throw new IllegalArgumentException("Utviklerfeil: SequenceSpecification evaluering annet enn JA før siste spec.");
             }
         }
-        SequenceEvaluation evaluation = new SequenceEvaluation(identifikator(), beskrivelse(), evaluations);
-        if (scope != null) {
-            evaluation.setEvaluationProperty(scope.getBeskrivelse(), scope.getVerdi().toString());
-        }
-        serviceArguments.forEach(serviceArgument -> evaluation.setEvaluationProperty(serviceArgument.getBeskrivelse(), serviceArgument.getVerdi().toString()));
-        return evaluation;
+        return new SequenceEvaluation(identifikator(), beskrivelse(), evaluations);
+
     }
 
     @Override
