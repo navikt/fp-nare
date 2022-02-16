@@ -20,7 +20,7 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
 
     private ServiceArgument scope;
 
-    private List<Specification<T>> specs = new ArrayList<>();
+    private final List<Specification<T>> specs = new ArrayList<>();
 
     public SequenceSpecification(final String id, final String beskrivelse, final List<Specification<T>> specs) {
         super();
@@ -39,10 +39,6 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
     @SafeVarargs
     public SequenceSpecification(final String id, final String beskrivelse, final Specification<T>... specs) {
         this(id, beskrivelse, Arrays.asList(specs));
-    }
-
-    public SequenceSpecification(final String id, final String beskrivelse, final Specification<T> spec1, final Specification<T> spec2) {
-        this(id, beskrivelse, Arrays.asList(spec1, spec2));
     }
 
     private Specification<T> first() {
@@ -69,7 +65,7 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
     @Override
     public Evaluation evaluate(final T t, ServiceArgument serviceArgument) {
         if (serviceArgument == null) {
-            throw new IllegalArgumentException("Utviklerfeil: Førsøker evaluere ComputationalIf med argument null");
+            throw new IllegalArgumentException("Utviklerfeil: Førsøker evaluere Sequence med argument null");
         }
         var evaluation = doEvaluate(t, serviceArgument);
         if (scope != null) {

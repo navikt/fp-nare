@@ -18,8 +18,6 @@ public interface Specification<T> {
 
     String beskrivelse();
 
-
-
     /**
      * Check if {@code t} is satisfied by the specification.
      *
@@ -40,6 +38,7 @@ public interface Specification<T> {
     Specification<T> medID(String id);
 
     @SuppressWarnings("unused")
+    @Deprecated // Bruk beregningForeach eller beregningForeachThen
     default Specification<T> medScope(ServiceArgument scope) {
         return this;
     }

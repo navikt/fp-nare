@@ -27,8 +27,7 @@ public class Ruleset<V> {
     }
 
     /**
-     * Realiserer flyten if <betingelse> then <then-spesifikasjon> else
-     * <else-spesifikasjon> for beregningsregel
+     * Realiserer flyten if <betingelse> then <then-spesifikasjon> else <else-spesifikasjon> for beregningsregel
      * 
      * @param testSpec
      * @param thenSpec
@@ -41,23 +40,19 @@ public class Ruleset<V> {
     }
 
     /**
-     * Realiserer sekvens av to spesifikasjoner der bare den siste har betydning for
-     * videre flyt
+     * Realiserer sekvens av N spesifikasjoner der bare den siste har betydning for videre flyt
      * 
      * @param id
      * @param beskrivelse
-     * @param spec1
-     * @param spec2
+     * @param specs
      * @return
      */
-    public Specification<V> beregningsRegel(String id, String beskrivelse, Specification<V> spec1,
-            Specification<V> spec2) {
-        return new SequenceSpecification<>(id, beskrivelse, spec1, spec2);
+    public Specification<V> beregningsRegel(String id, String beskrivelse, Specification<V>... specs) {
+        return new SequenceSpecification<>(id, beskrivelse, specs);
     }
 
     /**
-     * Realiserer sekvens av N spesifikasjoner der bare den siste har betydning for
-     * videre flyt
+     * Realiserer sekvens av N spesifikasjoner der bare den siste har betydning for videre flyt
      * 
      * @param id
      * @param beskrivelse
@@ -94,6 +89,28 @@ public class Ruleset<V> {
     }
 
     /**
+     * Realiserer sekvens der en regel utføres N ganger - 1 gang for hvert element i en collection - fulgt av annen regel
+     *
+     * @param id
+     * @param beskrivelse
+     * @param spec          regel som utføres 1 gang for hvert element i argumentlisten, med argName + arg som "scope"
+     * @param argName
+     * @param args          argumentlisten, inneholder N argumenter
+     * @param specThen      regel som utføres 1 gang etter at spec er utført N ganger
+     * @return
+     */
+    public Specification<V> beregningsForeachThenRegel(String id, String beskrivelse, Specification<V> spec,
+                                                   String argName, List<?> args, Specification<V> specThen) {
+        Objects.requireNonNull(spec, "spec");
+        Objects.requireNonNull(args, "args1");
+        Objects.requireNonNull(specThen, "specThen");
+        if (args.isEmpty()) {
+            throw new IllegalArgumentException("Argumentlisten kan ikke være tom");
+        }
+        return new SequenceSpecification<>(id, beskrivelse, new ForeachSpecification<>(id, beskrivelse, spec, args, argName), specThen);
+    }
+
+    /**
      * Realiserer sekvens der en regel utføres N ganger, etterfulgt av en
      * spesifikasjon som har betydning for videre flyt
      * 
@@ -108,6 +125,7 @@ public class Ruleset<V> {
      * @param spec2               utføres 1 gang etter at spec1 er utført N ganger
      * @return
      */
+    @Deprecated // Bruk beregningForeach eller beregningForeachThen
     public Specification<V> beregningsRegel(String id, String beskrivelse, Class<? extends DynamicRuleService<V>> spec1,
             V regelmodell, String argumentBeskrivelse, List<? extends Object> args1, Specification<V> spec2) {
         Objects.requireNonNull(spec1, "spec1");
