@@ -40,6 +40,19 @@ public class Ruleset<V> {
     }
 
     /**
+     * Realiserer sekvens av 2 spesifikasjoner der bare den siste har betydning for videre flyt
+     *
+     * @param id
+     * @param beskrivelse
+     * @param spec1
+     * @param spec2
+     * @return
+     */
+    public Specification<V> beregningsRegel(String id, String beskrivelse, Specification<V> spec1, Specification<V> spec2) {
+        return new SequenceSpecification<>(id, beskrivelse, spec1, spec2);
+    }
+
+    /**
      * Realiserer sekvens av N spesifikasjoner der bare den siste har betydning for videre flyt
      * 
      * @param id

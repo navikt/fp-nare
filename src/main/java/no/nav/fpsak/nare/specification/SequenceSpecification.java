@@ -41,6 +41,10 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
         this(id, beskrivelse, Arrays.asList(specs));
     }
 
+    public SequenceSpecification(final String id, final String beskrivelse, final Specification<T> spec1, Specification<T> spec2) {
+        this(id, beskrivelse, Arrays.asList(spec1, spec2));
+    }
+
     private Specification<T> first() {
         return specs.get(0);
     }
