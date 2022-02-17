@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import no.nav.fpsak.nare.specification.ComputationalIfSpecification;
 import no.nav.fpsak.nare.specification.ConditionalOrSpecification;
-import no.nav.fpsak.nare.specification.ConditionalOrSpecification.Builder;
 import no.nav.fpsak.nare.specification.ForeachSpecification;
 import no.nav.fpsak.nare.specification.SequenceSpecification;
 import no.nav.fpsak.nare.specification.Specification;
@@ -22,8 +21,16 @@ public class Ruleset<V> {
         return specification.medBeskrivelse(beskrivelse).medID(id);
     }
 
-    public Builder<V> hvisRegel(String id, String beskrivelse) {
+    public ConditionalOrSpecification.Builder<V> hvisRegel(String id, String beskrivelse) {
         return ConditionalOrSpecification.<V>regel(id, beskrivelse);
+    }
+
+    public SequenceSpecification.Builder<V> sekvensRegel(String id, String beskrivelse) {
+        return SequenceSpecification.<V>regel(id, beskrivelse);
+    }
+
+    public ComputationalIfSpecification.Builder<V> betingetSekvensRegel(Specification<V> hvis, Specification<V> evaluer) {
+        return ComputationalIfSpecification.<V>regel().hvis(hvis, evaluer);
     }
 
     /**
@@ -37,6 +44,17 @@ public class Ruleset<V> {
     public Specification<V> beregningHvisRegel(Specification<V> testSpec, Specification<V> thenSpec,
             Specification<V> elseSpec) {
         return new ComputationalIfSpecification<>(testSpec, thenSpec, elseSpec);
+    }
+
+    /**
+     * Realiserer flyten if <betingelse> then <then-spesifikasjon> (else true) for beregningsregel
+     *
+     * @param testSpec
+     * @param thenSpec
+     * @return
+     */
+    public Specification<V> beregningHvisRegel(Specification<V> testSpec, Specification<V> thenSpec) {
+        return new ComputationalIfSpecification<>(testSpec, thenSpec);
     }
 
     /**

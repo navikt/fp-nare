@@ -18,6 +18,34 @@ import no.nav.fpsak.nare.evaluation.node.SequenceEvaluation;
  */
 public class SequenceSpecification<T> extends AbstractSpecification<T> {
 
+    public static <V> SequenceSpecification.Builder<V> regel(String id, String beskrivelse) {
+        return new Builder<>(id, beskrivelse);
+    }
+
+    public static class Builder<T> {
+        private final List<Specification<T>> sekvens = new ArrayList<>();
+        private String id;
+        private String beskrivelse;
+
+        public Builder() {
+        }
+
+        public Builder(String id, String beskrivelse) {
+            this.id = id;
+            this.beskrivelse = beskrivelse;
+        }
+
+        public Builder<T> neste(Specification<T> specification) {
+            this.sekvens.add(specification);
+            return this;
+        }
+
+        public SequenceSpecification<T> siste(Specification<T> specification) {
+            this.sekvens.add(specification);
+            return new SequenceSpecification<>(id, beskrivelse, sekvens);
+        }
+    }
+
     private ServiceArgument scope;
 
     private final List<Specification<T>> specs = new ArrayList<>();
