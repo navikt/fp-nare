@@ -2,8 +2,6 @@ package no.nav.fpsak.nare.specification.modrekvote;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Collection;
-
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
@@ -45,8 +43,13 @@ public class ModrekvoteTest {
                 .contains("FK_VK.10.B");
 
         EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
-        Collection<String> leafReasons = evaluationSummary.leafReasons(Resultat.NEI, Resultat.IKKE_VURDERT);
-        Assertions.assertThat(leafReasons).containsOnly("UTFALL_09", "UTFALL_11");
+        var leafReasons = evaluationSummary.leafEvaluations(Resultat.NEI, Resultat.IKKE_VURDERT).stream()
+                .map(Evaluation::getOutcome)
+                .filter(l -> l instanceof ModrekvoteRuleReason)
+                .map(l -> (ModrekvoteRuleReason)l)
+                .map(ModrekvoteRuleReason::utfall)
+                .toList();
+        Assertions.assertThat(leafReasons).containsOnly(ModrekvoteUtfall.UTFALL_09, ModrekvoteUtfall.UTFALL_11);
 
     }
 }

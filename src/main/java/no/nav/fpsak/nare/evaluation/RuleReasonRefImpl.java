@@ -1,19 +1,10 @@
 package no.nav.fpsak.nare.evaluation;
 
-import no.nav.fpsak.nare.specification.LeafSpecification;
-
-/**
- * Representerer en unik output fra en kjøring av Specifications. Produseres normalt av {@link LeafSpecification}.
+/*
+ * Bruk RuleOutcome eller implementer en lokal RuleReasonRef som kan gi ut en enum eller record, unngå kode-magi
  */
-public class RuleReasonRefImpl implements RuleReasonRef {
-
-    private final String reasonCode;
-    private final String reason;
-
-    public RuleReasonRefImpl(String reasonCode, String reason) {
-        this.reasonCode = reasonCode;
-        this.reason = reason;
-    }
+@Deprecated(forRemoval = true)
+public record RuleReasonRefImpl(String reasonCode, String reason) implements RuleReasonRef {
 
     @Override
     public String getReasonTextTemplate() {

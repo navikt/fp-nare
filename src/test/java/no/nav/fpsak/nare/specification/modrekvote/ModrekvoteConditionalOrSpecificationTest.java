@@ -1,6 +1,7 @@
 package no.nav.fpsak.nare.specification.modrekvote;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -32,8 +33,11 @@ public class ModrekvoteConditionalOrSpecificationTest {
         @SuppressWarnings("deprecation")
         String asJson = EvaluationSerializer.asLegacyJsonTree(evaluation);
         EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
-        Collection<String> leafReasons = evaluationSummary.leafReasons(Resultat.NEI, Resultat.IKKE_VURDERT);
-        Assertions.assertThat(leafReasons).containsOnly("UTFALL_09");
+        Collection<ModrekvoteUtfall> leafReasons = evaluationSummary.leafEvaluations(Resultat.NEI, Resultat.IKKE_VURDERT).stream()
+                .map(Evaluation::getOutcome)
+                .map(o -> o instanceof ModrekvoteRuleReason m ? m.utfall() : null)
+                .collect(Collectors.toList());
+        Assertions.assertThat(leafReasons).containsOnly(ModrekvoteUtfall.UTFALL_09);
 
         Assertions.assertThat(asJson)
                 .doesNotContain("FK_VK 10.4")

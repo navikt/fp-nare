@@ -13,7 +13,7 @@ import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
 import no.nav.fpsak.nare.evaluation.Resultat;
-import no.nav.fpsak.nare.evaluation.RuleReasonRefImpl;
+import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 import no.nav.fpsak.nare.evaluation.node.ConditionalElseEvaluation;
 import no.nav.fpsak.nare.evaluation.node.ConditionalOrEvaluation;
 
@@ -23,8 +23,7 @@ import no.nav.fpsak.nare.evaluation.node.ConditionalOrEvaluation;
  */
 public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
 
-    private static final RuleReasonRefImpl INVALID_EXIT = new RuleReasonRefImpl(Operator.COND_OR.name(),
-            "{0} har ingen gyldige utganger");
+    private static final IllegalExit INVALID_EXIT = new IllegalExit(Operator.COND_OR.name(), "{0} har ingen gyldige utganger");
 
     public static class Builder<T> {
         private final List<CondOrEntry<T>> conditionalEntries = new ArrayList<>();
@@ -113,18 +112,18 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
     public Evaluation evaluate(final T t) {
         AtomicReference<Evaluation> lastTestResult = new AtomicReference<>();
         Optional<CondOrEntry<T>> firstMatch = this.conditionalEntries.stream().filter(coe -> {
-            Evaluation testEval = coe.testSpec().evaluate(t);
+            var testEval = coe.testSpec().evaluate(t);
             lastTestResult.set(testEval);
             // kun JA som skal fortsette, kast exception dersom testflyt returnerer Manuell?
             return Objects.equals(Resultat.JA, testEval.result());
         }).findFirst();
 
         if (firstMatch.isPresent()) {
-            Evaluation testResult = lastTestResult.get();
-            Evaluation flowResult = firstMatch.get().flowSpec().evaluate(t);
+            var testResult = lastTestResult.get();
+            var flowResult = firstMatch.get().flowSpec().evaluate(t);
             return new ConditionalOrEvaluation(identifikator(), beskrivelse(), testResult, flowResult);
         } else if (elseCondition != null) {
-            Evaluation elseEvaluation = elseCondition.evaluate(t);
+            var elseEvaluation = elseCondition.evaluate(t);
             return new ConditionalElseEvaluation(identifikator(), beskrivelse(), elseEvaluation);
         } else {
             // varlse en kritisk feil? Er inne i en blindvei
@@ -133,18 +132,9 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
     }
 
     @Override
-    public void visit(Specification<T> parentSpecification, SpecificationVisitor<T> visitor) {
-        // TODO (FC): riktig visit?
-        for (CondOrEntry<T> entry : conditionalEntries) {
-            entry.testSpec.visit(this, visitor);
-            entry.flowSpec.visit(this, visitor);
-        }
-    }
-
-    @Override
     public RuleDescription ruleDescription() {
-        String rootSpecId = identifikator();
-        List<RuleDescription> ruleDescriptions = conditionalEntries.stream().map(coe -> {
+        var rootSpecId = identifikator();
+        var ruleDescriptions = conditionalEntries.stream().map(coe -> {
             return new BasicRuleDescription(Operator.AND, rootSpecId + "\u2192" + coe.testSpec().identifikator(),
                     coe.testSpec().beskrivelse(), coe.flowSpec.ruleDescription());
         }).collect(Collectors.toList());
@@ -158,6 +148,18 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
         RuleDescription[] arrayRuleDesc = allRuleDescriptions.toArray(new RuleDescription[allRuleDescriptions.size()]);
 
         return new SpecificationRuleDescription(Operator.COND_OR, identifikator(), beskrivelse(), arrayRuleDesc);
+    }
+
+    private static record IllegalExit(String reasonCode, String reason) implements RuleReasonRef {
+        @Override
+        public String getReasonTextTemplate() {
+            return reason;
+        }
+
+        @Override
+        public String getReasonCode() {
+            return reasonCode;
+        }
     }
 
 }

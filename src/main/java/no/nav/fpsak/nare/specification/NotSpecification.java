@@ -47,11 +47,6 @@ public class NotSpecification<T> extends AbstractSpecification<T> {
     }
 
     @Override
-    public void visit(Specification<T> parentSpecification, SpecificationVisitor<T> visitor) {
-        visitor.visiting(parentSpecification, spec1);
-    }
-
-    @Override
     public RuleDescription ruleDescription() {
         return new SpecificationRuleDescription(Operator.NOT, identifikator(), beskrivelse(), spec1.ruleDescription());
     }

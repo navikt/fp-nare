@@ -6,6 +6,7 @@ import java.util.Set;
 
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
+import no.nav.fpsak.nare.evaluation.node.SingleEvaluation;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSummary.EvaluationVisitorCondition;
 
 public class NonCircularVisitorEvaluationCollector implements EvaluationVisitor {
@@ -24,9 +25,10 @@ public class NonCircularVisitorEvaluationCollector implements EvaluationVisitor 
 
     @Override
     public boolean visiting(Operator operator, Evaluation parentEvaluation, Evaluation evaluation) {
-        if (Objects.equals(parentEvaluation, evaluation)) {
-            // er ved roten
-            return true;
+        if (Objects.equals(parentEvaluation, evaluation) &&
+             (!(evaluation instanceof SingleEvaluation) || visited.contains(evaluation))) {
+                // er ved roten. Special case med at roten er en Leaf
+                return true;
         }
         boolean added = visited.add(evaluation);
         if (!added) {
