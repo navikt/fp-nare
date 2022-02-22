@@ -13,7 +13,7 @@ public class ForeachEvaluation extends AggregatedEvaluation {
 
     @Override
     public String reason() {
-        return "Utført " + ruleDescriptionText();
+        return "Utført " + lastChild().ruleIdentification();
     }
     
     @Override

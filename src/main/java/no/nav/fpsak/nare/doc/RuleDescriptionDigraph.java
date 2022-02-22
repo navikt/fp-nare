@@ -3,11 +3,11 @@ package no.nav.fpsak.nare.doc;
 import java.util.IdentityHashMap;
 import java.util.LinkedHashSet;
 
-import no.nav.fpsak.nare.evaluation.Operator;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import no.nav.fpsak.nare.evaluation.Operator;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RuleDescriptionDigraph {
@@ -37,7 +37,7 @@ public class RuleDescriptionDigraph {
         RuleNode myNode = new RuleNode(ruledesc);
         nodes.add(myNode);
 
-        if (ruledesc.getOperator() == Operator.COND_OR) {
+        if (ruledesc.getOperator() == Operator.COND_OR && erConditionalOrSpecification(ruledesc)) {
             processCondOrNodes(ruledesc, myNode);
         } else {
             processRegularNodes(ruledesc, myNode);
@@ -53,9 +53,21 @@ public class RuleDescriptionDigraph {
         }
     }
 
+    // Forksjell på EvalDescriptions og SpecDescriptions her
+    // SpecDescription vil ha en magisk unær AND ..... og man lager en rolle på edge
+    // EvalDescription kun vil treffe en av grenene
+    private boolean erConditionalOrSpecification(RuleDescription description) {
+        return description.getChildren().stream()
+            .anyMatch(c -> Operator.AND.equals(c.getOperator()) && c.getChildren().size() == 1);
+    }
+
+    /*
+     * TODO: Vurder et binært expression-tree, som dette i realiteten er
+     */
     protected void processCondOrNodes(RuleDescription ruledesc, RuleNode condorNode) {
         for (RuleDescription child : ruledesc.getChildren()) {
-            if (child.getOperator() == Operator.AND) {
+            // SpecDescription vil ha en magisk unær AND ..... og man lager en rolle på edge
+            if (child.getOperator() == Operator.AND && child.getChildren().size() == 1) {
                 RuleNode flowChild = process(child.firstChild());
                 String edgeRole = child.getRuleDescription();
                 edges.add(new RuleEdge(condorNode, flowChild, edgeRole));

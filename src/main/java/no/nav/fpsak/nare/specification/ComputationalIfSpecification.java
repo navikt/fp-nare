@@ -1,5 +1,7 @@
 package no.nav.fpsak.nare.specification;
 
+import java.util.Optional;
+
 import no.nav.fpsak.nare.ServiceArgument;
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
@@ -31,6 +33,12 @@ public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
             this.testSpec = ifSpec;
             this.ifTrueSpec = thenSpec;
             return this;
+        }
+
+        public  ComputationalIfSpecification<T> hvisEllersJa(Specification<T> ifSpec, Specification<T> thenSpec) {
+            this.testSpec = ifSpec;
+            this.ifTrueSpec = thenSpec;
+            return this.build();
         }
 
         public ComputationalIfSpecification<T> ellers(Specification<T> specification) {
@@ -67,9 +75,14 @@ public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
         this.ifFalseSpec = ifFalseSpec;
     }
 
+    private Optional<Specification<T>> eller() {
+        return Optional.ofNullable(ifFalseSpec);
+    }
+
     @Override
     public String beskrivelse() {
-        return "...";
+        return beskrivelseIkkeTom()
+            .orElseGet(() -> "(COMP HVIS/SÅ" + eller().map(s -> "/ELLERS").orElse("") + ")");
     }
 
     @Override
@@ -108,12 +121,16 @@ public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public String identifikator() {
-        return "...";
+        return identifikatorIkkeTom().orElseGet(() -> "(HVIS " + testSpec.identifikator() + " SÅ " + ifTrueSpec.identifikator() + eller().map(s -> " ELLERS " + s.identifikator()).orElse("") + ")");
     }
 
     @Override
     public RuleDescription ruleDescription() {
-        return new SpecificationRuleDescription(Operator.COMPUTATIONAL_IF, identifikator(), beskrivelse(), testSpec.ruleDescription(), ifTrueSpec.ruleDescription(), ifFalseSpec.ruleDescription());
+        if (ifFalseSpec != null) {
+            return new SpecificationRuleDescription(Operator.COMPUTATIONAL_IF, identifikator(), beskrivelse(), testSpec.ruleDescription(), ifTrueSpec.ruleDescription(), ifFalseSpec.ruleDescription());
+        } else {
+            return new SpecificationRuleDescription(Operator.COMPUTATIONAL_IF, identifikator(), beskrivelse(), testSpec.ruleDescription(), ifTrueSpec.ruleDescription());
+        }
     }
 
     @Override

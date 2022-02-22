@@ -15,14 +15,17 @@ To model decision trees so they can be visualised, documented, and traced (input
 
 # Features
 * Unary expressions:
-  - Sequence
+  - Sequence: Sequence of expressions, result = result from last evaluation.
+  - Foreach:  
   - Not
   - Node:  (node computation supplied by implementor) Allows for arbitrary evaluations to be included.
 * Binary expressions:
   - And
   - Or
 * Ternary expressions:
-  - Conditional If/Else:  Allows for evaluating only specific subtrees based on a provided condition.
+* - Computational If/Else:  Simple if/then or if/then/else. Returns result from .
+* N-ary expressions:
+  - Conditional If/Or/Else:  Allows for evaluating only specific subtrees based on a provided condition.
 
 # Rule documentation
 The rule specification may be output to Asciidoc using the supplied Javadoc Doclet.  This will output names of parameters and rules to a single asciidoc document, while the trees will be output to a json document as a set of nodes and edges.  The output format in json is the same for both the specification and evaluation trees (except a few evaluation specific parameters), making both suitable for long term storage.

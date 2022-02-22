@@ -22,13 +22,7 @@ public class NotSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public String beskrivelse() {
-        String beskrivelse = super.beskrivelse();
-        if (beskrivelse.isEmpty()) {
-            return "(IKKE " + spec1.beskrivelse() + ")";
-        } else {
-            return beskrivelse;
-        }
-
+        return beskrivelseIkkeTom().orElse("(IKKE)");
     }
 
     @Override
@@ -38,12 +32,7 @@ public class NotSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public String identifikator() {
-        String id = super.identifikator();
-        if (id.isEmpty()) {
-            return "(IKKE " + spec1.identifikator() + ")";
-        } else {
-            return id;
-        }
+        return identifikatorIkkeTom().orElseGet(() -> "(IKKE " + spec1.identifikator() + ")");
     }
 
     @Override

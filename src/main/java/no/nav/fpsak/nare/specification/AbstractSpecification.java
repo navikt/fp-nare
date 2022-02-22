@@ -1,6 +1,7 @@
 package no.nav.fpsak.nare.specification;
 
 import java.util.Map;
+import java.util.Optional;
 
 import no.nav.fpsak.nare.doc.JsonOutput;
 import no.nav.fpsak.nare.doc.RuleDescription;
@@ -89,5 +90,13 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
     @Override
     public String toString() {
         return JsonOutput.asJson(this);
+    }
+
+    protected Optional<String> identifikatorIkkeTom () {
+        return Optional.ofNullable(id).filter(s -> !s.isEmpty());
+    }
+
+    protected Optional<String> beskrivelseIkkeTom () {
+        return Optional.ofNullable(beskrivelse).filter(s -> !s.isEmpty());
     }
 }

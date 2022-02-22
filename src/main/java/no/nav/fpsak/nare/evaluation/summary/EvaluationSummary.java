@@ -3,28 +3,37 @@ package no.nav.fpsak.nare.evaluation.summary;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import no.nav.fpsak.nare.evaluation.AggregatedEvaluation;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
 import no.nav.fpsak.nare.evaluation.Resultat;
+import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 
 /** Hjelpeklasse for å lage sammendrag av en evaluering. */
 public class EvaluationSummary {
 
     private final class LeafNodeVisitorCondition implements EvaluationVisitorCondition {
         private final Set<Resultat> accepted;
+        private boolean all;
 
-        private LeafNodeVisitorCondition(Set<Resultat> accepted) {
+        private LeafNodeVisitorCondition(Set<Resultat> accepted, boolean all) {
             this.accepted = accepted;
+            this.all = all;
         }
 
         @Override
         public boolean check(Operator op, Evaluation parent, Evaluation child) {
             if (!(Operator.SINGLE.equals(op) && accepted.contains(child.result()))) {
                 return false;
+            }
+            if (all) {
+                return true;
             }
 
             // special case, kun prosessere siste SingleEvaluation barn av SequenceEvaluation siden alle andre returnerer ja.
@@ -38,7 +47,7 @@ public class EvaluationSummary {
         }
     }
 
-    interface EvaluationVisitorCondition {
+    public interface EvaluationVisitorCondition {
         boolean check(Operator operator, Evaluation parent, Evaluation child);
     }
 
@@ -68,9 +77,29 @@ public class EvaluationSummary {
         Set<Resultat> accepted = acceptedResults.length > 0 ? EnumSet.copyOf(Arrays.asList(acceptedResults))
                 : EnumSet.allOf(Resultat.class);
 
-        NonCircularVisitorEvaluationCollector visitor = new NonCircularVisitorEvaluationCollector(new LeafNodeVisitorCondition(accepted));
+        NonCircularVisitorEvaluationCollector visitor = new NonCircularVisitorEvaluationCollector(new LeafNodeVisitorCondition(accepted, false));
         rootEvaluation.visit(rootEvaluation, visitor);
         return visitor.getCollected();
+    }
+
+    public Collection<Evaluation> allLeafEvaluations(Resultat... acceptedResults) {
+        Set<Resultat> accepted = acceptedResults.length > 0 ? EnumSet.copyOf(Arrays.asList(acceptedResults))
+            : EnumSet.allOf(Resultat.class);
+
+        NonCircularVisitorEvaluationCollector visitor = new NonCircularVisitorEvaluationCollector(new LeafNodeVisitorCondition(accepted, true));
+        rootEvaluation.visit(rootEvaluation, visitor);
+        return visitor.getCollected();
+    }
+
+    public List<RuleReasonRef> allOutcomes() {
+        Set<Resultat> accepted = EnumSet.allOf(Resultat.class);
+
+        NonCircularVisitorEvaluationCollector visitor = new NonCircularVisitorEvaluationCollector(new LeafNodeVisitorCondition(accepted, true));
+        rootEvaluation.visit(rootEvaluation, visitor);
+        return visitor.getCollected().stream()
+            .map(Evaluation::getOutcome)
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
     }
 
 }

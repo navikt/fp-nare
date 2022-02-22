@@ -2,6 +2,7 @@ package no.nav.fpsak.nare;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,16 +22,24 @@ public class Ruleset<V> {
         return specification.medBeskrivelse(beskrivelse).medID(id);
     }
 
+    public ConditionalOrSpecification.Builder<V> hvisRegel() {
+        return ConditionalOrSpecification.<V>regel();
+    }
+
     public ConditionalOrSpecification.Builder<V> hvisRegel(String id, String beskrivelse) {
         return ConditionalOrSpecification.<V>regel(id, beskrivelse);
+    }
+
+    public SequenceSpecification.Builder<V> sekvensRegel() {
+        return SequenceSpecification.<V>regel();
     }
 
     public SequenceSpecification.Builder<V> sekvensRegel(String id, String beskrivelse) {
         return SequenceSpecification.<V>regel(id, beskrivelse);
     }
 
-    public ComputationalIfSpecification.Builder<V> betingetSekvensRegel(Specification<V> hvis, Specification<V> evaluer) {
-        return ComputationalIfSpecification.<V>regel().hvis(hvis, evaluer);
+    public ComputationalIfSpecification.Builder<V> sekvensHvisRegel(Specification<V> hvis, Specification<V> evaluer) {
+        return ComputationalIfSpecification.<V>regel();
     }
 
     /**
@@ -84,6 +93,16 @@ public class Ruleset<V> {
 
     /**
      * Realiserer sekvens av N spesifikasjoner der bare den siste har betydning for videre flyt
+     *
+     * @param specs
+     * @return
+     */
+    public Specification<V> beregningsRegel(Specification<V>... specs) {
+        return new SequenceSpecification<>(Arrays.asList(specs));
+    }
+
+    /**
+     * Realiserer sekvens av N spesifikasjoner der bare den siste har betydning for videre flyt
      * 
      * @param id
      * @param beskrivelse
@@ -91,8 +110,7 @@ public class Ruleset<V> {
      * @param spec2
      * @return
      */
-    public Specification<V> beregningsRegel(String id, String beskrivelse, List<Specification<V>> spec1list,
-            Specification<V> spec2) {
+    public Specification<V> beregningsRegel(String id, String beskrivelse, List<Specification<V>> spec1list, Specification<V> spec2) {
         List<Specification<V>> specs = new ArrayList<>();
         specs.addAll(spec1list);
         specs.add(spec2);
@@ -117,6 +135,25 @@ public class Ruleset<V> {
             throw new IllegalArgumentException("Argumentlisten kan ikke være tom");
         }
         return new ForeachSpecification<>(id, beskrivelse, spec, args, argName);
+    }
+
+    /**
+     * Realiserer sekvens der en regel utføres N ganger - 1 gang for hvert element i en collection
+     *
+     * @param id
+     * @param beskrivelse
+     * @param spec          regel som utføres 1 gang for hvert element i argumentlisten, med argName + arg som "scope"
+     * @param argName
+     * @param args          argumentlisten, inneholder N argumenter
+     * @return
+     */
+    public Specification<V> beregningsForeachRegel(Specification<V> spec, String argName, List<?> args) {
+        Objects.requireNonNull(spec, "spec1");
+        Objects.requireNonNull(args, "args1");
+        if (args.isEmpty()) {
+            throw new IllegalArgumentException("Argumentlisten kan ikke være tom");
+        }
+        return new ForeachSpecification<>(spec, args, argName);
     }
 
     /**

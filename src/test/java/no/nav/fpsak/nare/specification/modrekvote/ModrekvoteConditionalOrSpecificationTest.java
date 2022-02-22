@@ -29,9 +29,8 @@ public class ModrekvoteConditionalOrSpecificationTest {
 
         RuleService<Soknad> modrekvote = new ModrekvoteConditional();
         Evaluation evaluation = modrekvote.evaluer(soknad);
-        
-        @SuppressWarnings("deprecation")
-        String asJson = EvaluationSerializer.asLegacyJsonTree(evaluation);
+
+        String asJson = EvaluationSerializer.asJson(evaluation);
         EvaluationSummary evaluationSummary = new EvaluationSummary(evaluation);
         Collection<ModrekvoteUtfall> leafReasons = evaluationSummary.leafEvaluations(Resultat.NEI, Resultat.IKKE_VURDERT).stream()
                 .map(Evaluation::getOutcome)
@@ -49,7 +48,7 @@ public class ModrekvoteConditionalOrSpecificationTest {
         System.out.println(asJson);
         
         System.out.println("\n\n\n\n\n-------------\n\n\n");
-        System.out.println(EvaluationSerializer.asJson(evaluation));
+        System.out.println(EvaluationSerializer.asJson(modrekvote.getSpecification()));
     }
 
 }

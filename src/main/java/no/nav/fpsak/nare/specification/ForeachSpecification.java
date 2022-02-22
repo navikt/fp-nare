@@ -7,7 +7,6 @@ import no.nav.fpsak.nare.ServiceArgument;
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
-import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.node.ForeachEvaluation;
 
 /**
@@ -19,26 +18,27 @@ public class ForeachSpecification<T> extends AbstractSpecification<T> {
     private List<?> args;
     private String argName;
 
-    public ForeachSpecification(String id, String beskrivelse, Specification<T> spec, List<?> args, String argName) {
+    public ForeachSpecification(Specification<T> spec, List<?> args, String argName) {
         super();
-        Objects.requireNonNull(id, "ID");
-        Objects.requireNonNull(beskrivelse, "beskrivelse");
         Objects.requireNonNull(spec, "spec");
         Objects.requireNonNull(args, "args");
         Objects.requireNonNull(argName, "argName");
         this.spec = spec;
         this.args = args;
         this.argName = argName;
+    }
+
+    public ForeachSpecification(String id, String beskrivelse, Specification<T> spec, List<?> args, String argName) {
+        this(spec, args, argName);
+        Objects.requireNonNull(id, "ID");
+        Objects.requireNonNull(beskrivelse, "beskrivelse");
         medID(id);
         medBeskrivelse(beskrivelse);
     }
 
     @Override
     public String beskrivelse() {
-        if (super.beskrivelse().isEmpty()) {
-            return "(FOREACH " + argName + ": " + spec.beskrivelse() + ")";
-        }
-        return super.beskrivelse();
+        return beskrivelseIkkeTom().orElseGet(() -> "(FOREACH " + argName + ")");
     }
 
     @Override
@@ -47,11 +47,7 @@ public class ForeachSpecification<T> extends AbstractSpecification<T> {
         Evaluation[] evaluations = new Evaluation[args.size()];
         for (var arg : args) {
             var serviceArgument = new ServiceArgument(argName, arg);
-            var eval = spec.evaluate(t, serviceArgument);
-            evaluations[ix] = eval;
-            if (!Resultat.JA.equals(evaluations[ix].result())) {
-                throw new IllegalArgumentException("Utviklerfeil: ForeachSpecification evaluering annet enn JA.");
-            }
+            evaluations[ix] = spec.evaluate(t, serviceArgument);
             ix++;
         }
         var resultingEval = new ForeachEvaluation(identifikator(), beskrivelse(), evaluations);
@@ -68,10 +64,7 @@ public class ForeachSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public String identifikator() {
-        if (super.identifikator().isEmpty()) {
-            return "(FOREACH " + argName + ": " + spec.beskrivelse() + ")";
-        }
-        return super.identifikator();
+        return identifikatorIkkeTom().orElseGet(() -> "(FOREACH " + argName + ": " + spec.identifikator() + ")");
     }
 
     @Override
