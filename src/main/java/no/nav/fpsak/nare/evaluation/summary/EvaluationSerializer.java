@@ -1,21 +1,19 @@
 package no.nav.fpsak.nare.evaluation.summary;
 
-import no.nav.fpsak.nare.doc.JsonOutput;
 import no.nav.fpsak.nare.doc.RuleDescriptionDigraph;
 import no.nav.fpsak.nare.evaluation.Evaluation;
+import no.nav.fpsak.nare.specification.Specification;
 
 public class EvaluationSerializer {
 
-    /**
-     * @deprecated Kun av historisk interesse. Bruk #asJson
-     */
-    @Deprecated
-    public static String asLegacyJsonTree(Evaluation evaluation) {
-        return JsonOutput.asJson(evaluation);
-    }
-    
     public static String asJson(Evaluation evaluation) {
-        RuleDescriptionDigraph digraph = new RuleDescriptionDigraph(evaluation.toRuleDescription());
+        var desc = evaluation.toRuleDescription();
+        RuleDescriptionDigraph digraph = new RuleDescriptionDigraph(desc);
+        return digraph.toJson();
+    }
+
+    public static String asJson(Specification<?> specification) {
+        RuleDescriptionDigraph digraph = new RuleDescriptionDigraph(specification.ruleDescription());
         return digraph.toJson();
     }
 

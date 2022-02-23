@@ -16,12 +16,7 @@ public class OrSpecification<T> extends BinarySpecification<T> {
 
     @Override
     public String beskrivelse() {
-        String beskrivelse = super.beskrivelse();
-        if (beskrivelse.isEmpty()) {
-            return "(" + spec1.beskrivelse() + " ELLER " + spec2.beskrivelse() + ")";
-        } else {
-            return beskrivelse;
-        }
+        return beskrivelseIkkeTom().orElse("(ELLER)");
     }
 
     @Override
@@ -31,12 +26,7 @@ public class OrSpecification<T> extends BinarySpecification<T> {
 
     @Override
     public String identifikator() {
-        String id = super.identifikator();
-        if (id.isEmpty()) {
-            return "(" + spec1.identifikator() + " ELLER " + spec2.identifikator() + ")";
-        } else {
-            return id;
-        }
+        return identifikatorIkkeTom().orElseGet(() -> "(" + spec1.identifikator() + " ELLER " + spec2.identifikator() + ")");
     }
 
     @Override

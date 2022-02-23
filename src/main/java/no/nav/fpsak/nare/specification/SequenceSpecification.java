@@ -9,7 +9,6 @@ import no.nav.fpsak.nare.ServiceArgument;
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
-import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.node.SequenceEvaluation;
 
 /**
@@ -17,6 +16,10 @@ import no.nav.fpsak.nare.evaluation.node.SequenceEvaluation;
  * ignoring the result of the first specification (ie assumed always JA)
  */
 public class SequenceSpecification<T> extends AbstractSpecification<T> {
+
+    public static <V> SequenceSpecification.Builder<V> regel() {
+        return new Builder<>();
+    }
 
     public static <V> SequenceSpecification.Builder<V> regel(String id, String beskrivelse) {
         return new Builder<>(id, beskrivelse);
@@ -40,9 +43,32 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
             return this;
         }
 
+        public Builder<T> hvis(Specification<T> test, Specification<T> spec) {
+            this.sekvens.add(new ComputationalIfSpecification<>(test, spec));
+            return this;
+        }
+
+        public Builder<T> hvisEllers(Specification<T> test, Specification<T> hvis, Specification<T> eller) {
+            this.sekvens.add(new ComputationalIfSpecification<>(test, hvis, eller));
+            return this;
+        }
+
+        public Builder<T> forAlle(String argName, List<?> args, Specification<T> spec) {
+            this.sekvens.add(new ForeachSpecification<>(spec, args, argName));
+            return this;
+        }
+
         public SequenceSpecification<T> siste(Specification<T> specification) {
             this.sekvens.add(specification);
-            return new SequenceSpecification<>(id, beskrivelse, sekvens);
+            return build();
+        }
+
+        public SequenceSpecification<T> build() {
+            var spec = new SequenceSpecification<T>(sekvens);
+            if (id != null) {
+                spec.medID(id).medBeskrivelse(beskrivelse);
+            }
+            return spec;
         }
     }
 
@@ -50,19 +76,22 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
 
     private final List<Specification<T>> specs = new ArrayList<>();
 
-    public SequenceSpecification(final String id, final String beskrivelse, final List<Specification<T>> specs) {
+    public SequenceSpecification(final List<Specification<T>> specs) {
         super();
-        Objects.requireNonNull(id, "ID");
-        Objects.requireNonNull(beskrivelse, "beskrivelse");
         Objects.requireNonNull(specs, "specs");
         if (specs.size() < 2) {
             throw new IllegalArgumentException("Utviklerfeil: SequenceSpecification må inneholde minst to Specifications.");
         }
         this.specs.addAll(specs);
+    }
+
+    public SequenceSpecification(final String id, final String beskrivelse, final List<Specification<T>> specs) {
+        this(specs);
+        Objects.requireNonNull(id, "ID");
+        Objects.requireNonNull(beskrivelse, "beskrivelse");
         medID(id);
         medBeskrivelse(beskrivelse);
     }
-
 
     @SafeVarargs
     public SequenceSpecification(final String id, final String beskrivelse, final Specification<T>... specs) {
@@ -77,12 +106,13 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
         return specs.get(0);
     }
 
+    private Specification<T> last() {
+        return specs.get(specs.size()-1);
+    }
+
     @Override
     public String beskrivelse() {
-        if (super.beskrivelse().isEmpty()) {
-            return "(" + first().beskrivelse() + " FULGT AV...)";
-        }
-        return super.beskrivelse();
+        return beskrivelseIkkeTom().orElse("(SEKVENS ...)");
     }
 
     @Override
@@ -111,11 +141,7 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
         var specSize = specs.size();
         Evaluation[] evaluations = new Evaluation[specSize];
         for (int ix = 0; ix < specSize; ix++) {
-            var result = serviceArgument != null ? specs.get(ix).evaluate(t, serviceArgument) : specs.get(ix).evaluate(t);
-            evaluations[ix] = result;
-            if (ix < specSize - 1 && !Resultat.JA.equals(evaluations[ix].result())) {
-                throw new IllegalArgumentException("Utviklerfeil: SequenceSpecification evaluering annet enn JA før siste spec.");
-            }
+            evaluations[ix] = serviceArgument != null ? specs.get(ix).evaluate(t, serviceArgument) : specs.get(ix).evaluate(t);
         }
         return new SequenceEvaluation(identifikator(), beskrivelse(), evaluations);
 
@@ -123,10 +149,7 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public String identifikator() {
-        if (super.identifikator().isEmpty()) {
-            return "(" + first().identifikator() + " FULGT AV...)";
-        }
-        return super.identifikator();
+        return identifikatorIkkeTom().orElseGet(() -> "(SEKVENS " + first().identifikator() + " ... " + last().identifikator() + ")");
     }
 
     @Override

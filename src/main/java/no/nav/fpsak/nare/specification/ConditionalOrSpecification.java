@@ -28,10 +28,12 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
     public static class Builder<T> {
         private final List<CondOrEntry<T>> conditionalEntries = new ArrayList<>();
         private Specification<T> elseCondition;
-        private String id;
-        private String beskrivelse;
+        private final String id;
+        private final String beskrivelse;
 
         public Builder() {
+            this.id = "";
+            this.beskrivelse = "";
         }
 
         public Builder(String id, String beskrivelse) {
@@ -108,6 +110,10 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
         }
     }
 
+    /*
+     * TODO: Vurder et binært/ternært expression-tree, som dette i realiteten er.
+     *  OBS: testSpec som eval til NEI kastes - tenk ikke-komplett regelsporing vs regelversjonering
+     */
     @Override
     public Evaluation evaluate(final T t) {
         AtomicReference<Evaluation> lastTestResult = new AtomicReference<>();
@@ -131,6 +137,24 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
         }
     }
 
+    @Override
+    public String identifikator() {
+        return identifikatorIkkeTom().orElseGet(() -> {
+            var condFirstEntry =  conditionalEntries.isEmpty() ? null : conditionalEntries.get(0);
+            var condId = condFirstEntry != null ? ("HVIS " + condFirstEntry.testSpec.identifikator() + " SÅ  ... ") : "";
+            var elseId = elseCondition != null ? ("ELLERS " + elseCondition.identifikator()) : "";
+            return "(COND " + condId + elseId + ")";
+        });
+    }
+
+    @Override
+    public String beskrivelse() {
+        return beskrivelseIkkeTom().orElse("(COND HVIS/SÅ/.../ELLERS)");
+    }
+
+    /*
+     * TODO: Vurder et binært expression-tree, som dette i realiteten er. Dessuten flyr det ikke for komplekse test-clauses
+     */
     @Override
     public RuleDescription ruleDescription() {
         var rootSpecId = identifikator();

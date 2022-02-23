@@ -3,55 +3,54 @@ package no.nav.fpsak.nare.specification.modrekvote.regler;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.junit.Test;
 
 import no.nav.fpsak.nare.RuleService;
+import no.nav.fpsak.nare.Ruleset;
 import no.nav.fpsak.nare.ServiceArgument;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.RuleOutcome;
+import no.nav.fpsak.nare.evaluation.node.SingleEvaluation;
+import no.nav.fpsak.nare.evaluation.summary.EvaluationSerializer;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSummary;
-import no.nav.fpsak.nare.specification.ConditionalOrSpecification;
-import no.nav.fpsak.nare.specification.ForeachSpecification;
 import no.nav.fpsak.nare.specification.LeafSpecification;
-import no.nav.fpsak.nare.specification.SequenceSpecification;
 import no.nav.fpsak.nare.specification.Specification;
 
 public class CountingpecificationTest {
 
     @Test
-    public void skal_evaluere_regel_med_hvis_branch()  {
+    public void skal_evaluere_regel_med_ellers_branch()  {
         var singleSpecification = new SingleRule();
         var evaluation = singleSpecification.evaluer(new MellomregnInt(1));
 
         assertThat(evaluation.result()).isEqualTo(Resultat.JA);
-
+        System.out.println(EvaluationSerializer.asJson(evaluation));
+        System.out.println(EvaluationSerializer.asJson(singleSpecification.getSpecification()));
         var evaluationSummary = new EvaluationSummary(evaluation);
         var outcome = hentOutcome(evaluationSummary);
         assertThat(outcome).contains(12);
     }
 
     @Test
-    public void skal_evaluere_regel_med_ellers_branch()  {
+    public void skal_evaluere_regel_med_hvis_branch()  {
         var singleSpecification = new SingleRule();
         var evaluation = singleSpecification.evaluer(new MellomregnInt(2));
 
         assertThat(evaluation.result()).isEqualTo(Resultat.JA);
-
+        //System.out.println(EvaluationSerializer.asJson(evaluation));
+        //System.out.println(EvaluationSerializer.asJson(singleSpecification.getSpecification()));
         var evaluationSummary = new EvaluationSummary(evaluation);
         var outcome = hentOutcome(evaluationSummary);
         assertThat(outcome).contains(24);
     }
 
     private Optional<Integer> hentOutcome(EvaluationSummary evaluationSummary) {
-        return evaluationSummary.leafEvaluations(Resultat.JA).stream()
-                .map(Evaluation::getOutcome)
-                .filter(Objects::nonNull)
-                .map(o -> o instanceof RuleOutcome p ? p.calculated() : null)
-                .map(o -> o instanceof Integer i ? i : null)
+        return evaluationSummary.allOutcomes().stream()
+                .map(o -> o instanceof RuleOutcome p ? p.calculated() : 0)
+                .map(o -> o instanceof Integer i ? i : 0)
                 .findFirst();
     }
 
@@ -79,22 +78,22 @@ public class CountingpecificationTest {
         @SuppressWarnings("unchecked")
         @Override
         public Specification<MellomregnInt> getSpecification() {
-            return new SequenceSpecification<>("Seq", "Seq",
-                    new AddOneLeaf(),
-                    new ForeachSpecification<>("Sum", "Sum for Bokstav", new AddOneLeaf(), List.of("A", "B", "C"), "bokstav"),
-                    ConditionalOrSpecification.<MellomregnInt>regel("Hvis", "Så")
-                            .hvis(new EvenLeaf(), new MultiplyByTwoLeaf())
-                            .ellers(new AddOneLeaf()),
-                    new MultiplyByTwoLeaf(),
-                    new SinkLeaf()
-            );
+            var rs = new Ruleset<MellomregnInt>();
+            var regel = rs.sekvensRegel()
+                .neste(new AddOneLeaf())
+                .forAlle("bokstav", List.of("A", "B", "C"), new AddOneLeaf())
+                //.hvisEllers(new EvenLeaf(), new MultiplyByTwoLeaf(), new AddOneLeaf())
+                .neste(rs.hvisRegel().hvis(new EvenLeaf(), new MultiplyByTwoLeaf()).ellers(new AddOneLeaf()))
+                .neste(new MultiplyByTwoLeaf())
+                .siste(new SinkLeaf());
+            return regel;//rs.regel("Seq", "Seq", regel);
         }
 
     }
 
     private static class AddOneLeaf extends LeafSpecification<MellomregnInt> {
         private AddOneLeaf() {
-            super("AddOne");
+            super("AddOne", "AddOne");
         }
 
         @Override
@@ -114,7 +113,7 @@ public class CountingpecificationTest {
 
     private static class MultiplyByTwoLeaf extends LeafSpecification<MellomregnInt> {
         private MultiplyByTwoLeaf() {
-            super("TimesTwo");
+            super("TimesTwo", "TimesTwo");
         }
 
         @Override
@@ -126,19 +125,21 @@ public class CountingpecificationTest {
 
     private static class EvenLeaf extends LeafSpecification<MellomregnInt> {
         private EvenLeaf() {
-            super("CarryOn");
+            super("CarryOn", "IsEvenNumber");
         }
+
 
         @Override
         public Evaluation evaluate(MellomregnInt input) {
-            return input.carryon % 2 == 0 ? ja() : nei();
+            var desc = beskrivelse() + ": " + input.carryon;
+            return new SingleEvaluation(input.carryon % 2 == 0  ? Resultat.JA : Resultat.NEI, identifikator(), desc, null);
         }
     }
 
     private static class SinkLeaf extends LeafSpecification<MellomregnInt> {
 
         private SinkLeaf() {
-            super("Collect");
+            super("Collect", "Collect");
         }
 
         @Override
