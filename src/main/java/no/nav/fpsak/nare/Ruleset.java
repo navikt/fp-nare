@@ -38,7 +38,7 @@ public class Ruleset<V> {
         return SequenceSpecification.<V>regel(id, beskrivelse);
     }
 
-    public ComputationalIfSpecification.Builder<V> sekvensHvisRegel(Specification<V> hvis, Specification<V> evaluer) {
+    public ComputationalIfSpecification.Builder<V> sekvensHvisRegel() {
         return ComputationalIfSpecification.<V>regel();
     }
 
