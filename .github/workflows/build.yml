@@ -53,3 +53,5 @@ jobs:
           mvn jacoco:prepare-agent install jacoco:report sonar:sonar -q -B -s settings.xml -Drevision=${MVN_VERSION} -Djacoco.destFile=$(pwd)/target/jacoco.exec -Dsonar.exclusions="**/testutilities/**/*,**/pom.xml,**/src/test/**/*"
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
