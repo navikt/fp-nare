@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import no.nav.fpsak.nare.RuleService;
 import no.nav.fpsak.nare.evaluation.Evaluation;
@@ -46,7 +46,7 @@ public class ModrekvoteConditionalOrSpecificationTest {
                 .contains("FK_VK.10.B");
 
         System.out.println(asJson);
-        
+
         System.out.println("\n\n\n\n\n-------------\n\n\n");
         System.out.println(EvaluationSerializer.asJson(modrekvote.getSpecification()));
     }
