@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>no.nav.foreldrepenger.felles</groupId>
@@ -9,21 +10,20 @@
         <version>0.3.0</version>
     </parent>
 
-    <modelVersion>4.0.0</modelVersion>
     <groupId>no.nav.fpsak.nare</groupId>
+    <artifactId>fpsak-nare-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
     <description>NARE - Not A Rule Engine</description>
     <url>https://github.com/navikt/fp-nare</url>
-
-    <artifactId>fpsak-nare-core</artifactId>
-
     <name>FPSAK NARE :: Core</name>
-    <packaging>jar</packaging>
+
     <properties>
-        <revision>1.0-SNAPSHOT</revision>
         <additionalparam>-Xdoclint:none</additionalparam>
         <sonar.projectKey>navikt_fp-nare</sonar.projectKey>
     </properties>
+
     <scm>
         <developerConnection>scm:git:git@github.com:navikt/fp-nare.git</developerConnection>
         <connection>scm:git:git@github.com:navikt/fp-nare.git</connection>
