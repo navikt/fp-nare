@@ -12,7 +12,7 @@
 
     <groupId>no.nav.fpsak.nare</groupId>
     <artifactId>fpsak-nare-core</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
     <packaging>jar</packaging>
 
     <description>NARE - Not A Rule Engine</description>
@@ -20,6 +20,9 @@
     <name>FPSAK NARE :: Core</name>
 
     <properties>
+        <revision>1.0-SNAPSHOT</revision>
+        <java.version>17</java.version>
+
         <additionalparam>-Xdoclint:none</additionalparam>
         <sonar.projectKey>navikt_fp-nare</sonar.projectKey>
     </properties>
