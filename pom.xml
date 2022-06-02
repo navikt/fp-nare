@@ -37,7 +37,7 @@
         <repository>
             <id>github</id>
             <name>Github navikt Maven Packages</name>
-            <url>https://maven.pkg.github.com/navikt/fp-nare/</url>
+            <url>https://maven.pkg.github.com/navikt/fp-nare</url>
         </repository>
     </distributionManagement>
 
