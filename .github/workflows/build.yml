@@ -50,7 +50,7 @@ jobs:
       - name: Build artifacts & deploy
         shell: bash
         run: |
-          mvn jacoco:prepare-agent install jacoco:report org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -q -B -s settings.xml -Dsonar.login=${SONAR_TOKEN} -Drevision=${MVN_VERSION} -Djacoco.destFile=$(pwd)/target/jacoco.exec -Dsonar.exclusions="**/testutilities/**/*,**/pom.xml,**/src/test/**/*"
+          mvn jacoco:prepare-agent install jacoco:report -q -B -s settings.xml -Drevision=${MVN_VERSION} -Djacoco.destFile=$(pwd)/target/jacoco.exec -Dsonar.exclusions="**/testutilities/**/*,**/pom.xml,**/src/test/**/*"
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
