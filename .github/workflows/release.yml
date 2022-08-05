@@ -12,13 +12,6 @@ jobs:
       - name: Checkout latest code
         uses: actions/checkout@v3
 
-      - name: Setup maven
-        uses: whelk-io/maven-settings-xml-action@v20
-        with:
-          repositories: '[{ "id": "github", "name": "github", "url": "https://maven.pkg.github.com/${{ github.repository }}", "releases": { "enabled": "true" }, "snapshots": { "enabled": "false" } }]'
-          servers: '[{ "id": "github", "username": "${{ github.actor }}", "password": "${{ secrets.GITHUB_TOKEN }}" }]'
-          output_file: settings.xml
-
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -34,6 +27,6 @@ jobs:
           REPO_NAME: ${{ github.repository }}
         run: |
           echo "-- Setting new release version ${NEW_VERSION} for ${REPO_NAME} --"
-          mvn versions:set -B -s settings.xml -DnewVersion="${NEW_VERSION}" -DprocessAllModules -DgenerateBackupPoms=false
+          mvn versions:set -B -DnewVersion="${NEW_VERSION}" -DprocessAllModules -DgenerateBackupPoms=false
           echo "-- Build, test and deploy release to GPR --"
           mvn clean deploy -B -s settings.xml -DskipTests
