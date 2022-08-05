@@ -29,4 +29,4 @@ jobs:
           echo "-- Setting new release version ${NEW_VERSION} for ${REPO_NAME} --"
           mvn versions:set -B -DnewVersion="${NEW_VERSION}" -DprocessAllModules -DgenerateBackupPoms=false
           echo "-- Build, test and deploy release to GPR --"
-          mvn clean deploy -B -s settings.xml -DskipTests
+          mvn clean deploy -B -DskipTests
