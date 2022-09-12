@@ -38,8 +38,15 @@ public interface Specification<T> {
     Specification<T> medID(String id);
 
     @SuppressWarnings("unused")
-    @Deprecated // Bruk beregningForeach eller beregningForeachThen
+    @Deprecated // Bruk medSporing - evt beregningForeach eller beregningForeachThen
     default Specification<T> medScope(ServiceArgument scope) {
+        return this;
+    }
+
+    /**
+     * Brukes ifm enkelte regler til å angi hva regelen anvendes på - legges til evalueringsproperty for sporing.
+     */
+    default Specification<T> medSporing(ServiceArgument beskrevetArgument) {
         return this;
     }
 
