@@ -17,8 +17,8 @@ import no.nav.fpsak.nare.evaluation.node.ComputationalIfEvaluation;
  */
 public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
 
-    public static <V> Builder<V> regel() {
-        return new Builder<>();
+    public static <V> Builder<V> regel(Specification<V> ifSpec) {
+        return new Builder<>(ifSpec);
     }
 
     public static class Builder<T> {
@@ -26,11 +26,11 @@ public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
         private Specification<T> ifTrueSpec;
         private Specification<T> ifFalseSpec;
 
-        public Builder() {
+        public Builder(Specification<T> ifSpec) {
+            this.testSpec = ifSpec;
         }
 
-        public Builder<T> hvis(Specification<T> ifSpec, Specification<T> thenSpec) {
-            this.testSpec = ifSpec;
+        public Builder<T> hvisja(Specification<T> thenSpec) {
             this.ifTrueSpec = thenSpec;
             return this;
         }

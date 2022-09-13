@@ -38,8 +38,8 @@ public class Ruleset<V> {
         return SequenceSpecification.<V>regel(id, beskrivelse);
     }
 
-    public ComputationalIfSpecification.Builder<V> sekvensHvisRegel() {
-        return ComputationalIfSpecification.<V>regel();
+    public ComputationalIfSpecification.Builder<V> dersomRegel(Specification<V> ifSpec) {
+        return ComputationalIfSpecification.<V>regel(ifSpec);
     }
 
     /**

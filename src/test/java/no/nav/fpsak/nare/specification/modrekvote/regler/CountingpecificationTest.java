@@ -82,8 +82,10 @@ public class CountingpecificationTest {
             var regel = rs.sekvensRegel()
                 .neste(new AddOneLeaf())
                 .forAlle("bokstav", List.of("A", "B", "C"), new AddOneLeaf())
-                //.hvisEllers(new EvenLeaf(), new MultiplyByTwoLeaf(), new AddOneLeaf())
-                .neste(rs.hvisRegel().hvis(new EvenLeaf(), new MultiplyByTwoLeaf()).ellers(new AddOneLeaf()))
+                .hvisEllers(new EvenLeaf(), new MultiplyByTwoLeaf(), new AddOneLeaf())
+                // Alternative måter med hhv condOr og compIf
+                //.neste(rs.hvisRegel().hvis(new EvenLeaf(), new MultiplyByTwoLeaf()).ellers(new AddOneLeaf()))
+                //.neste(rs.dersomRegel(new EvenLeaf()).hvisja(new MultiplyByTwoLeaf()).ellers(new AddOneLeaf()))
                 .neste(new MultiplyByTwoLeaf())
                 .siste(new SinkLeaf());
             return regel;//rs.regel("Seq", "Seq", regel);
