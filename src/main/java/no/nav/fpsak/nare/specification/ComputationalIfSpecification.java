@@ -17,8 +17,8 @@ import no.nav.fpsak.nare.evaluation.node.ComputationalIfEvaluation;
  */
 public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
 
-    public static <V> Builder<V> regel() {
-        return new Builder<>();
+    public static <V> Builder<V> regel(Specification<V> ifSpec) {
+        return new Builder<>(ifSpec);
     }
 
     public static class Builder<T> {
@@ -26,19 +26,13 @@ public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
         private Specification<T> ifTrueSpec;
         private Specification<T> ifFalseSpec;
 
-        public Builder() {
+        public Builder(Specification<T> ifSpec) {
+            this.testSpec = ifSpec;
         }
 
-        public Builder<T> hvis(Specification<T> ifSpec, Specification<T> thenSpec) {
-            this.testSpec = ifSpec;
+        public Builder<T> hvisja(Specification<T> thenSpec) {
             this.ifTrueSpec = thenSpec;
             return this;
-        }
-
-        public  ComputationalIfSpecification<T> hvisEllersJa(Specification<T> ifSpec, Specification<T> thenSpec) {
-            this.testSpec = ifSpec;
-            this.ifTrueSpec = thenSpec;
-            return this.build();
         }
 
         public ComputationalIfSpecification<T> ellers(Specification<T> specification) {
@@ -58,7 +52,7 @@ public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
     private Specification<T> ifTrueSpec;
     private Specification<T> ifFalseSpec;
     private Evaluation testEvaluation;
-    private ServiceArgument scope;
+    private ServiceArgument property;
 
 
     public ComputationalIfSpecification(final Specification<T> testSpec, final Specification<T> doSpec) {
@@ -90,8 +84,8 @@ public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
         testEvaluation = testSpec.evaluate(t);
         var conditionalEvaluation = Resultat.JA.equals(testEvaluation.result()) ? ifTrueSpec.evaluate(t) : doEvaluateIfFalse(t, null);
         var evaluation = new ComputationalIfEvaluation(identifikator(), beskrivelse(), testEvaluation, conditionalEvaluation);
-        if (scope != null) {
-            evaluation.setEvaluationProperty(scope.getBeskrivelse(), scope.getVerdi().toString());
+        if (property != null) {
+            evaluation.setEvaluationProperty(property.getBeskrivelse(), property.getVerdi().toString());
         }
         return evaluation;
     }
@@ -99,13 +93,13 @@ public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
     @Override
     public Evaluation evaluate(final T t, ServiceArgument serviceArgument) {
         if (serviceArgument == null) {
-            throw new IllegalArgumentException("Utviklerfeil: Førsøker evaluere ComputationalIf med argument null");
+            throw new IllegalArgumentException("Utviklerfeil: Forsøker evaluere ComputationalIf med argument null");
         }
         testEvaluation = testSpec.evaluate(t, serviceArgument);
         var conditionalEvaluation = Resultat.JA.equals(testEvaluation.result()) ? ifTrueSpec.evaluate(t, serviceArgument) : doEvaluateIfFalse(t, serviceArgument);
         var evaluation = new ComputationalIfEvaluation(identifikator(), beskrivelse(), testEvaluation, conditionalEvaluation);
-        if (scope != null) {
-            evaluation.setEvaluationProperty(scope.getBeskrivelse(), scope.getVerdi().toString());
+        if (property != null) {
+            evaluation.setEvaluationProperty(property.getBeskrivelse(), property.getVerdi().toString());
         }
         evaluation.setEvaluationProperty(serviceArgument.getBeskrivelse(), serviceArgument.getVerdi().toString());
         return evaluation;
@@ -135,7 +129,13 @@ public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public Specification<T> medScope(ServiceArgument scope) {
-        this.scope = scope;
+        this.property = scope;
+        return this;
+    }
+
+    @Override
+    public Specification<T> medEvaluationProperty(ServiceArgument property) {
+        this.property = property;
         return this;
     }
 }

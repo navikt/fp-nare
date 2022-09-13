@@ -38,8 +38,8 @@ public class Ruleset<V> {
         return SequenceSpecification.<V>regel(id, beskrivelse);
     }
 
-    public ComputationalIfSpecification.Builder<V> sekvensHvisRegel() {
-        return ComputationalIfSpecification.<V>regel();
+    public ComputationalIfSpecification.Builder<V> dersomRegel(Specification<V> ifSpec) {
+        return ComputationalIfSpecification.<V>regel(ifSpec);
     }
 
     /**
@@ -193,7 +193,7 @@ public class Ruleset<V> {
      * @param spec2               utføres 1 gang etter at spec1 er utført N ganger
      * @return
      */
-    @Deprecated // Bruk beregningForeach eller beregningForeachThen
+    @Deprecated // Konsturer en liste selv og bruk beregningsRegel(spec1list, spec2) eller Bruk beregningForeach eller beregningForeachThen
     public Specification<V> beregningsRegel(String id, String beskrivelse, Class<? extends DynamicRuleService<V>> spec1,
             V regelmodell, String argumentBeskrivelse, List<? extends Object> args1, Specification<V> spec2) {
         Objects.requireNonNull(spec1, "spec1");

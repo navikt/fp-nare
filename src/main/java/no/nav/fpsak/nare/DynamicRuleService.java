@@ -2,6 +2,7 @@ package no.nav.fpsak.nare;
 
 import no.nav.fpsak.nare.evaluation.Evaluation;
 
+@Deprecated // Enten konstruer en liste av specs selv eller bruk en variant med ForeachSpecification
 public abstract class DynamicRuleService<T> implements RuleService<T> {
 
     protected T regelmodell;
