@@ -50,16 +50,9 @@ public interface RuleService<T> {
 
     /**
      * Angitt spesifikasjon for kjøring og dokumentasjon.
+     * 
+     * Input til denne trenge ikke være samme som til evaluer, men den kan ta et pre-prosessert objekt f.eks. for å
+     * enklere håndtere reglene.
      */
     <V> Specification<V> getSpecification();
-
-    /**
-     * Angitt spesifikasjon for kjøring og dokumentasjon.
-     *
-     * Input til denne trenge ikke være samme som til evaluer, men den kan ta et pre-prosessert objekt f.eks. for å
-     * enklere håndtere eller instansiere reglene. Pluss propagere argument som medScope for dokumentasjonsformål
-     */
-    default <V> Specification<V> getSpecification(ServiceArgument argument) {
-        return getSpecification();
-    }
 }

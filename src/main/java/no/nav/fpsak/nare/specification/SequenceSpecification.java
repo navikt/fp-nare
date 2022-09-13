@@ -72,7 +72,7 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
         }
     }
 
-    private ServiceArgument beskrevetArgument;
+    private ServiceArgument property;
 
     private final List<Specification<T>> specs = new ArrayList<>();
 
@@ -118,8 +118,8 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
     @Override
     public Evaluation evaluate(final T t) {
         var evaluation = doEvaluate(t, null);
-        if (beskrevetArgument != null) {
-            evaluation.setEvaluationProperty(beskrevetArgument.getBeskrivelse(), beskrevetArgument.getVerdi().toString());
+        if (property != null) {
+            evaluation.setEvaluationProperty(property.getBeskrivelse(), property.getVerdi().toString());
         }
         return evaluation;
     }
@@ -130,8 +130,8 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
             throw new IllegalArgumentException("Utviklerfeil: Førsøker evaluere Sequence med argument null");
         }
         var evaluation = doEvaluate(t, serviceArgument);
-        if (beskrevetArgument != null) {
-            evaluation.setEvaluationProperty(beskrevetArgument.getBeskrivelse(), beskrevetArgument.getVerdi().toString());
+        if (property != null) {
+            evaluation.setEvaluationProperty(property.getBeskrivelse(), property.getVerdi().toString());
         }
         evaluation.setEvaluationProperty(serviceArgument.getBeskrivelse(), serviceArgument.getVerdi().toString());
         return evaluation;
@@ -163,13 +163,13 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public Specification<T> medScope(ServiceArgument scope) {
-        this.beskrevetArgument = scope;
+        this.property = scope;
         return this;
     }
 
     @Override
-    public Specification<T> medSporing(ServiceArgument beskrevetArgument) {
-        this.beskrevetArgument = beskrevetArgument;
+    public Specification<T> medEvaluationProperty(ServiceArgument property) {
+        this.property = property;
         return this;
     }
 }
