@@ -37,7 +37,7 @@ public class EvaluationSummary {
             }
 
             // special case, kun prosessere siste SingleEvaluation barn av SequenceEvaluation siden alle andre returnerer ja.
-            if (Operator.SEQUENCE.equals(parent.getOperator()) || Operator.FOREACH.equals(parent.getOperator())) {
+            if (Operator.SEQUENCE.equals(parent.getOperator())) {
                 String childRuleId = child.ruleIdentification();
                 String lastChildOfParentRuleId = ((AggregatedEvaluation) parent).lastChild().ruleIdentification();
                 return (childRuleId.equals(lastChildOfParentRuleId));

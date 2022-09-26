@@ -2,19 +2,16 @@ package no.nav.fpsak.nare.specification.modrekvote.regler;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
 import no.nav.fpsak.nare.RuleService;
 import no.nav.fpsak.nare.Ruleset;
-import no.nav.fpsak.nare.ServiceArgument;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.RuleOutcome;
 import no.nav.fpsak.nare.evaluation.node.SingleEvaluation;
-import no.nav.fpsak.nare.evaluation.summary.EvaluationSerializer;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSummary;
 import no.nav.fpsak.nare.specification.LeafSpecification;
 import no.nav.fpsak.nare.specification.Specification;
@@ -24,14 +21,14 @@ public class CountingpecificationTest {
     @Test
     public void skal_evaluere_regel_med_ellers_branch()  {
         var singleSpecification = new SingleRule();
-        var evaluation = singleSpecification.evaluer(new MellomregnInt(1));
+        var evaluation = singleSpecification.evaluer(new MellomregnInt(3));
 
         assertThat(evaluation.result()).isEqualTo(Resultat.JA);
-        System.out.println(EvaluationSerializer.asJson(evaluation));
-        System.out.println(EvaluationSerializer.asJson(singleSpecification.getSpecification()));
+        //System.out.println(EvaluationSerializer.asJson(evaluation));
+        //System.out.println(EvaluationSerializer.asJson(singleSpecification.getSpecification()));
         var evaluationSummary = new EvaluationSummary(evaluation);
         var outcome = hentOutcome(evaluationSummary);
-        assertThat(outcome).contains(12);
+        assertThat(outcome).contains(16);
     }
 
     @Test
@@ -44,7 +41,7 @@ public class CountingpecificationTest {
         //System.out.println(EvaluationSerializer.asJson(singleSpecification.getSpecification()));
         var evaluationSummary = new EvaluationSummary(evaluation);
         var outcome = hentOutcome(evaluationSummary);
-        assertThat(outcome).contains(24);
+        assertThat(outcome).contains(8);
     }
 
     private Optional<Integer> hentOutcome(EvaluationSummary evaluationSummary) {
@@ -81,7 +78,6 @@ public class CountingpecificationTest {
             var rs = new Ruleset<MellomregnInt>();
             var regel = rs.sekvensRegel()
                 .neste(new AddOneLeaf())
-                .forAlle("bokstav", List.of("A", "B", "C"), new AddOneLeaf())
                 .hvisEllers(new EvenLeaf(), new MultiplyByTwoLeaf(), new AddOneLeaf())
                 // Alternative måter med hhv condOr og compIf
                 //.neste(rs.hvisRegel().hvis(new EvenLeaf(), new MultiplyByTwoLeaf()).ellers(new AddOneLeaf()))
@@ -102,13 +98,6 @@ public class CountingpecificationTest {
         public Evaluation evaluate(MellomregnInt input) {
             input.carryon = input.carryon + 1;
             var outcome = new RuleOutcome<>(input.carryon);
-            return ja();
-        }
-
-        @Override
-        public Evaluation evaluate(MellomregnInt input, ServiceArgument args) {
-            var bokstav = Optional.ofNullable(args).filter(a -> "bokstav".equals(args.beskrivelse())).map(a -> (String)a.verdi()).orElse(null);
-            input.carryon = input.carryon + 1;
             return ja();
         }
     }

@@ -65,6 +65,11 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
         return resultat;
     }
 
+    /** For beregningsregel: beregnet med sluttresultat i outcome. */
+    public SingleEvaluation endeligBeregnet(RuleReasonRef reasonKey, Object... reasonArgs) {
+        return ja(reasonKey, reasonArgs);
+    }
+
     @Override
     public Specification<T> medBeskrivelse(String beskrivelse) {
         this.beskrivelse = beskrivelse;

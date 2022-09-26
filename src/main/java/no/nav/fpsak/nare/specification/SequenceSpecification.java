@@ -53,11 +53,6 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
             return this;
         }
 
-        public Builder<T> forAlle(String argName, List<?> args, Specification<T> spec) {
-            this.sekvens.add(new ForeachSpecification<>(spec, args, argName));
-            return this;
-        }
-
         public SequenceSpecification<T> siste(Specification<T> specification) {
             this.sekvens.add(specification);
             return build();
@@ -117,31 +112,18 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
 
     @Override
     public Evaluation evaluate(final T t) {
-        var evaluation = doEvaluate(t, null);
+        var evaluation = doEvaluate(t);
         if (property != null) {
             evaluation.setEvaluationProperty(property.getBeskrivelse(), property.getVerdi().toString());
         }
         return evaluation;
     }
 
-    @Override
-    public Evaluation evaluate(final T t, ServiceArgument serviceArgument) {
-        if (serviceArgument == null) {
-            throw new IllegalArgumentException("Utviklerfeil: Førsøker evaluere Sequence med argument null");
-        }
-        var evaluation = doEvaluate(t, serviceArgument);
-        if (property != null) {
-            evaluation.setEvaluationProperty(property.getBeskrivelse(), property.getVerdi().toString());
-        }
-        evaluation.setEvaluationProperty(serviceArgument.getBeskrivelse(), serviceArgument.getVerdi().toString());
-        return evaluation;
-    }
-
-    private SequenceEvaluation doEvaluate(final T t, ServiceArgument serviceArgument) {
+    private SequenceEvaluation doEvaluate(final T t) {
         var specSize = specs.size();
         Evaluation[] evaluations = new Evaluation[specSize];
         for (int ix = 0; ix < specSize; ix++) {
-            evaluations[ix] = serviceArgument != null ? specs.get(ix).evaluate(t, serviceArgument) : specs.get(ix).evaluate(t);
+            evaluations[ix] = specs.get(ix).evaluate(t);
         }
         return new SequenceEvaluation(identifikator(), beskrivelse(), evaluations);
 
@@ -159,12 +141,6 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
             ruleDescriptions[ix] = specs.get(ix).ruleDescription();
         }
         return new SpecificationRuleDescription(Operator.SEQUENCE, identifikator(), beskrivelse(), ruleDescriptions);
-    }
-
-    @Override
-    public Specification<T> medScope(ServiceArgument scope) {
-        this.property = scope;
-        return this;
     }
 
     @Override
