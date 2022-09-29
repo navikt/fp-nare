@@ -26,22 +26,12 @@ public interface Specification<T> {
      */
     Evaluation evaluate(T t);
 
-    default Evaluation evaluate(T t, ServiceArgument serviceArgument) {
-        return evaluate(t);
-    }
-
     /**
      * Specification Builder methods
      */
     Specification<T> medBeskrivelse(String beskrivelse);
 
     Specification<T> medID(String id);
-
-    @SuppressWarnings("unused")
-    @Deprecated // Bruk medEvaluationProperty - evt beregningForeach eller beregningForeachThen
-    default Specification<T> medScope(ServiceArgument scope) {
-        return this;
-    }
 
     /**
      * Setter en evaluationproperty basert på beskrivelse og objekt i ServiceArgument.

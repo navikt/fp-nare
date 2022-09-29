@@ -82,7 +82,7 @@ public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
     @Override
     public Evaluation evaluate(final T t) {
         testEvaluation = testSpec.evaluate(t);
-        var conditionalEvaluation = Resultat.JA.equals(testEvaluation.result()) ? ifTrueSpec.evaluate(t) : doEvaluateIfFalse(t, null);
+        var conditionalEvaluation = Resultat.JA.equals(testEvaluation.result()) ? ifTrueSpec.evaluate(t) : doEvaluateIfFalse(t);
         var evaluation = new ComputationalIfEvaluation(identifikator(), beskrivelse(), testEvaluation, conditionalEvaluation);
         if (property != null) {
             evaluation.setEvaluationProperty(property.getBeskrivelse(), property.getVerdi().toString());
@@ -90,27 +90,8 @@ public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
         return evaluation;
     }
 
-    @Override
-    public Evaluation evaluate(final T t, ServiceArgument serviceArgument) {
-        if (serviceArgument == null) {
-            throw new IllegalArgumentException("Utviklerfeil: Forsøker evaluere ComputationalIf med argument null");
-        }
-        testEvaluation = testSpec.evaluate(t, serviceArgument);
-        var conditionalEvaluation = Resultat.JA.equals(testEvaluation.result()) ? ifTrueSpec.evaluate(t, serviceArgument) : doEvaluateIfFalse(t, serviceArgument);
-        var evaluation = new ComputationalIfEvaluation(identifikator(), beskrivelse(), testEvaluation, conditionalEvaluation);
-        if (property != null) {
-            evaluation.setEvaluationProperty(property.getBeskrivelse(), property.getVerdi().toString());
-        }
-        evaluation.setEvaluationProperty(serviceArgument.getBeskrivelse(), serviceArgument.getVerdi().toString());
-        return evaluation;
-    }
-
-    private Evaluation doEvaluateIfFalse(final T t, ServiceArgument serviceArgument) {
-        if (ifFalseSpec != null) {
-            return serviceArgument != null ? ifFalseSpec.evaluate(t, serviceArgument) : ifFalseSpec.evaluate(t);
-        } else {
-            return ja();
-        }
+    private Evaluation doEvaluateIfFalse(final T t) {
+        return ifFalseSpec != null ? ifFalseSpec.evaluate(t) : ja();
     }
 
     @Override
@@ -125,12 +106,6 @@ public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
         } else {
             return new SpecificationRuleDescription(Operator.COMPUTATIONAL_IF, identifikator(), beskrivelse(), testSpec.ruleDescription(), ifTrueSpec.ruleDescription());
         }
-    }
-
-    @Override
-    public Specification<T> medScope(ServiceArgument scope) {
-        this.property = scope;
-        return this;
     }
 
     @Override
