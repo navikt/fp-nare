@@ -16,14 +16,18 @@ public class SequenceEvaluation extends AggregatedEvaluation {
     @Override
     public String reason() {
         var reasonText = new StringBuilder("Utført ");
+        int teller = 1;
         for (var child : children()) {
-            reasonText.append(child.ruleIdentification()).append(OG);
+            if (teller != 1) {
+                reasonText.append(OG);
+            }
+            String childId = child.ruleIdentification();
+            reasonText.append(childId != null ? childId : "operasjon " + teller);
+            teller++;
         }
-        var finalOg = reasonText.lastIndexOf(OG);
-        reasonText.delete(finalOg, finalOg + OG.length());
         return reasonText.toString();
     }
-    
+
     @Override
     public Resultat result() {
         return lastChild().result();

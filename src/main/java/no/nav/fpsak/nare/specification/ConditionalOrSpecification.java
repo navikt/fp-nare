@@ -108,6 +108,7 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
         } else {
             this.elseCondition = elseCondition;
         }
+        validateChildrenRuleId();
     }
 
     /*
@@ -135,21 +136,6 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
             // varlse en kritisk feil? Er inne i en blindvei
             return nei(INVALID_EXIT, identifikator());
         }
-    }
-
-    @Override
-    public String identifikator() {
-        return identifikatorIkkeTom().orElseGet(() -> {
-            var condFirstEntry =  conditionalEntries.isEmpty() ? null : conditionalEntries.get(0);
-            var condId = condFirstEntry != null ? ("HVIS " + condFirstEntry.testSpec.identifikator() + " SÅ  ... ") : "";
-            var elseId = elseCondition != null ? ("ELLERS " + elseCondition.identifikator()) : "";
-            return "(COND " + condId + elseId + ")";
-        });
-    }
-
-    @Override
-    public String beskrivelse() {
-        return beskrivelseIkkeTom().orElse("(COND HVIS/SÅ/.../ELLERS)");
     }
 
     /*
@@ -183,6 +169,20 @@ public class ConditionalOrSpecification<T> extends AbstractSpecification<T> {
         @Override
         public String getReasonCode() {
             return reasonCode;
+        }
+    }
+
+    private void validateChildrenRuleId() {
+        for (CondOrEntry<T> entry : conditionalEntries) {
+            if (entry.flowSpec().identifikator() == null) {
+                throw new IllegalArgumentException("Trenger RuleId på alle flowSpecifications for " + ConditionalOrSpecification.class.getSimpleName() + ", men mangler for " + entry.flowSpec().getClass().getSimpleName());
+            }
+            if (entry.testSpec().identifikator() == null){
+                throw new IllegalArgumentException("Trenger RuleId på alle testSpecifications for " + ConditionalOrSpecification.class.getSimpleName() + ", men mangler for " + entry.testSpec().getClass().getSimpleName());
+            }
+        }
+        if (elseCondition.identifikator() == null) {
+            throw new IllegalArgumentException("Trenger RuleId på alle flowSpecifications for " + ConditionalOrSpecification.class.getSimpleName() + ", men mangler for else-condition: " + elseCondition.getClass().getSimpleName());
         }
     }
 

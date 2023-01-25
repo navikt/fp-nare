@@ -97,19 +97,6 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
         this(id, beskrivelse, Arrays.asList(spec1, spec2));
     }
 
-    private Specification<T> first() {
-        return specs.get(0);
-    }
-
-    private Specification<T> last() {
-        return specs.get(specs.size()-1);
-    }
-
-    @Override
-    public String beskrivelse() {
-        return beskrivelseIkkeTom().orElse("(SEKVENS ...)");
-    }
-
     @Override
     public Evaluation evaluate(final T t) {
         var evaluation = doEvaluate(t);
@@ -127,11 +114,6 @@ public class SequenceSpecification<T> extends AbstractSpecification<T> {
         }
         return new SequenceEvaluation(identifikator(), beskrivelse(), evaluations);
 
-    }
-
-    @Override
-    public String identifikator() {
-        return identifikatorIkkeTom().orElseGet(() -> "(SEKVENS " + first().identifikator() + " ... " + last().identifikator() + ")");
     }
 
     @Override

@@ -1,5 +1,7 @@
 package no.nav.fpsak.nare.evaluation.node;
 
+import java.util.Optional;
+
 import no.nav.fpsak.nare.evaluation.AggregatedEvaluation;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
@@ -13,10 +15,11 @@ public class NotEvaluation extends AggregatedEvaluation {
 
     @Override
     public String reason() {
+        String barneNodeNavn = Optional.of(firstChild().ruleIdentification()).orElse("underregelsens utfall");
         if (result().equals(Resultat.JA)) {
-            return "Tilfredstiller det motsatte av " + firstChild().ruleIdentification();
+            return "Tilfredstiller det motsatte av " + barneNodeNavn;
         } else {
-            return "Tilfredstiller ikke det motsatte av " + firstChild().ruleIdentification();
+            return "Tilfredstiller ikke det motsatte av " + barneNodeNavn;
         }
 
     }

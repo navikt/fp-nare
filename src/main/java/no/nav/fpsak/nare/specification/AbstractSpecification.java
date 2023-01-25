@@ -11,8 +11,8 @@ import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 import no.nav.fpsak.nare.evaluation.node.SingleEvaluation;
 
 public abstract class AbstractSpecification<T> implements Specification<T> {
-    private String beskrivelse = "";
-    private String id = "";
+    private String beskrivelse;
+    private String id;
 
     protected AbstractSpecification() {
     }

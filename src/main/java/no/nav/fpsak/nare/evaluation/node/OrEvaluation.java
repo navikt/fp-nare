@@ -1,5 +1,7 @@
 package no.nav.fpsak.nare.evaluation.node;
 
+import java.util.Optional;
+
 import no.nav.fpsak.nare.evaluation.AggregatedEvaluation;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
@@ -16,7 +18,7 @@ public class OrEvaluation extends AggregatedEvaluation {
         if (result().equals(Resultat.JA)) {
             return "Tilfredstiller " + ruleOrIdentification();
         } else {
-            return "Tilfredstiller hverken " + firstChild().ruleIdentification() + " eller " + secondChild().ruleIdentification();
+            return "Tilfredstiller hverken " + navnFørsteNode() + " eller " + navnAndreNode();
         }
     }
 
@@ -26,13 +28,21 @@ public class OrEvaluation extends AggregatedEvaluation {
     }
 
     private String ruleOrIdentification() {
-        String firstID = firstChild().result().equals(Resultat.JA) ? firstChild().ruleIdentification() : "";
-        String secondID = secondChild().result().equals(Resultat.JA) ? secondChild().ruleIdentification() : "";
+        String firstID = firstChild().result().equals(Resultat.JA) ? navnFørsteNode() : "";
+        String secondID = secondChild().result().equals(Resultat.JA) ? navnAndreNode() : "";
         if (firstID.isEmpty())
             return secondID;
         if (secondID.isEmpty())
             return firstID;
         return firstID + " OG " + secondID;
+    }
+
+    private String navnFørsteNode(){
+        return Optional.ofNullable(firstChild().ruleIdentification()).orElse("første betingelse");
+    }
+
+    private String navnAndreNode(){
+        return Optional.ofNullable(secondChild().ruleIdentification()).orElse("andre betingelse");
     }
 
 }

@@ -69,16 +69,6 @@ public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
         this.ifFalseSpec = ifFalseSpec;
     }
 
-    private Optional<Specification<T>> eller() {
-        return Optional.ofNullable(ifFalseSpec);
-    }
-
-    @Override
-    public String beskrivelse() {
-        return beskrivelseIkkeTom()
-            .orElseGet(() -> "(COMP HVIS/SÅ" + eller().map(s -> "/ELLERS").orElse("") + ")");
-    }
-
     @Override
     public Evaluation evaluate(final T t) {
         testEvaluation = testSpec.evaluate(t);
@@ -92,11 +82,6 @@ public class ComputationalIfSpecification<T> extends AbstractSpecification<T> {
 
     private Evaluation doEvaluateIfFalse(final T t) {
         return ifFalseSpec != null ? ifFalseSpec.evaluate(t) : ja();
-    }
-
-    @Override
-    public String identifikator() {
-        return identifikatorIkkeTom().orElseGet(() -> "(HVIS " + testSpec.identifikator() + " SÅ " + ifTrueSpec.identifikator() + eller().map(s -> " ELLERS " + s.identifikator()).orElse("") + ")");
     }
 
     @Override

@@ -11,7 +11,7 @@ import no.nav.fpsak.nare.evaluation.node.NotEvaluation;
 public class NotSpecification<T> extends AbstractSpecification<T> {
 
     public static <V> NotSpecification<V> ikke(final Specification<V> spec1) {
-        return new NotSpecification<V>(spec1);
+        return new NotSpecification<>(spec1);
     }
 
     private Specification<T> spec1;
@@ -21,18 +21,8 @@ public class NotSpecification<T> extends AbstractSpecification<T> {
     }
 
     @Override
-    public String beskrivelse() {
-        return beskrivelseIkkeTom().orElse("(IKKE)");
-    }
-
-    @Override
     public Evaluation evaluate(final T t) {
         return new NotEvaluation(identifikator(), beskrivelse(), spec1.evaluate(t));
-    }
-
-    @Override
-    public String identifikator() {
-        return identifikatorIkkeTom().orElseGet(() -> "(IKKE " + spec1.identifikator() + ")");
     }
 
     @Override

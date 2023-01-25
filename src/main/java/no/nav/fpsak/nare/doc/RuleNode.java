@@ -2,13 +2,17 @@ package no.nav.fpsak.nare.doc;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import no.nav.fpsak.nare.evaluation.Operator;
 
 @SuppressWarnings("unused")
 public class RuleNode {
     final String id;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private final String ruleId;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private final String ruleDescription;
     private final Operator operator;
     private RuleDescription rule;

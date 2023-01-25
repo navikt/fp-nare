@@ -15,18 +15,8 @@ public class AndSpecification<T> extends BinarySpecification<T> {
     }
 
     @Override
-    public String beskrivelse() {
-        return beskrivelseIkkeTom().orElse("(OG)");
-    }
-
-    @Override
     public Evaluation evaluate(final T t) {
         return new AndEvaluation(identifikator(), beskrivelse(), spec1.evaluate(t), spec2.evaluate(t));
-    }
-
-    @Override
-    public String identifikator() {
-        return identifikatorIkkeTom().orElseGet(() -> "(" + spec1.identifikator() + " OG " + spec2.identifikator() + ")");
     }
 
     @Override

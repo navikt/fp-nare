@@ -15,18 +15,8 @@ public class OrSpecification<T> extends BinarySpecification<T> {
     }
 
     @Override
-    public String beskrivelse() {
-        return beskrivelseIkkeTom().orElse("(ELLER)");
-    }
-
-    @Override
     public Evaluation evaluate(final T t) {
         return new OrEvaluation(identifikator(), beskrivelse(), spec1.evaluate(t), spec2.evaluate(t));
-    }
-
-    @Override
-    public String identifikator() {
-        return identifikatorIkkeTom().orElseGet(() -> "(" + spec1.identifikator() + " ELLER " + spec2.identifikator() + ")");
     }
 
     @Override
