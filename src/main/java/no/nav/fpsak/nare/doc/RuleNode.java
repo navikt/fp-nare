@@ -13,7 +13,7 @@ public class RuleNode {
     private final Operator operator;
     private RuleDescription rule;
 
-    @Deprecated(forRemoval = true, since = "2.5.0")
+    @Deprecated(forRemoval = true, since = "2.6.0")
     public RuleNode(String ruleId, String ruleDescription, Operator operator) {
         this.id = UUID.randomUUID().toString();
         this.ruleId = ruleId;
@@ -21,7 +21,7 @@ public class RuleNode {
         this.operator = operator;
     }
 
-    @Deprecated(forRemoval = true, since = "2.5.0")
+    @Deprecated(forRemoval = true, since = "2.6.0")
     public RuleNode(RuleDescription node) {
         this.id = UUID.randomUUID().toString();
         this.ruleId = node.getRuleIdentification();

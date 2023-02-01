@@ -2,21 +2,19 @@ package no.nav.fpsak.nare.evaluation.summary;
 
 import java.util.Objects;
 
-public class EvaluationVersion {
-    private String name;
-    private String version;
+public record EvaluationVersion(String name, String version) {
 
-    public EvaluationVersion(String name, String version) {
+    public EvaluationVersion {
         Objects.requireNonNull(name, "name");
-        Objects.requireNonNull(name, "version");
-        this.name = name;
-        this.version = version;
+        Objects.requireNonNull(version, "version");
     }
 
+    @Deprecated(forRemoval = true, since = "2.6.0")
     public String getName() {
         return name;
     }
 
+    @Deprecated(forRemoval = true, since = "2.6.0")
     public String getVersion() {
         return version;
     }

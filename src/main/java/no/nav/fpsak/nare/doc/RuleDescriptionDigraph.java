@@ -42,7 +42,7 @@ public class RuleDescriptionDigraph {
     }
 
     //bruk istedet den andre constructoren
-    @Deprecated(forRemoval = true, since = "2.5.0")
+    @Deprecated(forRemoval = true, since = "2.6.0")
     public RuleDescriptionDigraph(RuleDescription root, RuleNodeIdProducer idProducer) {
         this.idProducer = idProducer;
         this.root = process(root);
