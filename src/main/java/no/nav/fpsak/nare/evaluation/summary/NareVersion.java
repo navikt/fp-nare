@@ -7,22 +7,19 @@ public class NareVersion {
     private NareVersion() {
     }
 
-    public static final EvaluationVersion NARE_VERSION = readProjectProperties(NareVersion.class.getClassLoader(), "nare");
+    public static final EvaluationVersion NARE_VERSION = readProjectProperties("nare", "nare/nare-version.properties");
 
 
-    public static EvaluationVersion readProjectProperties(ClassLoader cl, String defaultProjectName) {
-        String name;
+    public static EvaluationVersion readProjectProperties(String projectName, String propertiesFile) {
         String version;
         try {
             final Properties properties = new Properties();
-            properties.load(cl.getResourceAsStream("project.properties"));
-            name = properties.getProperty("name");
+            properties.load(NareVersion.class.getClassLoader().getResourceAsStream(propertiesFile));
             version = properties.getProperty("version");
         } catch (Exception e) {
-            name = defaultProjectName;
-            version = "0.0.0";
+            version = "UNKNOWN";
         }
-        return new EvaluationVersion(name, version);
+        return new EvaluationVersion(projectName, version);
     }
 
 }
