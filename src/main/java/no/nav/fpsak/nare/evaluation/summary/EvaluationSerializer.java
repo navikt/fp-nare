@@ -11,19 +11,26 @@ import no.nav.fpsak.nare.specification.Specification;
 
 public class EvaluationSerializer {
 
+
+    public static String asJson(Evaluation evaluation) {
+        var desc = evaluation.toRuleDescription();
+        RuleDescriptionDigraph digraph = new RuleDescriptionDigraph(desc, new EvaluationSerializer.IncrementalIdProcucer(), Map.of());
+        return digraph.toJson();
+    }
+
     public static String asJson(Evaluation evaluation, EvaluationVersion... versions) {
         var desc = evaluation.toRuleDescription();
-        RuleDescriptionDigraph digraph = new RuleDescriptionDigraph(desc, new EvaluationSerializer.IncrementalIdProcucer(), toVerisonsMap(versions));
+        RuleDescriptionDigraph digraph = new RuleDescriptionDigraph(desc, new EvaluationSerializer.IncrementalIdProcucer(), toVersionsMap(versions));
         return digraph.toJson();
     }
 
     public static String asJson(Specification<?> specification, EvaluationVersion... versions) {
-        RuleDescriptionDigraph digraph = new RuleDescriptionDigraph(specification.ruleDescription(), new EvaluationSerializer.IncrementalIdProcucer(), toVerisonsMap(versions));
+        RuleDescriptionDigraph digraph = new RuleDescriptionDigraph(specification.ruleDescription(), new EvaluationSerializer.IncrementalIdProcucer(), toVersionsMap(versions));
         return digraph.toJson();
     }
 
-    private static Map<String, String> toVerisonsMap(EvaluationVersion[] versions) {
-        Map<String, String> map = Arrays.stream(versions).collect(Collectors.toMap(EvaluationVersion::getName, EvaluationVersion::getVersion));
+    private static Map<String, String> toVersionsMap(EvaluationVersion[] versions) {
+        Map<String, String> map = Arrays.stream(versions).collect(Collectors.toMap(EvaluationVersion::name, EvaluationVersion::version));
         //hvis ingen versjoner er oppgitt, sender inn null for å unngå å få med versjon-elementet i sin helhet
         return map.isEmpty() ? null : map;
     }
