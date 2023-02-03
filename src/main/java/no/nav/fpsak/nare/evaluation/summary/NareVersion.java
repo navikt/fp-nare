@@ -7,10 +7,10 @@ public class NareVersion {
     private NareVersion() {
     }
 
-    public static final EvaluationVersion NARE_VERSION = readProjectProperties("nare", "nare/nare-version.properties");
+    public static final EvaluationVersion NARE_VERSION = readVersionPropertyFor("nare", "nare/nare-version.properties");
 
 
-    public static EvaluationVersion readProjectProperties(String projectName, String propertiesFile) {
+    public static EvaluationVersion readVersionPropertyFor(String projectName, String propertiesFile) {
         String version;
         try {
             final Properties properties = new Properties();
