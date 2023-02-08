@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import no.nav.fpsak.nare.doc.BasicRuleDescription;
-import no.nav.fpsak.nare.doc.JsonOutput;
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Operator;
@@ -16,6 +15,7 @@ import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 import no.nav.fpsak.nare.evaluation.node.ConditionalElseEvaluation;
 import no.nav.fpsak.nare.evaluation.node.ConditionalOrEvaluation;
+import no.nav.fpsak.nare.json.JsonOutput;
 
 /**
  * Conditional Or specification, used to create a new specifcation that is the

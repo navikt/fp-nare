@@ -3,12 +3,12 @@ package no.nav.fpsak.nare.specification;
 import java.util.Map;
 import java.util.Optional;
 
-import no.nav.fpsak.nare.doc.JsonOutput;
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.Operator;
 import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 import no.nav.fpsak.nare.evaluation.node.SingleEvaluation;
+import no.nav.fpsak.nare.json.JsonOutput;
 
 public abstract class AbstractSpecification<T> implements Specification<T> {
     private String beskrivelse = "";
