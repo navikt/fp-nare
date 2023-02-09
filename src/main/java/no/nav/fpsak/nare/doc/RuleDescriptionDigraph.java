@@ -8,9 +8,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.Version;
 
 import no.nav.fpsak.nare.evaluation.Operator;
+import no.nav.fpsak.nare.json.JsonOutput;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RuleDescriptionDigraph {
