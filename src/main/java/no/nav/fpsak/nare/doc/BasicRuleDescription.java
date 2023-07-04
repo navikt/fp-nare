@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import no.nav.fpsak.nare.evaluation.Operator;
+import no.nav.fpsak.nare.json.JsonOutput;
 
 @JsonInclude(Include.NON_NULL)
 public class BasicRuleDescription implements RuleDescription {

@@ -2,18 +2,28 @@ package no.nav.fpsak.nare.doc;
 
 import java.util.IdentityHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import no.nav.fpsak.nare.evaluation.Operator;
+import no.nav.fpsak.nare.json.JsonOutput;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RuleDescriptionDigraph {
 
     @JsonIgnore
     private transient IdentityHashMap<RuleDescription, Boolean> processed = new IdentityHashMap<>();
+    @JsonIgnore
+    private transient RuleNodeIdProducer idProducer;
+
+    @SuppressWarnings("unused")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty(value = "versions")
+    private Map<String, String> versions;
 
     @SuppressWarnings("unused")
     @JsonProperty(value="root")
@@ -25,8 +35,18 @@ public class RuleDescriptionDigraph {
     @JsonProperty(value="edges")
     private LinkedHashSet<RuleEdge> edges = new LinkedHashSet<>();
 
-    public RuleDescriptionDigraph(RuleDescription root) {
+    public RuleDescriptionDigraph(RuleDescription root, RuleNodeIdProducer idProducer, Map<String, String> versions) {
+        this.idProducer = idProducer;
         this.root = process(root);
+        this.versions = versions;
+    }
+
+    //bruk istedet den andre constructoren
+    @Deprecated(forRemoval = true, since = "2.6.0")
+    public RuleDescriptionDigraph(RuleDescription root, RuleNodeIdProducer idProducer) {
+        this.idProducer = idProducer;
+        this.root = process(root);
+        this.versions = null;
     }
 
     private RuleNode process(RuleDescription ruledesc) {
@@ -34,7 +54,7 @@ public class RuleDescriptionDigraph {
         if (prev != null) {
             return null;
         }
-        RuleNode myNode = new RuleNode(ruledesc);
+        RuleNode myNode = new RuleNode(idProducer.produceId(), ruledesc);
         nodes.add(myNode);
 
         if (ruledesc.getOperator() == Operator.COND_OR && erConditionalOrSpecification(ruledesc)) {
@@ -49,7 +69,6 @@ public class RuleDescriptionDigraph {
         for (RuleDescription child : ruledesc.getChildren()) {
             RuleNode childNode = process(child);
             edges.add(new RuleEdge(myNode, childNode, null));
-
         }
     }
 

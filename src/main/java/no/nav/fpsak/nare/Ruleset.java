@@ -47,8 +47,7 @@ public class Ruleset<V> {
      * @param elseSpec
      * @return
      */
-    public Specification<V> beregningHvisRegel(Specification<V> testSpec, Specification<V> thenSpec,
-            Specification<V> elseSpec) {
+    public Specification<V> beregningHvisRegel(Specification<V> testSpec, Specification<V> thenSpec, Specification<V> elseSpec) {
         return new ComputationalIfSpecification<>(testSpec, thenSpec, elseSpec);
     }
 
