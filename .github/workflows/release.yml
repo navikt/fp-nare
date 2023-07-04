@@ -1,31 +1,14 @@
 name: Publish release
-
 on:
   release:
-    types: [published]
+    types: [ published ]
 
 jobs:
-  publish-release:
-    runs-on: ubuntu-latest
-    permissions: 
-      contents: read
-      packages: write 
-
-    steps:
-      - name: Checkout latest code
-        uses: actions/checkout@v3
-
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: 17
-          cache: 'maven'
-
-      - name: Publish artifact
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NEW_VERSION: ${{ github.event.release.tag_name }}
-        run: |
-          mvn versions:set -B -DnewVersion="${NEW_VERSION}" -DprocessAllModules -DgenerateBackupPoms=false
-          mvn clean deploy -B -DskipTests
+  release:
+    name: Feature
+    permissions:
+      packages: write
+    uses: navikt/fp-gha-workflows/.github/workflows/release-feature.yml@main
+    with:
+      release-version: ${{ github.event.release.tag_name }}
+    secrets: inherit
