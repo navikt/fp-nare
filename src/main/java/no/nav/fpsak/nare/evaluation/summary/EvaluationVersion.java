@@ -9,13 +9,7 @@ public record EvaluationVersion(String name, String version) {
         Objects.requireNonNull(version, "version");
     }
 
-    @Deprecated(forRemoval = true, since = "2.6.0")
-    public String getName() {
-        return name;
-    }
-
-    @Deprecated(forRemoval = true, since = "2.6.0")
-    public String getVersion() {
-        return version;
+    public String nameAndVersion() {
+        return name() + ':' + version();
     }
 }
