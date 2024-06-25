@@ -1,16 +1,15 @@
 package no.nav.fpsak.nare.doc;
 
-import java.util.IdentityHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import no.nav.fpsak.nare.evaluation.Operator;
 import no.nav.fpsak.nare.json.JsonOutput;
+
+import java.util.IdentityHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RuleDescriptionDigraph {
@@ -39,14 +38,6 @@ public class RuleDescriptionDigraph {
         this.idProducer = idProducer;
         this.root = process(root);
         this.versions = versions;
-    }
-
-    //bruk istedet den andre constructoren
-    @Deprecated(forRemoval = true, since = "2.6.0")
-    public RuleDescriptionDigraph(RuleDescription root, RuleNodeIdProducer idProducer) {
-        this.idProducer = idProducer;
-        this.root = process(root);
-        this.versions = null;
     }
 
     private RuleNode process(RuleDescription ruledesc) {
