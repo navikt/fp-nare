@@ -18,7 +18,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <revision>1.0-SNAPSHOT</revision>
         <java.version>21</java.version>
-        <jupiter.version>5.12.2</jupiter.version>
+        <jupiter.version>5.13.3</jupiter.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
