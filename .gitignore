@@ -29,4 +29,4 @@ _*.sh
 .mvn/maven.config
 .flattened*
 .flattened
-
+.java-version
