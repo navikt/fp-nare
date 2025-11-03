@@ -16,10 +16,10 @@ import no.nav.fpsak.nare.evaluation.summary.EvaluationSummary;
 import no.nav.fpsak.nare.specification.LeafSpecification;
 import no.nav.fpsak.nare.specification.Specification;
 
-public class CountingpecificationTest {
+class CountingpecificationTest {
 
     @Test
-    public void skal_evaluere_regel_med_ellers_branch()  {
+    void skal_evaluere_regel_med_ellers_branch()  {
         var singleSpecification = new SingleRule();
         var evaluation = singleSpecification.evaluer(new MellomregnInt(3));
 
@@ -32,7 +32,7 @@ public class CountingpecificationTest {
     }
 
     @Test
-    public void skal_evaluere_regel_med_hvis_branch()  {
+    void skal_evaluere_regel_med_hvis_branch()  {
         var singleSpecification = new SingleRule();
         var evaluation = singleSpecification.evaluer(new MellomregnInt(2));
 

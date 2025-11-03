@@ -16,14 +16,14 @@ import no.nav.fpsak.nare.specification.modrekvote.input.Rolle;
 import no.nav.fpsak.nare.specification.modrekvote.input.Soknad;
 import no.nav.fpsak.nare.specification.modrekvote.input.Uttaksplan;
 
-public class ModrekvoteConditionalOrSpecificationTest {
+class ModrekvoteConditionalOrSpecificationTest {
 
     Person far = new Person("Truls", Rolle.FAR, "Nerd", 500000, 800, "Klofta", true);
     Person mor = new Person("Guro", Rolle.MOR, "Prosjektleder", 600000, 24, "Oslo", true);
     Person barn = new Person("Theo", Rolle.BARN, "Barn", 0, 0, "Oslo", false);
 
     @Test
-    public void skal_evaluere_mødrekvote_conditional() throws Exception {
+    void skal_evaluere_mødrekvote_conditional(){
         mor.setUttaksplan(Uttaksplan.SENERE);
         Soknad soknad = Soknad.adopsjonsSøknada(mor).medSøker(far);
 
@@ -35,7 +35,7 @@ public class ModrekvoteConditionalOrSpecificationTest {
         Collection<ModrekvoteUtfall> leafReasons = evaluationSummary.leafEvaluations(Resultat.NEI, Resultat.IKKE_VURDERT).stream()
                 .map(Evaluation::getOutcome)
                 .map(o -> o instanceof ModrekvoteRuleReason m ? m.utfall() : null)
-                .collect(Collectors.toList());
+                .toList();
         Assertions.assertThat(leafReasons).containsOnly(ModrekvoteUtfall.UTFALL_09);
 
         Assertions.assertThat(asJson)
