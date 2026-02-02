@@ -33,8 +33,20 @@ public class JsonOutput {
         }
     }
 
+    public static <T> T fromJson(String json, Class<T> clazz) {
+        try {
+            return MAPPER.readerFor(clazz).readValue(json);
+        } catch (JsonProcessingException e) {
+            throw mapDeserializationException(json, e);
+        }
+    }
+
     private static NareJsonException mapException(Object obj, JsonProcessingException e) {
         return new NareJsonException(String.format("Kunne ikke serialiseres til json: %s", obj), e);
+    }
+
+    private static NareJsonException mapDeserializationException(String json, JsonProcessingException e) {
+        return new NareJsonException(String.format("Kunne ikke deserialisere fra json: %s", json), e);
     }
 
     private static ObjectMapper createObjectMapper() {
