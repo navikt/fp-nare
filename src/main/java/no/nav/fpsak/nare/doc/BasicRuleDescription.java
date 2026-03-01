@@ -89,4 +89,16 @@ public class BasicRuleDescription implements RuleDescription {
     public boolean hasChildren() {
         return !children.isEmpty();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof BasicRuleDescription that)) return false;
+        return Objects.equals(ruleIdentification, that.ruleIdentification) && Objects.equals(ruleDescription, that.ruleDescription)
+                && operator == that.operator && Objects.equals(children, that.children);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ruleIdentification, ruleDescription, operator, children);
+    }
 }
