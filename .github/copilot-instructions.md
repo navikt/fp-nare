@@ -1,8 +1,8 @@
 # fp-nare — Not-A-Rule-Engine
 
 Specification-pattern / expression-tree library for business rules.
-Used by fp-uttak, fp-inngangsvilkar, fp-ytelse-beregn, fp-stonadskonto
-and svp-uttak to encode Folketrygdloven kap. 14 logic.
+Used by fp-uttak, fp-inngangsvilkar, fp-ytelse-beregn, fp-stonadskonto,
+ft-beregning and svp-uttak to encode Folketrygdloven kap. 14 logic.
 
 ## Context
 
