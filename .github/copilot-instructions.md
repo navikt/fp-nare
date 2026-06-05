@@ -1,4 +1,4 @@
-# fp-nare
+# fp-nare (Not A Rule Engine)
 
 Specification-pattern library for business rules used across the foreldrepenger ecosystem.
 
