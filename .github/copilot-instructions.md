@@ -13,19 +13,20 @@ Specification-pattern library for business rules used across the foreldrepenger 
 Reference: Eric Evans and Martin Fowler's Specification pattern, extended here to support n-ary nodes.
 Rules are modeled as expression trees. Both the specification and the evaluation trace can be serialized to JSON and persisted for legal and regulatory review.
 
-Key concepts:
-- `Spesifikasjon` - the rule definition
-- `Evaluering` - the evaluation with outcomes and calculations
+Key concepts and interfaces:
+- `Specification` - the rule definition
+- `Evaluation` - the evaluation with outcomes and calculations
+- `RuleService` - interface for a rule service
+- `Ruleset` - utilities for building rules and specifications
 
 ## Expression types
 
-| Arity | Expressions |
-|---|---|
-| Unary| Sequence, Not, Node |
-| Binary | And, Or |
-| Ternary | If/Else, If/Then/Else |
-| Sequences | N evaluated steps |
-| N-ary | Conditional If/Or/Else with lazy subtree evaluation |
+| Arity | Expressions                                                                |
+|---|----------------------------------------------------------------------------|
+| Unary| Not, Leaf/Single                                                           |
+| Binary | And, Or                                                                    |
+| Ternary | If/Else, If/Then/Else                                                      |
+| N-ary | Sequence with N steps, Conditional If/Or/Else with lazy subtree evaluation |
 
 ## Outputs
 
