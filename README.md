@@ -19,16 +19,15 @@ To model decision trees so they can be visualised, documented, and traced (input
 
 # Features
 * Unary expressions:
-  - Sequence: Sequence of expressions, result = result from last evaluation.
-  - Foreach:  
   - Not
-  - Node:  (node computation supplied by implementor) Allows for arbitrary evaluations to be included.
+  - Leaf/Node:  (node computation supplied by implementor) Allows for arbitrary evaluations to be included.
 * Binary expressions:
   - And
   - Or
 * Ternary expressions:
-* - Computational If/Else:  Simple if/then or if/then/else. Returns result from .
+* - Computational If/Else:  Simple if/then or if/then/else. Returns result from branch evaluated.
 * N-ary expressions:
+  - Sequence: Sequence of expressions, result = result from last evaluation.
   - Conditional If/Or/Else:  Allows for evaluating only specific subtrees based on a provided condition.
 
 # Rule documentation
