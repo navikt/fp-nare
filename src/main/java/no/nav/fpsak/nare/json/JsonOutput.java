@@ -54,6 +54,7 @@ public class JsonOutput {
         om.registerModule(new JavaTimeModule());
         om.registerModule(new Jdk8Module());
         om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        om.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         om.setVisibility(PropertyAccessor.GETTER, Visibility.NONE);
         om.setVisibility(PropertyAccessor.SETTER, Visibility.NONE);

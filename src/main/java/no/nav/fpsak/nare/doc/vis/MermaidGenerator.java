@@ -1,10 +1,10 @@
 package no.nav.fpsak.nare.doc.vis;
 
-import no.nav.fpsak.nare.doc.RuleDescriptionDeserializedDigraph;
 import no.nav.fpsak.nare.doc.RuleNode;
-import no.nav.fpsak.nare.doc.RuleNodeIdProducer;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.EvaluationRuleDescription;
+import no.nav.fpsak.nare.evaluation.node.SingleEvaluation;
+import no.nav.fpsak.nare.json.JsonOutput;
 import no.nav.fpsak.nare.specification.Specification;
 
 import java.util.Optional;
@@ -26,35 +26,59 @@ import java.util.Optional;
  */
 public class MermaidGenerator {
 
+    public enum EvalOutputOptions { ALL, BASIC, OUTCOME, PROPERTIES }
 
     private MermaidGenerator() {
     }
 
     public static String asMermaid(Evaluation evaluation) {
-        var desc = evaluation.toRuleDescription();
-        var digraph = new RuleDescriptionMermaidDigraph(desc, new IncrementalIdProcucer());
-        return asMermaid(digraph);
+        return asMermaid(evaluation, EvalOutputOptions.ALL);
+    }
+
+    public static String asMermaid(Evaluation evaluation, EvalOutputOptions evalOutputOptions) {
+        var ruledesc = evaluation.toRuleDescription();
+        var digraph = new RuleDescriptionProcessor().toMermaidDigraph(ruledesc);
+        return digraphAsMermaid(digraph, evalOutputOptions);
     }
 
     public static String asMermaid(Specification<?> specification) {
-        var digraph = new RuleDescriptionMermaidDigraph(specification.ruleDescription(), new IncrementalIdProcucer());
-        return asMermaid(digraph);
+        var ruledesc = specification.ruleDescription();
+        var digraph = new RuleDescriptionProcessor().toMermaidDigraph(ruledesc);
+        return digraphAsMermaid(digraph, EvalOutputOptions.BASIC);
     }
 
     public static String evaluationAsMermaid(RuleDescriptionDeserializedDigraph digraph) {
-        var mdigraph = new RuleDescriptionMermaidDigraph(digraph, false);
-        return asMermaid(mdigraph);
+        return evaluationAsMermaid(digraph, EvalOutputOptions.ALL);
+    }
+
+    public static String evaluationAsMermaid(RuleDescriptionDeserializedDigraph digraph, EvalOutputOptions evalOutputOptions) {
+        var mdigraph = DeserializedDigraphProcessor.toMermaidDigraph(digraph, false);
+        return digraphAsMermaid(mdigraph, evalOutputOptions);
+    }
+
+    public static String evaluationAsMermaid(String json, EvalOutputOptions evalOutputOptions) {
+        var digraph = JsonOutput.fromJson(json, RuleDescriptionDeserializedDigraph.class);
+        return evaluationAsMermaid(digraph, evalOutputOptions);
+    }
+
+    public static String evaluationAsMermaid(String json) {
+        return evaluationAsMermaid(json, EvalOutputOptions.ALL);
     }
 
     public static String specificationAsMermaid(RuleDescriptionDeserializedDigraph digraph) {
-        var mdigraph = new RuleDescriptionMermaidDigraph(digraph, true);
-        return asMermaid(mdigraph);
+        var mdigraph = DeserializedDigraphProcessor.toMermaidDigraph(digraph, true);
+        return digraphAsMermaid(mdigraph, EvalOutputOptions.BASIC);
     }
 
-    private static String asMermaid(RuleDescriptionMermaidDigraph digraph) {
+    public static String specificationAsMermaid(String json) {
+        var digraph = JsonOutput.fromJson(json, RuleDescriptionDeserializedDigraph.class);
+        return specificationAsMermaid(digraph);
+    }
+
+    private static String digraphAsMermaid(RuleDescriptionMermaidDigraph digraph, EvalOutputOptions outputOptions) {
         var b = new StringBuilder("graph TD\n");
-        digraph.getNodes().forEach(n -> b.append(nodeToMermaid(n)));
-        digraph.getEdges().forEach(e -> {
+        digraph.nodes().forEach(n -> b.append(nodeToMermaid(n, outputOptions)));
+        digraph.edges().forEach(e -> {
             b.append(e.source()).append(" -->");
             if (e.role() != null && !e.role().isEmpty()) {
                 b.append("|").append(e.role().replaceAll("[()\"']", "")).append("|");
@@ -64,27 +88,51 @@ public class MermaidGenerator {
         return b.toString();
     }
 
-    private static String nodeToMermaid(RuleNode n) {
+    private static String nodeToMermaid(RuleNode n, EvalOutputOptions outputOptions) {
         String b = n.id() + nodeTitleOpenSymbol(n) +
                 logicalOperatorPrefix(n) +
-                nodeRuleIdDescriptionText(n) +
+                nodeRuleIdDescriptionText(n, outputOptions) +
                 nodeTitleCloseSymbol(n) + "\n";
         return b.replaceAll("[\"']", "")
                 .replace("COMP HVIS/SÅ", "HVIS/SÅ")
                 .replace("COND HVIS/SÅ", "HVIS/SÅ");
     }
 
-    private static String nodeRuleIdDescriptionText(RuleNode n) {
+    private static String nodeRuleIdDescriptionText(RuleNode n, EvalOutputOptions outputOptions) {
         var ruleId = Optional.ofNullable(n.ruleId()).filter(s -> !s.isEmpty() && !s.startsWith("("));
         var description = Optional.ofNullable(n.ruleDescription()).filter(s -> !s.isEmpty());
         var nonDefaultDescription = description.filter(d -> !d.startsWith("("));
         var tekst = ruleId.map(s -> "ID:" + s + (nonDefaultDescription.map(d -> "\n" + d).orElse("")))
                 .or(() -> nonDefaultDescription)
                 .orElseGet(() -> logicalOperatorPrefix(n).isEmpty() ? description.orElseGet(() -> n.operator().name()) : "");
-        if (n.rule() instanceof EvaluationRuleDescription eval && eval.getResultat() != null) {
-            tekst = Optional.of(tekst).filter(s -> !s.isEmpty()).map(s -> s + "\n").orElse("") + "Resultat: " + eval.getResultat();
+        if (n.rule() instanceof EvaluationRuleDescription eval) {
+            tekst = tekst + ekstraEvaluationText(eval, tekst, outputOptions);
         }
-        return tekst.replaceAll("[()\"']", "");
+        return tekst.replaceAll("[(){}\\[\\]\"']", "");
+    }
+
+    private static String ekstraEvaluationText(EvaluationRuleDescription eval, String tekst, EvalOutputOptions outputOptions) {
+        var ekstratekst = Optional.of(tekst).filter(s -> !s.isEmpty()).map(_ -> "\n").orElse("") + "Resultat: " + eval.getResultat();
+        if (eval.getEvaluationProperties() != null && !eval.getEvaluationProperties().isEmpty() && outputProperties(outputOptions)) {
+            var properties = eval.getEvaluationProperties().entrySet().stream()
+                    .filter(e -> e.getValue() != null && !e.getValue().toString().isEmpty())
+                    .map(e -> e.getKey() + "=" + e.getValue())
+                    .reduce((s1, s2) -> s1 + ", " + s2)
+                    .orElse("");
+            ekstratekst = ekstratekst + (properties.isEmpty() ? "" : "\n\nProperties: " + properties);
+        }
+        if (eval instanceof DeserializedDigraphProcessor.DeserSingleEvaluationRuleDescription single && single.getOutcomeReason() != null && outputOutcome(outputOptions)) {
+            var outcomes = single.getOutcomeReason().entrySet().stream()
+                    .filter(e -> e.getValue() != null && !e.getValue().toString().isEmpty())
+                    .map(e -> e.getKey() + "=" + e.getValue())
+                    .reduce((s1, s2) -> s1 + ", " + s2)
+                    .orElse("");
+            ekstratekst = ekstratekst + (outcomes.isEmpty() ? "" : "\n\nOutcome: " + outcomes);
+        } else if (eval instanceof SingleEvaluation.SingleEvaluationRuleDescription single && single.getOutcomeReason() != null && outputOutcome(outputOptions)) {
+            var outcome = single.getOutcomeReason().toString();
+            ekstratekst = ekstratekst + (outcome.isEmpty() ? "" : "\n\nOutcome: " + outcome);
+        }
+        return ekstratekst;
     }
 
     private static String nodeTitleOpenSymbol(RuleNode n) {
@@ -114,14 +162,12 @@ public class MermaidGenerator {
         };
     }
 
-    private static class IncrementalIdProcucer implements RuleNodeIdProducer {
-        private int index = 0;
+    private static boolean outputProperties(EvalOutputOptions outputOptions) {
+        return outputOptions == EvalOutputOptions.ALL || outputOptions == EvalOutputOptions.PROPERTIES;
+    }
 
-        @Override
-        public String produceId() {
-            index++;
-            return "n" + index;
-        }
+    private static boolean outputOutcome(EvalOutputOptions outputOptions) {
+        return outputOptions == EvalOutputOptions.ALL || outputOptions == EvalOutputOptions.OUTCOME;
     }
 
 }

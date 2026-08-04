@@ -1,7 +1,5 @@
 package no.nav.fpsak.nare.evaluation.node;
 
-import java.text.MessageFormat;
-
 import no.nav.fpsak.nare.doc.RuleDescription;
 import no.nav.fpsak.nare.evaluation.BasicEvaluation;
 import no.nav.fpsak.nare.evaluation.Evaluation;
@@ -10,6 +8,8 @@ import no.nav.fpsak.nare.evaluation.Operator;
 import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.RuleReasonRef;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationVisitor;
+
+import java.text.MessageFormat;
 
 public class SingleEvaluation extends BasicEvaluation {
 
@@ -45,13 +45,17 @@ public class SingleEvaluation extends BasicEvaluation {
         visitor.visiting(OPERATOR, parent, this); // NOSONAR
     }
     
-    static class SingleEvaluationRuleDescription extends EvaluationRuleDescription {
+    public static class SingleEvaluationRuleDescription extends EvaluationRuleDescription {
         @SuppressWarnings("unused")
         private final RuleReasonRef outcomeReason;
 
         public SingleEvaluationRuleDescription(SingleEvaluation evaluation) {
             super(OPERATOR, evaluation);
             outcomeReason = evaluation.getOutcome();
+        }
+
+        public RuleReasonRef getOutcomeReason() {
+            return outcomeReason;
         }
     }
 

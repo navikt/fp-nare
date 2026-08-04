@@ -1,4 +1,4 @@
-package no.nav.fpsak.nare.doc;
+package no.nav.fpsak.nare.doc.vis;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import no.nav.fpsak.nare.evaluation.Operator;
@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 /*
- * Needed due to ambiguous implementations of RuleDescription
+ * Simplified construct for deserializing Digraphs. Main reason being RuleNode containing interface RuleDescription.
+ * Will not attempt to deserialize extensions or interfaces (like RuleReasonRef).
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record RuleDescriptionDeserializedDigraph(Map<String, String> versions, RuleNodeDeser root,
@@ -19,6 +20,6 @@ public record RuleDescriptionDeserializedDigraph(Map<String, String> versions, R
 
     public record RuleNodeDeser(String id, String ruleId, String ruleDescription, Operator operator, RuleDescriptionDeser rule) {}
 
-    public record RuleDescriptionDeser(Resultat resultat, String reason, Map<String, Object> evaluationProperties) { }
+    public record RuleDescriptionDeser(Resultat resultat, String reason, Map<String, Object> evaluationProperties, Map<String, Object> outcomeReason) { }
 
 }

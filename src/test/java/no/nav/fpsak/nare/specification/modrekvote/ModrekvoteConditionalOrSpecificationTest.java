@@ -1,6 +1,7 @@
 package no.nav.fpsak.nare.specification.modrekvote;
 
 import no.nav.fpsak.nare.RuleService;
+import no.nav.fpsak.nare.doc.vis.MermaidGenerator;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSerializer;
@@ -49,6 +50,7 @@ class ModrekvoteConditionalOrSpecificationTest {
         //System.out.println(EvaluationSerializer.asJson(modrekvote.getSpecification()));
         //System.out.println(MermaidGenerator.asMermaid(modrekvote.getSpecification()));
         //System.out.println(MermaidGenerator.asMermaid(evaluation));
+        //System.out.println(MermaidGenerator.evaluationAsMermaid(asJson));
     }
 
 }
