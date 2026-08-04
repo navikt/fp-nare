@@ -1,0 +1,595 @@
+{
+  "versions" : {
+    "nare" : "2.6.4",
+    "fp-uttak" : "0-SNAPSHOT"
+  },
+  "root" : {
+    "id" : "n1",
+    "ruleId" : "FP_VK 18",
+    "ruleDescription" : "Er det utsettelse?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 15.3.1"
+    }
+  },
+  "nodes" : [ {
+    "id" : "n1",
+    "ruleId" : "FP_VK 18",
+    "ruleDescription" : "Er det utsettelse?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 15.3.1"
+    }
+  }, {
+    "id" : "n2",
+    "ruleId" : "FP_VK 15.3.1",
+    "ruleDescription" : "Er uttaksperiode før \"gyldig dato\"?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 15.6"
+    }
+  }, {
+    "id" : "n3",
+    "ruleId" : "FP_VK 15.6",
+    "ruleDescription" : "Er hele perioden innenfor maksimalgrense for foreldrepenger?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 15.7"
+    }
+  }, {
+    "id" : "n4",
+    "ruleId" : "FP_VK 15.7",
+    "ruleDescription" : "Er uttaksperioden etter start av neste stønadsperiode??",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 17.0"
+    }
+  }, {
+    "id" : "n5",
+    "ruleId" : "FP_VK 17.0",
+    "ruleDescription" : "Er uttaksperioden etter søkers dødsdato?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 17.1.1.1"
+    }
+  }, {
+    "id" : "n6",
+    "ruleId" : "FP_VK 17.1.1.1",
+    "ruleDescription" : "Er uttaksperioden etter senere enn 6 uker etter barns dødsdato?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 2.0.1"
+    }
+  }, {
+    "id" : "n7",
+    "ruleId" : "FP_VK 2.0.1",
+    "ruleDescription" : "Inneholder perioden opphørsdato for medlemskap",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 1/FP_VK 11"
+    }
+  }, {
+    "id" : "n8",
+    "ruleId" : "FP_VK 1/FP_VK 11",
+    "ruleDescription" : "Er fødselsvilkåret oppfylt?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (test=FP_VK 1/FP_VK 11)/FP_VK 16"
+    }
+  }, {
+    "id" : "n9",
+    "ruleId" : "FP_VK 1/FP_VK 11",
+    "ruleDescription" : "",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA"
+    }
+  }, {
+    "id" : "n10",
+    "ruleId" : "FP_VK 16",
+    "ruleDescription" : "Er adopsjonsvilkåret oppfylt?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (test=FP_VK 16)/FP_VK 8"
+    }
+  }, {
+    "id" : "n11",
+    "ruleId" : "FP_VK 16",
+    "ruleDescription" : "",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA"
+    }
+  }, {
+    "id" : "n12",
+    "ruleId" : "FP_VK 8",
+    "ruleDescription" : "Er foreldreansvarsvilkåret oppfylt?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (test=FP_VK 8)/FP_VK 23"
+    }
+  }, {
+    "id" : "n13",
+    "ruleId" : "FP_VK 8",
+    "ruleDescription" : "",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA"
+    }
+  }, {
+    "id" : "n14",
+    "ruleId" : "FP_VK 23",
+    "ruleDescription" : "Er medlemskapsvilkåret oppfylt?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (test=FP_VK 23)/FP_VK 23"
+    }
+  }, {
+    "id" : "n15",
+    "ruleId" : "FP_VK 23",
+    "ruleDescription" : "",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA"
+    }
+  }, {
+    "id" : "n16",
+    "ruleId" : "FP_VK 23",
+    "ruleDescription" : "Er opptjeningsvilkåret oppfylt?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (test=FP_VK 23)/FP_VK PP1"
+    }
+  }, {
+    "id" : "n17",
+    "ruleId" : "FP_VK 23",
+    "ruleDescription" : "",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA"
+    }
+  }, {
+    "id" : "n18",
+    "ruleId" : "FP_VK PP1",
+    "ruleDescription" : "Er bruker innvilget pleiepenger i perioden?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 14.10.6"
+    }
+  }, {
+    "id" : "n19",
+    "ruleId" : "FP_VK 14.10.6",
+    "ruleDescription" : "Overlapper perioden med annen parts uttak i EØS?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 30.0.2"
+    }
+  }, {
+    "id" : "n20",
+    "ruleId" : "FP_VK 30.0.2",
+    "ruleDescription" : "Er det samtykke og overlappende periode?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (test=FP_VK 30.0.2)/FP_VK 30.0.3"
+    }
+  }, {
+    "id" : "n21",
+    "ruleId" : "FP_VK 30.0.2",
+    "ruleDescription" : "",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA"
+    }
+  }, {
+    "id" : "n22",
+    "ruleId" : "FP_VK 30.0.3",
+    "ruleDescription" : "Er det berørt behandling?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 30.0.7"
+    }
+  }, {
+    "id" : "n23",
+    "ruleId" : "FP_VK 30.0.7",
+    "ruleDescription" : "Har annen part senere søkt om uttak/utsettelse i samme tidsperiode?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 18"
+    }
+  }, {
+    "id" : "n24",
+    "ruleId" : "FP_VK 18",
+    "ruleDescription" : "Er det utsettelse?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 30.2.1"
+    }
+  }, {
+    "id" : "n25",
+    "ruleId" : "FP_VK 30.2.1",
+    "ruleDescription" : "Er det \"Manglende søkt periode\"?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 17.1.1"
+    }
+  }, {
+    "id" : "n26",
+    "ruleId" : "FP_VK 17.1.1",
+    "ruleDescription" : "Er det opprettet stønadskonto som tilsvarer stønadskonto i uttaksperioden?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (test=FP_VK 17.1.1)/FP_VK 27"
+    }
+  }, {
+    "id" : "n27",
+    "ruleId" : "FP_VK 17.1.1",
+    "ruleDescription" : "",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA"
+    }
+  }, {
+    "id" : "n28",
+    "ruleId" : "FP_VK 27",
+    "ruleDescription" : "Er det søkt om uttak av foreldrepenger før fødsel?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 10.5.1"
+    }
+  }, {
+    "id" : "n29",
+    "ruleId" : "FP_VK 10.5.1",
+    "ruleDescription" : "Er søker tom for alle sine kontoer?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 26.1"
+    }
+  }, {
+    "id" : "n30",
+    "ruleId" : "FP_VK 26.1",
+    "ruleDescription" : "Er det søkt om gradering?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 16.1.1"
+    }
+  }, {
+    "id" : "n31",
+    "ruleId" : "FP_VK 16.1.1",
+    "ruleDescription" : "Er det adopsjon av stebarn?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 10"
+    }
+  }, {
+    "id" : "n32",
+    "ruleId" : "FP_VK 10",
+    "ruleDescription" : "Er det søkt om uttak av mødrekvote?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 13"
+    }
+  }, {
+    "id" : "n33",
+    "ruleId" : "FP_VK 13",
+    "ruleDescription" : "Er det søkt om uttak av fedrekvote?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (test=FP_VK 13)/FP_VK 9.0.0"
+    }
+  }, {
+    "id" : "n34",
+    "ruleId" : "FP_VK 13",
+    "ruleDescription" : "",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA"
+    }
+  }, {
+    "id" : "n35",
+    "ruleId" : "FP_VK 9.0.0",
+    "ruleDescription" : "Er det søkt om opphold av fedrekvoten?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 27.3.1"
+    }
+  }, {
+    "id" : "n36",
+    "ruleId" : "FP_VK 27.3.1",
+    "ruleDescription" : "Er søker far?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 18.3.2"
+    }
+  }, {
+    "id" : "n37",
+    "ruleId" : "FP_VK 18.3.2",
+    "ruleDescription" : "Er det bare far som har rett?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 10.1"
+    }
+  }, {
+    "id" : "n38",
+    "ruleId" : "FP_VK 10.1",
+    "ruleDescription" : "Er søknaden en terminsøknad/fødselsøknad?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (test=FP_VK 10.1)/FP_VK 13.2"
+    }
+  }, {
+    "id" : "n39",
+    "ruleId" : "FP_VK 10.1",
+    "ruleDescription" : "",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA"
+    }
+  }, {
+    "id" : "n40",
+    "ruleId" : "FP_VK 13.2",
+    "ruleDescription" : "Starter perioden før uke 7 etter termin/fødsel?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (test=FP_VK 13.2)/FP_VK 13.9"
+    }
+  }, {
+    "id" : "n41",
+    "ruleId" : "FP_VK 13.2",
+    "ruleDescription" : "",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA"
+    }
+  }, {
+    "id" : "n42",
+    "ruleId" : "FP_VK 13.9",
+    "ruleDescription" : "Er det hjemlet fars uttak rundt fødsel?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 11.5"
+    }
+  }, {
+    "id" : "n43",
+    "ruleId" : "FP_VK 11.5",
+    "ruleDescription" : "Skal uttaksperioden være før termin/fødsel?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 13.4"
+    }
+  }, {
+    "id" : "n44",
+    "ruleId" : "FP_VK 13.4",
+    "ruleDescription" : "Gjelder perioden flerbarnsdager?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/FP_VK 13.5.1"
+    }
+  }, {
+    "id" : "n45",
+    "ruleId" : "FP_VK 13.5.1",
+    "ruleDescription" : "Foreligger det gyldig grunn for hele perioden for tidlig oppstart?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (test=FP_VK 13.5.1)/FP_VK 30.7"
+    }
+  }, {
+    "id" : "n46",
+    "ruleId" : "FP_VK 13.5.1",
+    "ruleDescription" : "",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA"
+    }
+  }, {
+    "id" : "n47",
+    "ruleId" : "FP_VK 30.7",
+    "ruleDescription" : "Har søker omsorg for barnet?",
+    "operator" : "COND_OR",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Tilfredstiller ikke flyt (*/UT1025"
+    }
+  }, {
+    "id" : "n48",
+    "ruleId" : "UT1025",
+    "ruleDescription" : "",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "NEI",
+      "reason" : "Far har ikke omsorg",
+      "evaluationProperties" : {
+        "AVKLARING_ÅRSAK" : "FAR_HAR_IKKE_OMSORG",
+        "TREKK_DAGER_FRA_SALDO" : true,
+        "UTBETAL" : false,
+        "UTFALL" : "AVSLÅTT"
+      },
+      "outcomeReason" : {
+        "utfallType" : "AVSLÅTT",
+        "periodeÅrsak" : "FAR_HAR_IKKE_OMSORG",
+        "graderingIkkeInnvilgetÅrsak" : null,
+        "manuellbehandlingårsak" : null,
+        "skalUtbetale" : false,
+        "trekkDagerFraSaldo" : true
+      }
+    }
+  } ],
+  "edges" : [ {
+    "source" : "n8",
+    "target" : "n9"
+  }, {
+    "source" : "n10",
+    "target" : "n11"
+  }, {
+    "source" : "n12",
+    "target" : "n13"
+  }, {
+    "source" : "n14",
+    "target" : "n15"
+  }, {
+    "source" : "n16",
+    "target" : "n17"
+  }, {
+    "source" : "n20",
+    "target" : "n21"
+  }, {
+    "source" : "n26",
+    "target" : "n27"
+  }, {
+    "source" : "n33",
+    "target" : "n34"
+  }, {
+    "source" : "n38",
+    "target" : "n39"
+  }, {
+    "source" : "n40",
+    "target" : "n41"
+  }, {
+    "source" : "n45",
+    "target" : "n46"
+  }, {
+    "source" : "n47",
+    "target" : "n48"
+  }, {
+    "source" : "n45",
+    "target" : "n47"
+  }, {
+    "source" : "n44",
+    "target" : "n45"
+  }, {
+    "source" : "n43",
+    "target" : "n44"
+  }, {
+    "source" : "n42",
+    "target" : "n43"
+  }, {
+    "source" : "n40",
+    "target" : "n42"
+  }, {
+    "source" : "n38",
+    "target" : "n40"
+  }, {
+    "source" : "n37",
+    "target" : "n38"
+  }, {
+    "source" : "n36",
+    "target" : "n37"
+  }, {
+    "source" : "n35",
+    "target" : "n36"
+  }, {
+    "source" : "n33",
+    "target" : "n35"
+  }, {
+    "source" : "n32",
+    "target" : "n33"
+  }, {
+    "source" : "n31",
+    "target" : "n32"
+  }, {
+    "source" : "n30",
+    "target" : "n31"
+  }, {
+    "source" : "n29",
+    "target" : "n30"
+  }, {
+    "source" : "n28",
+    "target" : "n29"
+  }, {
+    "source" : "n26",
+    "target" : "n28"
+  }, {
+    "source" : "n25",
+    "target" : "n26"
+  }, {
+    "source" : "n24",
+    "target" : "n25"
+  }, {
+    "source" : "n23",
+    "target" : "n24"
+  }, {
+    "source" : "n22",
+    "target" : "n23"
+  }, {
+    "source" : "n20",
+    "target" : "n22"
+  }, {
+    "source" : "n19",
+    "target" : "n20"
+  }, {
+    "source" : "n18",
+    "target" : "n19"
+  }, {
+    "source" : "n16",
+    "target" : "n18"
+  }, {
+    "source" : "n14",
+    "target" : "n16"
+  }, {
+    "source" : "n12",
+    "target" : "n14"
+  }, {
+    "source" : "n10",
+    "target" : "n12"
+  }, {
+    "source" : "n8",
+    "target" : "n10"
+  }, {
+    "source" : "n7",
+    "target" : "n8"
+  }, {
+    "source" : "n6",
+    "target" : "n7"
+  }, {
+    "source" : "n5",
+    "target" : "n6"
+  }, {
+    "source" : "n4",
+    "target" : "n5"
+  }, {
+    "source" : "n3",
+    "target" : "n4"
+  }, {
+    "source" : "n2",
+    "target" : "n3"
+  }, {
+    "source" : "n1",
+    "target" : "n2"
+  } ]
+}
+

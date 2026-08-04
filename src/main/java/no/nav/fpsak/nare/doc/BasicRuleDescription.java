@@ -1,16 +1,15 @@
 package no.nav.fpsak.nare.doc;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import no.nav.fpsak.nare.evaluation.Operator;
+import no.nav.fpsak.nare.json.JsonOutput;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
-import no.nav.fpsak.nare.evaluation.Operator;
-import no.nav.fpsak.nare.json.JsonOutput;
 
 @JsonInclude(Include.NON_NULL)
 public class BasicRuleDescription implements RuleDescription {
@@ -57,7 +56,7 @@ public class BasicRuleDescription implements RuleDescription {
 
     @Override
     public RuleDescription firstChild() {
-        return children.get(0);
+        return children.getFirst();
     }
 
     @Override
@@ -82,7 +81,7 @@ public class BasicRuleDescription implements RuleDescription {
 
     @Override
     public RuleDescription lastChild() {
-        return children.get(children.size() - 1);
+        return children.getLast();
     }
 
     @Override
