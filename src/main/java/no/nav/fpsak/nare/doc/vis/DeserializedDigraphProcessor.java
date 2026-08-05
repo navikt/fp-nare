@@ -70,7 +70,7 @@ class DeserializedDigraphProcessor {
         var children = edges.stream().map(e -> nodes.get(e.target())).toList();
         var i = 1;
         for (var child: children) {
-            resultedges.add(new RuleEdge(fromNodeId, child.id(), "seq." + i++));
+            resultedges.add(new RuleEdge(fromNodeId, child.id(), "s" + i++));
             // TODO: vurder steg->steg. Denne gir piler fra sekvens til steg: fromNodeId = child.id();
         }
         return resultedges;

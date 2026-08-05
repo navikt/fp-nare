@@ -70,7 +70,7 @@ class RuleDescriptionProcessor {
         for (RuleDescription child : ruledesc.getChildren()) {
             RuleNode childNode = process(child);
             // Teller og bruker sekvensens node-id som prefiks for å kunne spore stegene
-            edges.add(new RuleEdge(fromNode, childNode, "seq." + ++i));
+            edges.add(new RuleEdge(fromNode, childNode, "s" + ++i));
             // TODO vurder piler fra spec til hvert steg vs piler fra steg til steg: fromNode = childNode;
         }
     }

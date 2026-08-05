@@ -1,5 +1,7 @@
 package no.nav.fpsak.nare.doc.vis;
 
+import no.nav.fpsak.nare.RuleService;
+import no.nav.fpsak.nare.doc.RuleDocumentation;
 import no.nav.fpsak.nare.doc.RuleNode;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.EvaluationRuleDescription;
@@ -45,6 +47,10 @@ public class MermaidGenerator {
         var ruledesc = specification.ruleDescription();
         var digraph = new RuleDescriptionProcessor().toMermaidDigraph(ruledesc);
         return digraphAsMermaid(digraph, EvalOutputOptions.BASIC);
+    }
+
+    public static String asMermaid(RuleService<?> ruleService) {
+        return getRuleServiceHeader(ruleService) + asMermaid(ruleService.getSpecification());
     }
 
     public static String evaluationAsMermaid(RuleDescriptionDeserializedDigraph digraph) {
@@ -168,6 +174,15 @@ public class MermaidGenerator {
 
     private static boolean outputOutcome(EvalOutputOptions outputOptions) {
         return outputOptions == EvalOutputOptions.ALL || outputOptions == EvalOutputOptions.OUTCOME;
+    }
+
+    private static String getRuleServiceHeader(RuleService<?> ruleService) {
+        var serviceName = Optional.ofNullable(ruleService.getClass().getAnnotation(RuleDocumentation.class))
+                .map(RuleDocumentation::value)
+                .filter(s -> !s.isEmpty())
+                .map(s -> ", referanse " + s)
+                .orElse("");
+        return String.format("---%ntitle: Regelklasse %s%s%n---%n", ruleService.getClass().getSimpleName(), serviceName);
     }
 
 }
