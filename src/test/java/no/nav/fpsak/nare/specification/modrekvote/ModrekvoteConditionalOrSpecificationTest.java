@@ -1,12 +1,7 @@
 package no.nav.fpsak.nare.specification.modrekvote;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
-
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import no.nav.fpsak.nare.RuleService;
+import no.nav.fpsak.nare.doc.vis.MermaidGenerator;
 import no.nav.fpsak.nare.evaluation.Evaluation;
 import no.nav.fpsak.nare.evaluation.Resultat;
 import no.nav.fpsak.nare.evaluation.summary.EvaluationSerializer;
@@ -15,6 +10,10 @@ import no.nav.fpsak.nare.specification.modrekvote.input.Person;
 import no.nav.fpsak.nare.specification.modrekvote.input.Rolle;
 import no.nav.fpsak.nare.specification.modrekvote.input.Soknad;
 import no.nav.fpsak.nare.specification.modrekvote.input.Uttaksplan;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.util.Collection;
 
 class ModrekvoteConditionalOrSpecificationTest {
 
@@ -45,10 +44,13 @@ class ModrekvoteConditionalOrSpecificationTest {
                 .contains("FK_VK 10.6")
                 .contains("FK_VK.10.B");
 
-        System.out.println(asJson);
+        //System.out.println(asJson);
 
-        System.out.println("\n\n\n\n\n-------------\n\n\n");
-        System.out.println(EvaluationSerializer.asJson(modrekvote.getSpecification()));
+        //System.out.println("\n\n\n\n\n-------------\n\n\n");
+        //System.out.println(EvaluationSerializer.asJson(modrekvote.getSpecification()));
+        //System.out.println(MermaidGenerator.asMermaid(modrekvote.getSpecification()));
+        //System.out.println(MermaidGenerator.asMermaid(evaluation));
+        //System.out.println(MermaidGenerator.evaluationAsMermaid(asJson));
     }
 
 }

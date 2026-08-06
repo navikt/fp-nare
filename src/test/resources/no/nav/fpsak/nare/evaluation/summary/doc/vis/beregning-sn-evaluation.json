@@ -1,0 +1,301 @@
+{
+  "versions" : { },
+  "root" : {
+    "id" : "n1",
+    "ruleId" : "FP_BR 2",
+    "ruleDescription" : "Foreslå beregningsgrunnlag for selvstendig næringsdrivende",
+    "operator" : "SEQUENCE",
+    "rule" : {
+      "resultat" : "JA",
+      "reason" : "Utført FP_BR 2.1 BP og FP_SETT_HJEMMEL_SN og FP_BR 2.9 BP og FP_BR 2.2 og (HVIS FP_BR 2.20 SÅ Beregnet ELLERS (HVIS FP_BR 2.18 SÅ 5049 ELLERS (HVIS FP_BR 2.19 SÅ (HVIS FP_BR 2.3 SÅ (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7) ELLERS FP_BR 2.7) ELLERS FP_BR 2.8)))"
+    }
+  },
+  "nodes" : [ {
+    "id" : "n1",
+    "ruleId" : "FP_BR 2",
+    "ruleDescription" : "Foreslå beregningsgrunnlag for selvstendig næringsdrivende",
+    "operator" : "SEQUENCE",
+    "rule" : {
+      "resultat" : "JA",
+      "reason" : "Utført FP_BR 2.1 BP og FP_SETT_HJEMMEL_SN og FP_BR 2.9 BP og FP_BR 2.2 og (HVIS FP_BR 2.20 SÅ Beregnet ELLERS (HVIS FP_BR 2.18 SÅ 5049 ELLERS (HVIS FP_BR 2.19 SÅ (HVIS FP_BR 2.3 SÅ (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7) ELLERS FP_BR 2.7) ELLERS FP_BR 2.8)))"
+    }
+  }, {
+    "id" : "n2",
+    "ruleId" : "FP_BR 2.1 BP",
+    "ruleDescription" : "Fastsett beregningsperiode",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA",
+      "evaluationProperties" : { }
+    }
+  }, {
+    "id" : "n3",
+    "ruleId" : "FP_SETT_HJEMMEL_SN",
+    "ruleDescription" : "Sett hjemmel",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA",
+      "evaluationProperties" : { }
+    }
+  }, {
+    "id" : "n4",
+    "ruleId" : "FP_BR 2.9 BP",
+    "ruleDescription" : "Beregn oppjustert inntekt for årene i beregningsperioden",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA",
+      "evaluationProperties" : {
+        "PGIjustert.2015" : 468170.0000000000,
+        "PGI/G.2015" : 5.0000000000,
+        "PGI/G.2016" : 5.0000000000,
+        "PGI/G.2017" : 5.0000000000,
+        "PGIjustert.2016" : 468170.0000000000,
+        "PGIjustert.2017" : 468170.0000000000
+      }
+    }
+  }, {
+    "id" : "n5",
+    "ruleId" : "FP_BR 2.2",
+    "ruleDescription" : "Beregn gjennomsnittlig PGI oppjustert til G",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA",
+      "evaluationProperties" : {
+        "bidragTilBG2017" : 5.0000000000,
+        "bidragTilBG2016" : 5.0000000000,
+        "bidragTilBG2015" : 5.0000000000,
+        "GjennomsnittligPGI" : 468170.0000000000
+      }
+    }
+  }, {
+    "id" : "n6",
+    "ruleId" : "(HVIS FP_BR 2.20 SÅ Beregnet ELLERS (HVIS FP_BR 2.18 SÅ 5049 ELLERS (HVIS FP_BR 2.19 SÅ (HVIS FP_BR 2.3 SÅ (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7) ELLERS FP_BR 2.7) ELLERS FP_BR 2.8)))",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : {
+      "resultat" : "JA",
+      "reason" : "Utført FP_BR 2.20 (nei) og (HVIS FP_BR 2.18 SÅ 5049 ELLERS (HVIS FP_BR 2.19 SÅ (HVIS FP_BR 2.3 SÅ (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7) ELLERS FP_BR 2.7) ELLERS FP_BR 2.8))"
+    }
+  }, {
+    "id" : "n7",
+    "ruleId" : "FP_BR 2.20",
+    "ruleDescription" : "Er beregningsgrunnlaget besteberegnet?",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "NEI"
+    }
+  }, {
+    "id" : "n8",
+    "ruleId" : "(HVIS FP_BR 2.18 SÅ 5049 ELLERS (HVIS FP_BR 2.19 SÅ (HVIS FP_BR 2.3 SÅ (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7) ELLERS FP_BR 2.7) ELLERS FP_BR 2.8))",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : {
+      "resultat" : "JA",
+      "reason" : "Utført FP_BR 2.18 (nei) og (HVIS FP_BR 2.19 SÅ (HVIS FP_BR 2.3 SÅ (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7) ELLERS FP_BR 2.7) ELLERS FP_BR 2.8)"
+    }
+  }, {
+    "id" : "n9",
+    "ruleId" : "FP_BR 2.18",
+    "ruleDescription" : "Fastsett beregningsgrunnlag for selvstendig næringsdrivende som er ny i arbeidslivet",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "NEI"
+    }
+  }, {
+    "id" : "n10",
+    "ruleId" : "(HVIS FP_BR 2.19 SÅ (HVIS FP_BR 2.3 SÅ (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7) ELLERS FP_BR 2.7) ELLERS FP_BR 2.8)",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : {
+      "resultat" : "JA",
+      "reason" : "Utført FP_BR 2.19 (nei) og FP_BR 2.8"
+    }
+  }, {
+    "id" : "n11",
+    "ruleId" : "FP_BR 2.19",
+    "ruleDescription" : "Har saksbehandler fastsatt beregningsgrunnlaget manuelt?",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "NEI"
+    }
+  }, {
+    "id" : "n12",
+    "ruleId" : "FP_BR 2.8",
+    "ruleDescription" : "Beregn brutto beregningsgrunnlag selvstendig næringsdrivende",
+    "operator" : "SEQUENCE",
+    "rule" : {
+      "resultat" : "JA",
+      "reason" : "Utført FP_BR 2.8 og (HVIS FP_BR 2.3 SÅ (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7) ELLERS FP_BR 2.7)"
+    }
+  }, {
+    "id" : "n13",
+    "ruleId" : "FP_BR 2.8",
+    "ruleDescription" : "Beregn brutto beregningsgrunnlag fra § 8-35",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA",
+      "evaluationProperties" : {
+        "gjennomsnittligPGI" : 468170.0000000000,
+        "bruttoBeregningsgrunnlagForStatus" : 252170.0000000000,
+        "bruttoBGArbeidstaker" : 216000
+      }
+    }
+  }, {
+    "id" : "n14",
+    "ruleId" : "(HVIS FP_BR 2.3 SÅ (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7) ELLERS FP_BR 2.7)",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : {
+      "resultat" : "JA",
+      "reason" : "Utført FP_BR 2.3 (ja) og (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7)"
+    }
+  }, {
+    "id" : "n15",
+    "ruleId" : "FP_BR 2.3",
+    "ruleDescription" : "Har bruker oppgitt varig endring i virksomhet eller nyoppstartet virksomhet?",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA"
+    }
+  }, {
+    "id" : "n16",
+    "ruleId" : "(HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7)",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : {
+      "resultat" : "JA",
+      "reason" : "Utført FP_BR XX (ja) og FP_BR 2.4"
+    }
+  }, {
+    "id" : "n17",
+    "ruleId" : "FP_BR XX",
+    "ruleDescription" : "Første beregningsgrunnlagperiode?",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA"
+    }
+  }, {
+    "id" : "n18",
+    "ruleId" : "FP_BR 2.4",
+    "ruleDescription" : "Fastsett sammenligningsgrunnlag og beregn avvik",
+    "operator" : "SEQUENCE",
+    "rule" : {
+      "resultat" : "JA",
+      "reason" : "Utført FP_BR 2.4 og (HVIS FP_BR 2.5 SÅ FP_BR 2.6 ELLERS FP_BR 2.7)"
+    }
+  }, {
+    "id" : "n19",
+    "ruleId" : "FP_BR 2.4",
+    "ruleDescription" : "Fastsett sammenligningsgrunnlag og beregn avvik i henhold til § 8-35 tredje ledd",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA",
+      "evaluationProperties" : {
+        "bruttoATFL" : 216000,
+        "gjennomsnittligPGI" : 468170.0000000000,
+        "inntektEtterVarigEndringPrÅr" : 369120,
+        "sammenligningsperiode" : {
+          "fom" : "2017-12-01",
+          "tom" : "2017-12-31"
+        },
+        "sammenligningsgrunnlagRapportertPrÅr" : 585120,
+        "avvikProsent" : 24.9802422200
+      }
+    }
+  }, {
+    "id" : "n20",
+    "ruleId" : "(HVIS FP_BR 2.5 SÅ FP_BR 2.6 ELLERS FP_BR 2.7)",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : {
+      "resultat" : "JA",
+      "reason" : "Utført FP_BR 2.5 (nei) og FP_BR 2.7"
+    }
+  }, {
+    "id" : "n21",
+    "ruleId" : "FP_BR 2.5",
+    "ruleDescription" : "Varig endring og avvik større enn 25%, beregningsgrunnlag fastsettes skjønnsmessig",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "NEI"
+    }
+  }, {
+    "id" : "n22",
+    "ruleId" : "FP_BR 2.7",
+    "ruleDescription" : "Fastsett beregnet pr år",
+    "operator" : "SINGLE",
+    "rule" : {
+      "resultat" : "JA",
+      "evaluationProperties" : {
+        "grunnbeløp" : 93634,
+        "beregnetPrÅr" : 252170.0000000000,
+        "skjæringstidspunkt" : "2018-01-15"
+      }
+    }
+  } ],
+  "edges" : [ {
+    "source" : "n1",
+    "target" : "n2"
+  }, {
+    "source" : "n1",
+    "target" : "n3"
+  }, {
+    "source" : "n1",
+    "target" : "n4"
+  }, {
+    "source" : "n1",
+    "target" : "n5"
+  }, {
+    "source" : "n6",
+    "target" : "n7"
+  }, {
+    "source" : "n8",
+    "target" : "n9"
+  }, {
+    "source" : "n10",
+    "target" : "n11"
+  }, {
+    "source" : "n12",
+    "target" : "n13"
+  }, {
+    "source" : "n14",
+    "target" : "n15"
+  }, {
+    "source" : "n16",
+    "target" : "n17"
+  }, {
+    "source" : "n18",
+    "target" : "n19"
+  }, {
+    "source" : "n20",
+    "target" : "n21"
+  }, {
+    "source" : "n20",
+    "target" : "n22"
+  }, {
+    "source" : "n18",
+    "target" : "n20"
+  }, {
+    "source" : "n16",
+    "target" : "n18"
+  }, {
+    "source" : "n14",
+    "target" : "n16"
+  }, {
+    "source" : "n12",
+    "target" : "n14"
+  }, {
+    "source" : "n10",
+    "target" : "n12"
+  }, {
+    "source" : "n8",
+    "target" : "n10"
+  }, {
+    "source" : "n6",
+    "target" : "n8"
+  }, {
+    "source" : "n1",
+    "target" : "n6"
+  } ]
+}
+

@@ -1,0 +1,396 @@
+{
+  "root" : {
+    "id" : "n1",
+    "ruleId" : "FP_BR 2",
+    "ruleDescription" : "Foreslå beregningsgrunnlag for selvstendig næringsdrivende",
+    "operator" : "SEQUENCE",
+    "rule" : { }
+  },
+  "nodes" : [ {
+    "id" : "n1",
+    "ruleId" : "FP_BR 2",
+    "ruleDescription" : "Foreslå beregningsgrunnlag for selvstendig næringsdrivende",
+    "operator" : "SEQUENCE",
+    "rule" : { }
+  }, {
+    "id" : "n2",
+    "ruleId" : "FP_BR 2.1 BP",
+    "ruleDescription" : "Fastsett beregningsperiode",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n3",
+    "ruleId" : "FP_SETT_HJEMMEL_SN",
+    "ruleDescription" : "Sett hjemmel",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n4",
+    "ruleId" : "FP_BR 2.9 BP",
+    "ruleDescription" : "Beregn oppjustert inntekt for årene i beregningsperioden",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n5",
+    "ruleId" : "FP_BR 2.2",
+    "ruleDescription" : "Beregn gjennomsnittlig PGI oppjustert til G",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n6",
+    "ruleId" : "(HVIS FP_BR 2.20 SÅ Beregnet ELLERS (HVIS FP_BR 2.18 SÅ 5049 ELLERS (HVIS FP_BR 2.19 SÅ (HVIS FP_BR 2.3 SÅ (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7) ELLERS FP_BR 2.7) ELLERS FP_BR 2.8)))",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : { }
+  }, {
+    "id" : "n7",
+    "ruleId" : "FP_BR 2.20",
+    "ruleDescription" : "Er beregningsgrunnlaget besteberegnet?",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n8",
+    "ruleId" : "Beregnet",
+    "ruleDescription" : "Beregnet",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n9",
+    "ruleId" : "(HVIS FP_BR 2.18 SÅ 5049 ELLERS (HVIS FP_BR 2.19 SÅ (HVIS FP_BR 2.3 SÅ (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7) ELLERS FP_BR 2.7) ELLERS FP_BR 2.8))",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : { }
+  }, {
+    "id" : "n10",
+    "ruleId" : "FP_BR 2.18",
+    "ruleDescription" : "Fastsett beregningsgrunnlag for selvstendig næringsdrivende som er ny i arbeidslivet",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n11",
+    "ruleId" : "5049",
+    "ruleDescription" : "Fastsett beregningsgrunnlag for selvstendig næringsdrivende som er ny i arbeidslivet",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n12",
+    "ruleId" : "(HVIS FP_BR 2.19 SÅ (HVIS FP_BR 2.3 SÅ (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7) ELLERS FP_BR 2.7) ELLERS FP_BR 2.8)",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : { }
+  }, {
+    "id" : "n13",
+    "ruleId" : "FP_BR 2.19",
+    "ruleDescription" : "Har saksbehandler fastsatt beregningsgrunnlaget manuelt?",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n14",
+    "ruleId" : "(HVIS FP_BR 2.3 SÅ (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7) ELLERS FP_BR 2.7)",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : { }
+  }, {
+    "id" : "n15",
+    "ruleId" : "FP_BR 2.3",
+    "ruleDescription" : "Har bruker oppgitt varig endring i virksomhet eller nyoppstartet virksomhet?",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n16",
+    "ruleId" : "(HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7)",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : { }
+  }, {
+    "id" : "n17",
+    "ruleId" : "FP_BR XX",
+    "ruleDescription" : "Første beregningsgrunnlagperiode?",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n18",
+    "ruleId" : "FP_BR 2.4",
+    "ruleDescription" : "Fastsett sammenligningsgrunnlag og beregn avvik",
+    "operator" : "SEQUENCE",
+    "rule" : { }
+  }, {
+    "id" : "n19",
+    "ruleId" : "FP_BR 2.4",
+    "ruleDescription" : "Fastsett sammenligningsgrunnlag og beregn avvik i henhold til § 8-35 tredje ledd",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n20",
+    "ruleId" : "(HVIS FP_BR 2.5 SÅ FP_BR 2.6 ELLERS FP_BR 2.7)",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : { }
+  }, {
+    "id" : "n21",
+    "ruleId" : "FP_BR 2.5",
+    "ruleDescription" : "Varig endring og avvik større enn 25%, beregningsgrunnlag fastsettes skjønnsmessig",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n22",
+    "ruleId" : "FP_BR 2.6",
+    "ruleDescription" : "Opprett regelmerknad",
+    "operator" : "SEQUENCE",
+    "rule" : { }
+  }, {
+    "id" : "n23",
+    "ruleId" : "FP_BR 2.7",
+    "ruleDescription" : "Fastsett beregnet pr år",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n24",
+    "ruleId" : "5039",
+    "ruleDescription" : "Varig endring og avvik større enn 25%, beregningsgrunnlag fastsettes skjønnsmessig",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n25",
+    "ruleId" : "FP_BR 2.7",
+    "ruleDescription" : "Fastsett beregnet pr år",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n26",
+    "ruleId" : "FP_BR 2.7",
+    "ruleDescription" : "Fastsett beregnet pr år",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n27",
+    "ruleId" : "FP_BR 2.7",
+    "ruleDescription" : "Fastsett beregnet pr år",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n28",
+    "ruleId" : "FP_BR 2.8",
+    "ruleDescription" : "Beregn brutto beregningsgrunnlag selvstendig næringsdrivende",
+    "operator" : "SEQUENCE",
+    "rule" : { }
+  }, {
+    "id" : "n29",
+    "ruleId" : "FP_BR 2.8",
+    "ruleDescription" : "Beregn brutto beregningsgrunnlag fra § 8-35",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n30",
+    "ruleId" : "(HVIS FP_BR 2.3 SÅ (HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7) ELLERS FP_BR 2.7)",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : { }
+  }, {
+    "id" : "n31",
+    "ruleId" : "FP_BR 2.3",
+    "ruleDescription" : "Har bruker oppgitt varig endring i virksomhet eller nyoppstartet virksomhet?",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n32",
+    "ruleId" : "(HVIS FP_BR XX SÅ FP_BR 2.4 ELLERS FP_BR 2.7)",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : { }
+  }, {
+    "id" : "n33",
+    "ruleId" : "FP_BR XX",
+    "ruleDescription" : "Første beregningsgrunnlagperiode?",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n34",
+    "ruleId" : "FP_BR 2.4",
+    "ruleDescription" : "Fastsett sammenligningsgrunnlag og beregn avvik",
+    "operator" : "SEQUENCE",
+    "rule" : { }
+  }, {
+    "id" : "n35",
+    "ruleId" : "FP_BR 2.4",
+    "ruleDescription" : "Fastsett sammenligningsgrunnlag og beregn avvik i henhold til § 8-35 tredje ledd",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n36",
+    "ruleId" : "(HVIS FP_BR 2.5 SÅ FP_BR 2.6 ELLERS FP_BR 2.7)",
+    "ruleDescription" : "(COMP HVIS/SÅ/ELLERS)",
+    "operator" : "COMPUTATIONAL_IF",
+    "rule" : { }
+  }, {
+    "id" : "n37",
+    "ruleId" : "FP_BR 2.5",
+    "ruleDescription" : "Varig endring og avvik større enn 25%, beregningsgrunnlag fastsettes skjønnsmessig",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n38",
+    "ruleId" : "FP_BR 2.6",
+    "ruleDescription" : "Opprett regelmerknad",
+    "operator" : "SEQUENCE",
+    "rule" : { }
+  }, {
+    "id" : "n39",
+    "ruleId" : "FP_BR 2.7",
+    "ruleDescription" : "Fastsett beregnet pr år",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n40",
+    "ruleId" : "5039",
+    "ruleDescription" : "Varig endring og avvik større enn 25%, beregningsgrunnlag fastsettes skjønnsmessig",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n41",
+    "ruleId" : "FP_BR 2.7",
+    "ruleDescription" : "Fastsett beregnet pr år",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n42",
+    "ruleId" : "FP_BR 2.7",
+    "ruleDescription" : "Fastsett beregnet pr år",
+    "operator" : "SINGLE",
+    "rule" : { }
+  }, {
+    "id" : "n43",
+    "ruleId" : "FP_BR 2.7",
+    "ruleDescription" : "Fastsett beregnet pr år",
+    "operator" : "SINGLE",
+    "rule" : { }
+  } ],
+  "edges" : [ {
+    "source" : "n1",
+    "target" : "n2"
+  }, {
+    "source" : "n1",
+    "target" : "n3"
+  }, {
+    "source" : "n1",
+    "target" : "n4"
+  }, {
+    "source" : "n1",
+    "target" : "n5"
+  }, {
+    "source" : "n6",
+    "target" : "n7"
+  }, {
+    "source" : "n6",
+    "target" : "n8"
+  }, {
+    "source" : "n9",
+    "target" : "n10"
+  }, {
+    "source" : "n9",
+    "target" : "n11"
+  }, {
+    "source" : "n12",
+    "target" : "n13"
+  }, {
+    "source" : "n14",
+    "target" : "n15"
+  }, {
+    "source" : "n16",
+    "target" : "n17"
+  }, {
+    "source" : "n18",
+    "target" : "n19"
+  }, {
+    "source" : "n20",
+    "target" : "n21"
+  }, {
+    "source" : "n22",
+    "target" : "n23"
+  }, {
+    "source" : "n22",
+    "target" : "n24"
+  }, {
+    "source" : "n20",
+    "target" : "n22"
+  }, {
+    "source" : "n20",
+    "target" : "n25"
+  }, {
+    "source" : "n18",
+    "target" : "n20"
+  }, {
+    "source" : "n16",
+    "target" : "n18"
+  }, {
+    "source" : "n16",
+    "target" : "n26"
+  }, {
+    "source" : "n14",
+    "target" : "n16"
+  }, {
+    "source" : "n14",
+    "target" : "n27"
+  }, {
+    "source" : "n12",
+    "target" : "n14"
+  }, {
+    "source" : "n28",
+    "target" : "n29"
+  }, {
+    "source" : "n30",
+    "target" : "n31"
+  }, {
+    "source" : "n32",
+    "target" : "n33"
+  }, {
+    "source" : "n34",
+    "target" : "n35"
+  }, {
+    "source" : "n36",
+    "target" : "n37"
+  }, {
+    "source" : "n38",
+    "target" : "n39"
+  }, {
+    "source" : "n38",
+    "target" : "n40"
+  }, {
+    "source" : "n36",
+    "target" : "n38"
+  }, {
+    "source" : "n36",
+    "target" : "n41"
+  }, {
+    "source" : "n34",
+    "target" : "n36"
+  }, {
+    "source" : "n32",
+    "target" : "n34"
+  }, {
+    "source" : "n32",
+    "target" : "n42"
+  }, {
+    "source" : "n30",
+    "target" : "n32"
+  }, {
+    "source" : "n30",
+    "target" : "n43"
+  }, {
+    "source" : "n28",
+    "target" : "n30"
+  }, {
+    "source" : "n12",
+    "target" : "n28"
+  }, {
+    "source" : "n9",
+    "target" : "n12"
+  }, {
+    "source" : "n6",
+    "target" : "n9"
+  }, {
+    "source" : "n1",
+    "target" : "n6"
+  } ]
+}
+
