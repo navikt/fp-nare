@@ -2,6 +2,7 @@ package no.nav.fpsak.nare.json;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.DeserializationFeature;
 import tools.jackson.databind.cfg.EnumFeature;
 import tools.jackson.databind.json.JsonMapper;
 
@@ -49,7 +50,8 @@ public class JsonOutput {
     private static JsonMapper.Builder createJsonMapperBuilder() {
         return JsonMapper.builder()
                 .defaultTimeZone(TimeZone.getTimeZone("Europe/Oslo"))
-                .disable(tools.jackson.databind.DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES) // Var noen tester med null for booleans
+                .disable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES) // Var noen tester med null for booleans
+                .disable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE)
                 .enable(EnumFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE)
                 .changeDefaultVisibility(v -> v
                         .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
