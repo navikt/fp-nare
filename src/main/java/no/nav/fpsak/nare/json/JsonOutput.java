@@ -21,14 +21,6 @@ public class JsonOutput {
 
     public static String asJson(Object obj) {
         try {
-            return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
-        } catch (JacksonException e) {
-            throw mapException(obj, e);
-        }
-    }
-
-    public static String asCompactJson(Object obj) {
-        try {
             return MAPPER.writeValueAsString(obj);
         } catch (JacksonException e) {
             throw mapException(obj, e);

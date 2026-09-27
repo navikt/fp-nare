@@ -39,9 +39,9 @@ class EvaluationSerializerTest {
         );
 
         Assertions.assertThat(serialisert)
-                .contains("\"nare\" : \"1.2.1\"")
-                .contains("\"regel\" : \"3.1.0\"")
-                .contains("\"fagsystem\" : \"1r3f2adf3f2a1101\"");
+                .contains("\"nare\":\"1.2.1\"")
+                .contains("\"regel\":\"3.1.0\"")
+                .contains("\"fagsystem\":\"1r3f2adf3f2a1101\"");
 
     }
 }
